@@ -49,7 +49,9 @@
   <body>
     <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg">
 
-    <br><br><br><br><br><br>
+    <br><br><br>
+      <h1 id="session">Session</h1>
+    <br><br><br>
 
     <div class="button1">
     <button id = "buttonPlayAI" type="button">Player VS. AI</button>
@@ -57,6 +59,8 @@
     <button id = "instructions" type="button">How to Play</button>
     <br><br>
     <button id = "encyclopedia" type="button">Encyclopedia</button>
+    <br><br>
+    <button id="logout" type="button">Log Out</button>
     </div>
 
     <img style="float: right;" alt="" class="thismusicicon" id="musicicon" src="../images/1024px-Mute_Icon.png" />
@@ -120,6 +124,12 @@
 
     $(document).ready(function()
     {
+    	$.get("/userInfo",function(data){
+    		if (data.username)
+    			$("#session").html("Welcome " + data.username);
+    	});
+
+      $("#logout").click(logoutClicked);
       $("#buttonPlayAI").click(buttonPlayClicked);
       $("#instructions").click(HTPClicked);
       $("#encyclopedia").click(encyclopediaClicked);
@@ -144,6 +154,12 @@
       current += "encyclopedia"
     //  console.log(current)
       window.location.href = current
+    }
+    function logoutClicked(){
+    	$.get("/logout",function(data){
+    		window.location = data.redirect;
+    	});
+    	return false;
     }
     </script>
   </body>
