@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Encyclopedia</title>
+    <style>
+      .thismusicicon
+      {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50px;
+        height: 50px
+      }
+      .imagedisplay {
+        text-align: center;
+      }
+      .imagedisplay img {
+        width: 40%;
+      }
+      ul {
+        display: table;
+        margin: 0 auto;
+      }
+      body{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <link rel="icon" type="image/png" href="../images/YEE.png">
+  </head>
+  <body>
+    <img id="left" src="../images/red-arrow-L.png" height="100" alt="">
+    <img id="right" src="../images/red-arrow-r.png" style="float: right" height="100" alt="">
+    <br>
+
+    <div class="imagedisplay">
+      <img id="display" src="../images/AlexCard.png"  height="450"alt="">
+    </div>
+
+
+    <ul id="list">
+      <li id="longhair">Long Hair:No</li>
+      <li id="haircolor">Hair Color:Grey</li>
+      <li id="facialhair">Facial Hair:No</li>
+      <li id="moustace">Moustace:No</li>
+      <li id="beard">Beard:No</li>
+      <li id="glasses">Glasses:Yes</li>
+      <li id="hat">Hat:No</li>
+      <li id="earrings">Earrings:No</li>
+      <li id="male">Male:Yes</li>
+      <li id="lightskin">Light Skin:Yes</li>
+    </ul>
+
+
+
+    <button type="button" id="back">Go Back</button>
+
+    <br><br>
+    <img style="float: right;" alt="" class="thismusicicon" id="musicicon" src="../images/1024px-Mute_Icon.png" />
+    <audio id="player" autoplay="autoplay" src="../sound/1-hour-of-silence.mp3"></audio>
+    <script>
+    let imagesrc = ["../images/AlexCard.png",
+    "../images/AndyCard.png",
+    "../images/AshleyCard.png",
+    "../images/BrandonCard.png",
+    "../images/ChrisCard.png",
+    "../images/ConnorCard.png",
+    "../images/DanielCard.png",
+    "../images/DavidCard.png",
+    "../images/EmilyCard.png",
+    "../images/JakeCard.png",
+    "../images/JamesCard.png",
+    "../images/JonCard.png",
+    "../images/JosephCard.png",
+    "../images/JoshuaCard.png",
+    "../images/JustinCard.png",
+    "../images/KyleCard.png",
+    "../images/MattCard.png",
+    "../images/MeganCard.png",
+    "../images/NickCard.png",
+    "../images/RachaelCard.png",
+    "../images/SarahCard.png",
+    "../images/TylerCard.png",
+    "../images/WilliamCard.png",
+    "../images/ZacharyCard.png"];
+
+      $("#right").click(clickedright)
+      $("#left").click(clickedleft)
+
+      function clickedright()
+      {
+        let currentindex = imagesrc.indexOf($("#display").attr("src"))
+        currentindex+=1
+        if(currentindex>23)
+          currentindex=0
+        $("#display").attr("src",imagesrc[currentindex])
+        updateinfo(currentindex)
+      }
+      function clickedleft()
+      {
+        let currentindex = imagesrc.indexOf($("#display").attr("src"))
+        currentindex-=1
+        if(currentindex<0)
+          currentindex=23
+        $("#display").attr("src",imagesrc[currentindex])
+        updateinfo(currentindex)
+      }
+      function updateinfo(index)
+      {
+        if(index==0)//alex
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Grey")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:Yes")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==1)//andy
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Black")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:Yes")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:No")
+        }
+        else if(index==2)//Ashley
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Red")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:Yes")
+          $("#earrings").html("Earrings:Yes")
+          $("#male").html("Male:No")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==3)//Brandon
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Blonde")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:Yes")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==4)//Chris
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Black")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:Yes")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==5)//Connor
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Black")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:Yes")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:No")
+        }
+        else if(index==6)//Daniel
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Black")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:Yes")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:No")
+        }
+        else if(index==7)//David
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Brown")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:Yes")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==8)//Emily
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Grey")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:Yes")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:Yes")
+          $("#male").html("Male:No")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==9)//Jake
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Blonde")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:Yes")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==10)//James
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Black")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:Yes")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:No")
+        }
+        else if(index==11)//Jon
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Grey")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:Yes")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==12)//Joseph
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Orange")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:Yes")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==13)//Joshua
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Grey")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:Yes")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==14)//Justin
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Brown")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:Yes")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==15)//Kyle
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Blonde")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==16)//Matt
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Grey")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==17)//Megan
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Blonde")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:Yes")
+          $("#male").html("Male:No")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==18)//Nick
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Black")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:Yes")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==19)//Rachael
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Black")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:Yes")
+          $("#earrings").html("Earrings:Yes")
+          $("#male").html("Male:No")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==20)//Sarah
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Black")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:Yes")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:No")
+          $("#lightskin").html("Light Skin:No")
+        }
+        else if(index==21)//Tyler
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Black")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:Yes")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==22)//William
+        {
+          $("#longhair").html("Long Hair:Yes")
+          $("#haircolor").html("Hair Color:Blonde")
+          $("#facialhair").html("Facial Hair:Yes")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:Yes")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+        else if(index==23)//Zachary
+        {
+          $("#longhair").html("Long Hair:No")
+          $("#haircolor").html("Hair Color:Orange")
+          $("#facialhair").html("Facial Hair:No")
+          $("#moustace").html("Moustace:No")
+          $("#beard").html("Beard:No")
+          $("#glasses").html("Glasses:No")
+          $("#hat").html("Hat:No")
+          $("#earrings").html("Earrings:No")
+          $("#male").html("Male:Yes")
+          $("#lightskin").html("Light Skin:Yes")
+        }
+      }
+
+      $("#musicicon").click(trialfunction);
+
+      function trialfunction()
+      {
+        if($("#musicicon").attr("src")=="../images/1024px-Mute_Icon.png")
+        {
+          $("#musicicon").attr("src", "../images/600px-Speaker_Icon.png")
+          playAudio();
+        }
+        else if($("#musicicon").attr("src")=="../images/600px-Speaker_Icon.png")
+        {
+          $("#musicicon").attr("src", "../images/1024px-Mute_Icon.png")
+          stopAudio();
+        }
+      }
+
+      let audioSources = ["../sound/13 - Beach - Plok! - OST - SNES.wav",
+      "../sound/Donkey Kong Country - Bonus Room Blitz [Restored].wav",
+      "../sound/Mario Paint OST - BGM 1.wav",
+      "../sound/Sonic CD - Tidal Tempest Present [JPEU] (HD).wav",
+      "../sound/Team Fortress 2 Soundtrack  Upgrade Station.wav"];
+
+      function stopAudio()
+      {
+        $("#player").attr("src","../sound/1-hour-of-silence.mp3")
+      }
+
+      function playAudio()
+      {
+        if(audioSources.length==0 || audioSources.src ==  "../sound/1-hour-of-silence.mp3")
+        {
+          audioSources = ["../sound/13 - Beach - Plok! - OST - SNES.wav",
+          "../sound/Donkey Kong Country - Bonus Room Blitz [Restored].wav",
+          "../sound/Mario Paint OST - BGM 1.wav",
+          "../sound/Sonic CD - Tidal Tempest Present [JPEU] (HD).wav",
+          "../sound/Team Fortress 2 Soundtrack  Upgrade Station.wav"];
+        }
+
+        let index = Math.floor(Math.random() * audioSources.length)
+        let audioSource = audioSources[index];
+
+        if(audioSource!=undefined)
+          $("#player").attr("src",audioSource)
+
+        let splicer = audioSources.indexOf(audioSource);
+        audioSources.splice(splicer, 1);
+
+      }
+      $("#player").on('ended', playAudio);
+
+      $(document).ready(function()
+      {$("#back").click(backClicked);});
+      function backClicked()
+      {
+        let current = $(location).attr('href')
+        let currentreplace = current.replace("encyclopedia","");
+        window.location.href = currentreplace
+      }
+    </script>
+  </body>
+</html>

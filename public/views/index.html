@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!--   -->
+<html>
+  <head>
+    <title>Home Page</title>
+      <meta charset="utf-8"/>
+        <style>
+        .header
+        {
+          padding-top: 1px;
+          padding-bottom: 1px;
+          padding-left: 20px;
+          text-align: left;
+          background: #1abc9c;
+          color: black;
+          font-size: 30px;
+        }
+        .button1
+        {
+          text-align:center;
+        }
+        .guesswhoimg
+        {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        }
+        .thismusicicon
+        {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50px;
+          height: 50px
+        }
+        body
+        {
+          background-image: url("../images/Background(Red).png");
+          background-size: 100% 300%;
+          background-repeat: no-repeat;
+        }
+
+        </style>
+      <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+      <link rel="icon" type="image/png" href="../images/YEE.png">
+  </head>
+
+  <body>
+    <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg">
+
+    <br><br><br><br><br><br>
+
+    <div class="button1">
+    <button id = "buttonPlayAI" type="button">Player VS. AI</button>
+    <br><br>
+    <button id = "instructions" type="button">How to Play</button>
+    <br><br>
+    <button id = "encyclopedia" type="button">Encyclopedia</button>
+    </div>
+
+    <img style="float: right;" alt="" class="thismusicicon" id="musicicon" src="../images/1024px-Mute_Icon.png" />
+    <div style="clear: right">
+    </div>
+
+    <br><br>
+
+    <audio id="player" autoplay="autoplay" src="../sound/1-hour-of-silence.mp3"></audio>
+
+    <script>
+    $("#musicicon").click(trialfunction);
+    function trialfunction()
+    {
+      if($("#musicicon").attr("src")=="../images/1024px-Mute_Icon.png")
+      {
+        $("#musicicon").attr("src", "../images/600px-Speaker_Icon.png")
+        playAudio();
+      }
+      else if($("#musicicon").attr("src")=="../images/600px-Speaker_Icon.png")
+      {
+        $("#musicicon").attr("src", "../images/1024px-Mute_Icon.png")
+        stopAudio();
+      }
+    }
+
+    let audioSources = ["../sound/13 - Beach - Plok! - OST - SNES.wav",
+    "../sound/Donkey Kong Country - Bonus Room Blitz [Restored].wav",
+    "../sound/Mario Paint OST - BGM 1.wav",
+    "../sound/Sonic CD - Tidal Tempest Present [JPEU] (HD).wav",
+    "../sound/Team Fortress 2 Soundtrack  Upgrade Station.wav"];
+
+    function stopAudio()
+    {
+      $("#player").attr("src","../sound/1-hour-of-silence.mp3")
+    }
+
+    function playAudio()
+    {
+      if(audioSources.length==0 || audioSources.src ==  "../sound/1-hour-of-silence.mp3")
+      {
+        audioSources = ["../sound/13 - Beach - Plok! - OST - SNES.wav",
+        "../sound/Donkey Kong Country - Bonus Room Blitz [Restored].wav",
+        "../sound/Mario Paint OST - BGM 1.wav",
+        "../sound/Sonic CD - Tidal Tempest Present [JPEU] (HD).wav",
+        "../sound/Team Fortress 2 Soundtrack  Upgrade Station.wav"];
+      }
+
+      let index = Math.floor(Math.random() * audioSources.length)
+      let audioSource = audioSources[index];
+
+      if(audioSource!=undefined)
+        $("#player").attr("src",audioSource)
+
+      let splicer = audioSources.indexOf(audioSource);
+      audioSources.splice(splicer, 1);
+
+    }
+    player.addEventListener('ended', playAudio);
+  //  playAudio();
+
+    $(document).ready(function()
+    {
+      $("#buttonPlayAI").click(buttonPlayClicked);
+      $("#instructions").click(HTPClicked);
+      $("#encyclopedia").click(encyclopediaClicked);
+    })
+    function buttonPlayClicked()
+    {
+      let current = $(location).attr('href')
+      current += "playvsai"
+    //  console.log(current)
+      window.location.href = current
+    }
+    function HTPClicked()
+    {
+      let current = $(location).attr('href')
+      current += "HTP"
+    //  console.log(current)
+      window.location.href = current
+    }
+    function encyclopediaClicked()
+    {
+      let current = $(location).attr('href')
+      current += "encyclopedia"
+    //  console.log(current)
+      window.location.href = current
+    }
+    </script>
+  </body>
+</html>
