@@ -88,9 +88,8 @@
       function backClicked()
       {
         let current = $(location).attr('href')
-        current = current.substring(0, current.length-3);
-      //  console.log(current)
-        window.location.href = current
+        let currentreplace = current.replace("HTP","menu");
+        window.location.href = currentreplace
       }
     </script>
   </body>

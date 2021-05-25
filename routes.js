@@ -23,19 +23,44 @@ router.get("/signup",function(req,res){
 	res.sendFile(__dirname + "/public/views/signup.html");
 });
 router.get("/menu",function(req,res){
-	res.sendFile(__dirname + "/public/views/index.html");
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/index.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
 });
 router.get("/playvsai",function(req,res){
-  res.sendFile(__dirname + "/public/views/vsai.html");
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/vsai.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+
 });
 router.get("/HTP",function(req,res){
-  res.sendFile(__dirname + "/public/views/HTP.html");
+	res.sendFile(__dirname + "/public/views/HTP.html");
+
+
 });
 router.get("/win",function(req,res){
-  res.sendFile(__dirname + "/public/views/win.html");
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/win.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+
 });
 router.get("/lose",function(req,res){
-  res.sendFile(__dirname + "/public/views/lose.html");
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/lose.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+
 });
 router.get("/encyclopedia",function(req,res){
   res.sendFile(__dirname + "/public/views/encyclo.html");
