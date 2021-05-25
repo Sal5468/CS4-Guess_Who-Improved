@@ -137,23 +137,21 @@
     function buttonPlayClicked()
     {
       let current = $(location).attr('href')
-      current += "playvsai"
-    //  console.log(current)
-      window.location.href = current
+      let currentreplace = current.replace("menu","playvsai");
+      window.location.href = currentreplace
+
     }
     function HTPClicked()
     {
       let current = $(location).attr('href')
-      current += "HTP"
-    //  console.log(current)
-      window.location.href = current
+      let currentreplace = current.replace("menu","HTP");
+      window.location.href = currentreplace
     }
     function encyclopediaClicked()
     {
       let current = $(location).attr('href')
-      current += "encyclopedia"
-    //  console.log(current)
-      window.location.href = current
+      let currentreplace = current.replace("menu","encyclopedia");
+      window.location.href = currentreplace
     }
     function logoutClicked(){
     	$.get("/logout",function(data){

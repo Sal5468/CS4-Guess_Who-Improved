@@ -17,7 +17,7 @@ var routes = require("./routes");
 var app = express();
 
 //27017 seems to be the port number used by mongod
-mongoose.connect("mongodb://localhost:27017/userdb");
+mongoose.connect("mongodb://localhost:27017/group2DB");
 setUpPassport();
 
 app.use('/', express.static('./'));
