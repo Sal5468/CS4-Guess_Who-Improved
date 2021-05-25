@@ -20,7 +20,7 @@ var app = express();
 mongoose.connect("mongodb://localhost:27017/group2DB");
 setUpPassport();
 
-app.use('/', express.static('./'));
+//app.use('/', express.static('./'));
 app.use('/js', express.static('./public/js'));
 
 

@@ -173,14 +173,13 @@ console.log("get successlogin");
 router.get("/faillogin", function(req, res) {
 console.log("get failsignup");
 	res.json({redirect:"/login"});
-
 });
 
 router.get("/menu", function(req, res) {
   console.log("get menu");
   if (req.isAuthenticated()) {
     console.log("sendFile menu.html")
-	let thePath = path.resolve(__dirname,"public/views/menu.html");
+	let thePath = path.resolve(__dirname,"public/views/index.html");
 	res.sendFile(thePath);
   } else {
     console.log("sendFile login.html")

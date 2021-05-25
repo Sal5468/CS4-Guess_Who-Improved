@@ -118,7 +118,7 @@
 
     }
     $("#player").on('ended', playAudio);
-    
+
     $(document).ready(function()
     {
       $("#return").click(returnClick);
@@ -133,7 +133,7 @@
     function mainmenuclick()
     {
       let current = $(location).attr('href')
-      let currentreplace = current.replace("lose","");
+      let currentreplace = current.replace("lose","menu");
       window.location.href = currentreplace
     }
     </script>
