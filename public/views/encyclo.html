@@ -479,9 +479,9 @@
       {$("#back").click(backClicked);});
       function backClicked()
       {
-        let current = $(location).attr('href')
-        let currentreplace = current.replace("encyclopedia","menu");
-        window.location.href = currentreplace
+        $.get("/getmenu",function(data){
+      		window.location = data.redirect;
+      	});
       }
     </script>
   </body>

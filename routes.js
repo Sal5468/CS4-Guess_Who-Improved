@@ -17,12 +17,6 @@ let Client = [];
 let newClientId = 0;
 
 router.get("/",function(req,res){
-	res.sendFile(__dirname + "/public/views/login.html");
-});
-router.get("/signup",function(req,res){
-	res.sendFile(__dirname + "/public/views/signup.html");
-});
-router.get("/menu",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/index.html");
 	}
@@ -30,6 +24,34 @@ router.get("/menu",function(req,res){
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
 });
+
+router.get("/login",function(req,res){
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/index.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+});
+
+router.get("/signup",function(req,res){
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/index.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/signup.html");
+	}
+});
+
+/*router.get("/menu",function(req,res){
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/index.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+});*/
+
 router.get("/playvsai",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/vsai.html");
@@ -37,13 +59,12 @@ router.get("/playvsai",function(req,res){
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
-
 });
+
 router.get("/HTP",function(req,res){
 	res.sendFile(__dirname + "/public/views/HTP.html");
-
-
 });
+
 router.get("/win",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/win.html");
@@ -51,8 +72,8 @@ router.get("/win",function(req,res){
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
-
 });
+
 router.get("/lose",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/lose.html");
@@ -60,8 +81,8 @@ router.get("/lose",function(req,res){
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
-
 });
+
 router.get("/encyclopedia",function(req,res){
   res.sendFile(__dirname + "/public/views/encyclo.html");
 });
@@ -174,6 +195,32 @@ router.get("/faillogin", function(req, res) {
 console.log("get failsignup");
 	res.json({redirect:"/login"});
 });
+
+router.get("/getmenu", function(req, res) {
+console.log("get menu");
+	res.json({redirect:"/menu"});
+});
+router.get("/getplayvsai", function(req, res) {
+console.log("get playvsai");
+	res.json({redirect:"/playvsai"});
+});
+router.get("/getHTP", function(req, res) {
+console.log("get HTP");
+	res.json({redirect:"/HTP"});
+});
+router.get("/getencyclopedia", function(req, res) {
+console.log("get encyclopedia");
+	res.json({redirect:"/encyclopedia"});
+});
+router.get("/getwin", function(req, res) {
+console.log("get win");
+	res.json({redirect:"/win"});
+});
+router.get("/getlose", function(req, res) {
+console.log("get lose");
+	res.json({redirect:"/lose"});
+});
+
 
 router.get("/menu", function(req, res) {
   console.log("get menu");

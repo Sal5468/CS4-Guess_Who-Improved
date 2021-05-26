@@ -136,21 +136,21 @@
     })
     function buttonPlayClicked()
     {
-      let current = $(location).attr('href')
-        let currentreplace = current.replace("menu","playvsai");
-        window.location.href = currentreplace
+      $.get("/getplayvsai",function(data){
+    		window.location = data.redirect;
+    	});
     }
     function HTPClicked()
     {
-      let current = $(location).attr('href')
-        let currentreplace = current.replace("menu","HTP");
-        window.location.href = currentreplace
+      $.get("/getHTP",function(data){
+    		window.location = data.redirect;
+    	});
     }
     function encyclopediaClicked()
     {
-      let current = $(location).attr('href')
-        let currentreplace = current.replace("menu","encyclopedia");
-        window.location.href = currentreplace
+      $.get("/getencyclopedia",function(data){
+    		window.location = data.redirect;
+    	});
     }
     function logoutClicked(){
     	$.get("/logout",function(data){

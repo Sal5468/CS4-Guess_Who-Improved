@@ -126,15 +126,15 @@
     })
     function returnClick()
     {
-      let current = $(location).attr('href')
-      let currentreplace = current.replace("win","playvsai");
-      window.location.href = currentreplace
+      $.get("/getplayvsai",function(data){
+        window.location = data.redirect;
+      });
     }
     function mainmenuclick()
     {
-      let current = $(location).attr('href')
-      let currentreplace = current.replace("win","menu");
-      window.location.href = currentreplace
+      $.get("/getmenu",function(data){
+        window.location = data.redirect;
+      });
     }
     </script>
   </body>
