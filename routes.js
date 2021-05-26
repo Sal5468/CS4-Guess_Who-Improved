@@ -100,10 +100,6 @@ router.get("/encyclopedia",function(req,res){
 ////////////////////////////////////////////////////////////////////////////////
 
 router.post('/init', function(req, res)
-<<<<<<< HEAD
-{//needs the client to pick an AI to go against.
-	//ADD CODE
-=======
 {//needs the AI to pick a chacter to work off of.
 	if(req.isAuthenticated()){
 //		console.log(req.user.username)
@@ -127,7 +123,6 @@ router.post('/init', function(req, res)
 //	console.log(Client[newClientId].getCharacter());
 //	newClientId++;
 //	console.log(Client);
->>>>>>> e05bb18084d19863083ad0dde3e34bd23a5b88c3
 });
 router.get("/askaiaquestion",function(req,res)
 {
