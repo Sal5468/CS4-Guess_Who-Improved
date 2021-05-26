@@ -9,7 +9,8 @@
 //let guessName;
 //let questionsAsked = [];
 
-//NEED TO REFORMAT THIS ENTIRE THING TO MAKE IT AN OBJECT
+
+//add handles to DB
 
 let AI = function(){
   this.boardInfo = require("./BoardInfo");
@@ -27,9 +28,9 @@ AI.prototype.getGuessName = function()
 AI.prototype.sendAnswer = function(question)
 {return(this.boardInfo.getCharAnswers(this.currentCharacter, question));}
 
-AI.prototype.setCharacter = function()
+AI.prototype.setCharacter = function(charnum)
 {
-  let charnum =   Math.floor(Math.random() * 24 + 1)
+
   if(charnum==1)
     this.currentCharacter="Alex"
   else if(charnum==2)
@@ -79,16 +80,18 @@ AI.prototype.setCharacter = function()
   else if(charnum==24)
     this.currentCharacter="Zachary"
 
-
+/*
   for(let i = 0; i<13; i++){
     this.questionsAsked[i] = false;
   }
+*/
+
   //console.log(charnum);
   //console.log(currentCharacter);
 }
 AI.prototype.getCharacter = function()
 {return(this.currentCharacter)}
-
+/*
 AI.prototype.generateAIBoard = function(){
     this.Board[0] = 'Alex';
     this.Board[1] = 'Andy';
@@ -115,7 +118,7 @@ AI.prototype.generateAIBoard = function(){
     this.Board[22] = 'William';
     this.Board[23] = 'Zachary';
 
-}
+}*/
 
 AI.prototype.EliminateAIBoard = function(numQ, answer, name) {//we need to change all of these to get at the
     /*if(numQ < 14)//for yee mode                                        getCharAnswers in BoardInfo

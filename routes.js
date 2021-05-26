@@ -13,9 +13,12 @@ var User = require("./models/user");
 let playercharchosen = ""//delete this
 let aiplayerchosen = ""//delete this
 
-let Client = [];
-let newClientId = 0;
+let AIArray = []
 
+
+function initAI(){
+
+}
 router.get("/",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/index.html");
@@ -60,6 +63,14 @@ router.get("/playvsai",function(req,res){
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
 });
+router.get("/multi",function(req,res){
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/multiRouting.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+});
 
 router.get("/HTP",function(req,res){
 	res.sendFile(__dirname + "/public/views/HTP.html");
@@ -89,16 +100,8 @@ router.get("/encyclopedia",function(req,res){
 ////////////////////////////////////////////////////////////////////////////////
 
 router.post('/init', function(req, res)
-{//needs the AI to pick a chacter to work off of.
-	Client[newClientId] = new AI;
-	Client[newClientId].setCharacter()
-	Client[newClientId].generateAIBoard()
-	//aiplayerchosen = Client[req.query.id].getCharacter()
-//	console.log(aiplayerchosen)
-	res.json({id: newClientId});
-//	console.log(Client[newClientId].getCharacter());
-	newClientId++;
-//	console.log(Client);
+{//needs the client to pick an AI to go against.
+	//ADD CODE
 });
 router.get("/askaiaquestion",function(req,res)
 {
@@ -207,6 +210,10 @@ console.log("get playvsai");
 router.get("/getHTP", function(req, res) {
 console.log("get HTP");
 	res.json({redirect:"/HTP"});
+});
+router.get("/getMulti", function(req, res) {
+console.log("get Multi");
+	res.json({redirect:"/multi"});
 });
 router.get("/getencyclopedia", function(req, res) {
 console.log("get encyclopedia");

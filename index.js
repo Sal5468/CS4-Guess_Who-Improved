@@ -46,11 +46,29 @@ app.use(express.static("./public"));
 
 app.use(routes);
 //app.use(logger("short"));
+let http = require('http');
 
-//req is info sending to server from client.
-//res is info sending to client from server.
+/**
+ * Create HTTP server.
+ */
+let server = http.createServer(app);
+////////////////////////////////
+// Socket.io server listens to our app
+let io = require('socket.io').listen(server);
+
+// Emit welcome message on connection
+io.on('connection', function(socket) {
+    // Use socket to communicate with this particular client only, sending it it's own id
+    socket.emit('welcome', { message: 'Welcome!', id: socket.id });
+
+    socket.on('update', function (data) {
+        // Broadcast to everyone (including self)
+        io.emit('update', data);
+    });
+
+});
 //info for yee server: ssh group2@www.mvhscsf.org  password: B2a7-->
 
-app.listen(4002, function () {
+server.listen(4002, function () {
   console.log('Guess who listening on port 4002!');
 });

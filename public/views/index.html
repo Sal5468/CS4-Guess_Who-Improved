@@ -56,10 +56,13 @@
     <div class="button1">
     <button id = "buttonPlayAI" type="button">Player VS. AI</button>
     <br><br>
+    <button id = "multi" type="button">Play vs Another Player</button>
+    <br><br>
     <button id = "instructions" type="button">How to Play</button>
     <br><br>
     <button id = "encyclopedia" type="button">Encyclopedia</button>
     <br><br>
+
     <button id="logout" type="button">Log Out</button>
     </div>
 
@@ -133,6 +136,7 @@
       $("#buttonPlayAI").click(buttonPlayClicked);
       $("#instructions").click(HTPClicked);
       $("#encyclopedia").click(encyclopediaClicked);
+      $("#multi").click(MultiClicked);
     })
     function buttonPlayClicked()
     {
@@ -143,6 +147,12 @@
     function HTPClicked()
     {
       $.get("/getHTP",function(data){
+    		window.location = data.redirect;
+    	});
+    }
+    function MultiClicked()
+    {
+      $.get("/getMulti",function(data){
     		window.location = data.redirect;
     	});
     }

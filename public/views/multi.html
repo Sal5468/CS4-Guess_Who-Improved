@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--   -->
+<html>
+  <head>
+    <title>Playing a Player</title>
+      <meta charset="utf-8"/>
+
+      <style>
+      .thismusicicon
+      {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50px;
+        height: 50px
+      }
+      .chat {
+        color: white
+        border: 2px solid white ;
+      }
+      p {
+        color: white;
+      }
+      h2 {
+        color: #00ff00;
+      }
+      body{
+        background-image: url("../images/Background.png");
+        background-size: 100% 300%;
+        background-repeat: no-repeat;
+      }
+      </style>
+
+      <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+      <link rel="icon" type="image/png" href="../images/YEE.png">
+  </head>
+
+  <body>
+      <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg" height="100" onclick="guessWhoClicked()">
+      <img style="float: right" src="../images/green-arrow.png" alt="green arrow img" class="greenarrowimg" height="100" onclick="controller()">
+      <div style="text-align: center"><h1 id="prompt1" style="display: inline-block">Choose your Character</h1></div>
+
+
+    <div class="board"><!--There are 24 Characters-->
+      <div style="float: right" class="chat">
+        <p>Chat</p>
+        <ul id="chat">
+        </ul>
+        <div>
+          <h1 style="display: inline-block; color: white;" onclick="Yes()">Yes</h1>
+          <h1 style="display: inline-block; color: white; padding-left: 50px; padding-right: 25px;" onclick="No()">No</h1>
+        </div>
+      </div>
+
+      <img src="../images/AlexCard.png" alt="Alex" height="150" id="Alex" onclick="Alex()">
+      <img src="../images/AndyCard.png" alt="Andy" height="150" id="Andy" onclick="Andy()">
+      <img src="../images/AshleyCard.png" alt="Ashley" height="150" id="Ashley" onclick="Ashley()">
+      <img src="../images/BrandonCard.png" alt="Brandon" height="150" id="Brandon" onclick="Brandon()">
+      <img src="../images/ChrisCard.png" alt="Chris" height="150" id="Chris" onclick="Chris()">
+      <img src="../images/ConnorCard.png" alt="Connor" height="150" id="Connor" onclick="Connor()">
+      <img src="../images/DanielCard.png" alt="Daniel" height="150" id="Daniel" onclick="Daniel()">
+      <img src="../images/DavidCard.png" alt="David" height="150" id="David" onclick="David()"><br>
+      <img src="../images/EmilyCard.png" alt="Emily" height="150" id="Emily" onclick="Emily()">
+      <img src="../images/JakeCard.png" alt="Jake" height="150" id="Jake" onclick="Jake()">
+      <img src="../images/JamesCard.png" alt="James" height="150" id="James" onclick="James()">
+      <img src="../images/JonCard.png" alt="Jon" height="150" id="Jon" onclick="Jon()">
+      <img src="../images/JosephCard.png" alt="Joseph" height="150" id="Joseph" onclick="Joseph()">
+      <img src="../images/JoshuaCard.png" alt="Joshua" height="150" id="Joshua" onclick="Joshua()">
+      <img src="../images/JustinCard.png" alt="Justin" height="150" id="Justin" onclick="Justin()">
+      <img src="../images/KyleCard.png" alt="Kyle" height="150" id="Kyle" onclick="Kyle()"><br>
+      <img src="../images/MattCard.png" alt="Matt" height="150" id="Matt" onclick="Matt()">
+      <img src="../images/MeganCard.png" alt="Megan" height="150" id="Megan" onclick="Megan()">
+      <img src="../images/NickCard.png" alt="Nick" height="150" id="Nick" onclick="Nick()">
+      <img src="../images/RachaelCard.png" alt="Rachael" height="150" id="Rachael" onclick="Rachael()">
+      <img src="../images/SarahCard.png" alt="Sarah" height="150" id="Sarah" onclick="Sarah()">
+      <img src="../images/TylerCard.png" alt="Tyler" height="150" id="Tyler" onclick="Tyler()">
+      <img src="../images/WilliamCard.png" alt="William" height="150" id="William" onclick="William()">
+      <img src="../images/ZacharyCard.png" alt="Zachary" height="150" id="Zachary" onclick="Zachary()">
+    </div>
+    <br><br>
+    <div>
+      <h1 style="display: inline-block">Character Chosen:</h1>
+      <h1 style="display: inline-block; float: right; color: #ff0000 ">Questions</h1>
+    </div>
+    <img src="../images/YEE.png" alt="Player" id="playerChar" height="300" style="display: inline-block">
+
+
+
+    <div style="float: right; display: inline-block">
+      <div style="display: inline-block;  padding-left: 50px">
+        <h2>Other Questions</h2>
+        <p onclick="questionClick(8)" id="8">Does your character have glasses?</p>
+        <p onclick="questionClick(9)" id="9">Does your character have a hat?</p>
+        <p onclick="questionClick(10)" id="10">Does your character have earrings?</p>
+        <p onclick="questionClick(11)" id="11">Is your character a male?</p>
+        <p onclick="questionClick(12)" id="12">Does your character have light skin?</p>
+        <h2 style="color: white;" onclick="guessClick()" id="makeGuess">Make a Guess</h2>
+      </div>
+      <div style="display: inline-block;  padding-left: 50px">
+        <h2>Hair Questions</h2>
+        <p onclick="questionClick(0)" id="0">Does your character have long hair?</p>
+        <p onclick="questionClick(1)" id="1">Does your character have gray hair?</p>
+        <p onclick="questionClick(2)" id="2">Does your character have orange hair?</p>
+        <p onclick="questionClick(3)" id="3">Does your character have black hair?</p>
+        <p onclick="questionClick(4)" id="4">Does your character have blonde hair?</p>
+        <p onclick="questionClick(5)" id="5">Does your character have facial hair?</p>
+        <p onclick="questionClick(6)" id="6">Does your character have a moustache?</p>
+        <p onclick="questionClick(7)" id="7">Does your character have a beard?</p>
+      </div>
+
+    </div>
+    <br><br><br><br><br>
+    <img style="float: right;" alt="" class="thismusicicon" id="musicicon" src="../images/1024px-Mute_Icon.png" />
+    <audio id="player" autoplay="autoplay" src="../sound/1-hour-of-silence.mp3"></audio>
+
+    <label>Name</label>
+    <input id="name" name="a" type="text"/><br>
+    <label>Comment</label>
+    <input type="text" id="comment" value="">
+    <input type="button" value="Send" onclick="doit()">
+    <ul id='messages'></ul>
+    <script>
+      let ident;
+
+      let socket = io();
+//Get message from server.
+      socket.on('welcome', function(data) {
+            ident = data.id;
+            console.log(ident);
+            //$("#messages").append('<li>' + data.message + " " + data.id + '</li>');
+      });
+
+//Get message from server.
+      socket.on('update', (data) => {
+            $("#messages").append('<li>' + data.name + ": " + data.text + '</li>');
+      });
+
+      function doit() {
+//Send message to server.
+            socket.emit('update', {'ident': ident, 'text': $("#comment").val(), 'name': $("#name").val()});
+            $("#comment").val("");
+            return false;
+      }
+
+      $(document).ready(function(){
+        $("#comment").keypress(function(event) {
+          if (event.keyCode != 13)
+                    return;
+          doit();
+        });
+        $("#name").keypress(function(event) {
+          if (event.keyCode != 13)
+                    return;
+          doit();
+        });
+      });
+
+    </script>
+
+  </body>
+  <script src="/views/js/multi.js"></script>
+  <!-- How it will work:
+        player chooses char, player asks aI a question, AI responds, Ai asks a question, person responds
+  -->
+</html>
