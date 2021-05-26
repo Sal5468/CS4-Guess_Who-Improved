@@ -738,8 +738,8 @@
   $(document).ready(function()
   {
     $.post("/init",null,function(data){
-      serverId = data.id;
-    //  console.log(serverId);
+      serverId = data.ident
+      console.log(serverId)
     });
   });
 

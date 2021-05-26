@@ -100,8 +100,34 @@ router.get("/encyclopedia",function(req,res){
 ////////////////////////////////////////////////////////////////////////////////
 
 router.post('/init', function(req, res)
+<<<<<<< HEAD
 {//needs the client to pick an AI to go against.
 	//ADD CODE
+=======
+{//needs the AI to pick a chacter to work off of.
+	if(req.isAuthenticated()){
+//		console.log(req.user.username)
+		User.findOne({ username: req.user.username }, function(err, user) {
+			if(err)
+			{
+				res.json(null);
+			}
+			res.json({ident:user.ident});
+		})
+	}
+	else{
+		res.json(null);
+	}
+	//Client[newClientId] = new AI;
+	//Client[newClientId].setCharacter()
+	//Client[newClientId].generateAIBoard()
+	//aiplayerchosen = Client[req.query.id].getCharacter()
+//	console.log(aiplayerchosen)
+//	res.json({id: newClientId});
+//	console.log(Client[newClientId].getCharacter());
+//	newClientId++;
+//	console.log(Client);
+>>>>>>> e05bb18084d19863083ad0dde3e34bd23a5b88c3
 });
 router.get("/askaiaquestion",function(req,res)
 {
@@ -272,9 +298,12 @@ router.get("/logout", function(req, res) {
 
 router.post("/signup", function(req, res, next) {
 console.log("post signup");
+console.log("Id number "+newClientId)
 
   var username = req.body.username;
   var password = req.body.password;
+	var ident = newClientId
+	newClientId++
 
   User.findOne({ username: username }, function(err, user) {
 console.log("User findOne function callback")
@@ -291,7 +320,8 @@ console.log("User findOne function callback")
 console.log("new User")
     var newUser = new User({
       username: username,
-      password: password
+      password: password,
+			ident: ident
     });
     newUser.save(next);    //goes to user.js (userSchema.pre(save))
   });
