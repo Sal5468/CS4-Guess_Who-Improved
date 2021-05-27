@@ -10,12 +10,36 @@
       //roomID = data.id;
       //console.log(roomID);
     //});
-  });
 
+    $("#join").keydown( function( event ) {
+        if ( event.which === 13 ) {
+          joinClicked()
+          return false;
+        }
+    });
+    $("#spectate").keydown( function( event ) {
+        if ( event.which === 13 ) {
+          spectateClicked()
+          return false;
+        }
+    });
+    $("#spectatebutton").click(spectateClicked)
+    $("#joinbutton").click(joinClicked)
+    $("#createbutton").click(createClicked)
+  });
+  function spectateClicked(){
+    alert("spectate " + $("#spectate").val())
+  }
+  function joinClicked(){
+    alert("join " + $("#join").val())
+  }
+  function createClicked(){
+    alert("create " + $("#create").val())
+  }
   function guessWhoClicked()
   {
     let current = $(location).attr('href')
-    let currentreplace = current.replace("multi","");
+    let currentreplace = current.replace("joinroom","");
     window.location.href = currentreplace
   }
 

@@ -2,7 +2,7 @@
 <!--   -->
 <html>
   <head>
-    <title>Playing a Player</title>
+    <title>Join A Room</title>
       <meta charset="utf-8"/>
 
       <style>
@@ -19,7 +19,7 @@
         border: 2px solid white ;
       }
       p {
-        color: white;
+        color: #a4a4a4;
       }
       h2 {
         color: #ffffff;
@@ -38,31 +38,25 @@
   <body>
       <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg" height="100" onclick="guessWhoClicked()">
       <br><br>
-      <h2>Join a Room:</h2>
-      <div class="">
-        <button type="button" name="button">Room1</button>
-        <button type="button" name="button">Room2</button>
-        <button type="button" name="button">Room3</button>
-        <button type="button" name="button">Room4</button>
-        <button type="button" name="button">Room5</button>
-        <button type="button" name="button">Room6</button>
-        <button type="button" name="button">Room7</button>
-        <button type="button" name="button">Room8</button>
-        <button type="button" name="button">Room9</button>
-        <button type="button" name="button">Room10</button>
+      <div style="float: left; display: inline-block">
+        <h2>Join a Room:</h2>
+        <p>Enter a room number:</p>
+        <input type="number" id="join" min="0" value="0">
+        <button type="button" id="joinbutton">Go</button>
+        <h2>Spectate a Room:</h2>
+        <p>Enter a room number:</p>
+        <input type="number" id="spectate" value="0" min="0">
+        <button type="button" id="spectatebutton">Go</button>
+        <h2>Create a Room:</h2>
+        <p>Enter a room number:</p>
+        <input type="number" id="create" value="0" min="0">
+        <button type="button" id="createbutton">Go</button>
       </div>
-      <h2>Spectate a Room:</h2>
-      <div class="">
-        <button type="button" name="button">Room1</button>
-        <button type="button" name="button">Room2</button>
-        <button type="button" name="button">Room3</button>
-        <button type="button" name="button">Room4</button>
-        <button type="button" name="button">Room5</button>
-        <button type="button" name="button">Room6</button>
-        <button type="button" name="button">Room7</button>
-        <button type="button" name="button">Room8</button>
-        <button type="button" name="button">Room9</button>
-        <button type="button" name="button">Room10</button>
+      <div style="float: right" class="chat">
+        <h4 style="color: white">Chat</h4>
+        <ul id="chat">
+        </ul>
+        <!-- implement this https://socket.io/docs/v4/rooms/ -->
       </div>
 
 

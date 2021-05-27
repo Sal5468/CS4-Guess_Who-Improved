@@ -9,6 +9,8 @@ var passport = require("passport");
 var path = require("path");
 
 var User = require("./models/user");
+var Game = require("./models/games")
+var Room = require("./models/rooms")
 
 let playercharchosen = ""//delete this
 let aiplayerchosen = ""//delete this
@@ -63,7 +65,7 @@ router.get("/playvsai",function(req,res){
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
 });
-router.get("/multi",function(req,res){
+router.get("/joinroom",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/multiRouting.html");
 	}
@@ -244,7 +246,7 @@ console.log("get HTP");
 });
 router.get("/getMulti", function(req, res) {
 console.log("get Multi");
-	res.json({redirect:"/multi"});
+	res.json({redirect:"/joinroom"});
 });
 router.get("/getencyclopedia", function(req, res) {
 console.log("get encyclopedia");
