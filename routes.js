@@ -73,7 +73,12 @@ router.get("/multi",function(req,res){
 });
 
 router.get("/HTP",function(req,res){
-	res.sendFile(__dirname + "/public/views/HTP.html");
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/HTP.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
 });
 
 router.get("/win",function(req,res){
@@ -95,7 +100,12 @@ router.get("/lose",function(req,res){
 });
 
 router.get("/encyclopedia",function(req,res){
-  res.sendFile(__dirname + "/public/views/encyclo.html");
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/encyclo.html");
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
 });
 ////////////////////////////////////////////////////////////////////////////////
 
