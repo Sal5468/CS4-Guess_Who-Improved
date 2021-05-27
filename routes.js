@@ -112,18 +112,46 @@ router.get("/encyclopedia",function(req,res){
 ////////////////////////////////////////////////////////////////////////////////
 
 router.post('/init', function(req, res)
-{//needs the AI to pick a chacter to work off of.
-	if(req.isAuthenticated()){
-//		console.log(req.user.username)
-		User.findOne({ username: req.user.username }, function(err, user) {
+{
+	if(req.isAuthenticated())
+	{
+		User.findOne({ username: req.user.username }, function(err, user)
+		{
 			if(err)
 			{
 				res.json(null);
 			}
-			res.json({ident:user.ident});
+				Game.findOne({ ClientNum: user.ident }, function(err, game)
+				{
+					if(err)
+					{
+						console.log("There is an err")
+						res.json(null);
+					}
+					if(game==null)
+					{
+						console.log("Game branch")
+						var obj = new Game({
+							AINum: Math.floor(Math.random()*24),
+						  AIBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+							ClientNum: user.ident,
+						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+						})
+						var newgame = Game.create(obj,function(error,info){//funtion not called untill this is called
+							console.log(info);//using info you need to set the ai up to it
+						});
+						//you can to a res.json of the obj to the client so you cn change objects there
+					}
+					else
+					{
+						console.log("game already exists")
+					}
+				})
+			res.json({ident:user.ident});//maybe del?
 		})
 	}
-	else{
+	else
+	{
 		res.json(null);
 	}
 	//Client[newClientId] = new AI;
