@@ -96,10 +96,8 @@
       alert("Please Wait For Your Turn To Guess")
     }
   }
-  function sus(data)
+  function sus(data)//replace with how other do it and also del the game that was being played
   {
-//    console.log("I am here")
-  //  console.log("data.winlose"+data.winlose)
     if(data.winlose)
     {
       let current = $(location).attr('href')
