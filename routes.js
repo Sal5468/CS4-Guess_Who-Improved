@@ -59,6 +59,57 @@ router.get("/signup",function(req,res){
 	}
 });*/
 
+router.post("/createRoom",function(req,res){
+	if(req.isAuthenticated()){
+		Room.findOne({roomNum: req.body.roomNum}, function(err, room){
+			if(err){
+				throw err;
+			}
+			else if(room == null){
+				var newRoom = new Room({
+					ClientID: req.user.id,
+					Client2ID: null,
+					ClientBoard: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+					Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+					roomNum: req.body.roomNum
+				})
+				Room.Create(newRoom, function(err, newRoom){
+					if(err){
+						throw err
+					}
+					console.log(newRoom);
+				})
+			}
+		})
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/signup.html");
+	}
+});
+
+router.get("/getCurrMatches",function(req,res){
+
+	if(req.isAuthenticated()){
+		console.log(req.user.username+ " is in multirouting");
+		//ADD CODE
+		let retarray = [{player1: req.user.username}];
+		//console.log(Room.count());
+		/*
+		Room.find({}, {projection: {ClientID: 1,Client2ID: 1,ClientBoard: 0,Client2Board: 0,Roomnum: 1}}).toArray(function(err, result){
+			if(err){
+				throw err;
+			}
+			else{
+				console.log(result);
+				res.json({retarray: result})
+			}
+		})*/
+		res.json({retarray: retarray})
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+});
 router.get("/playvsai",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/vsai.html");

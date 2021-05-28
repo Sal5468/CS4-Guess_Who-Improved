@@ -1,7 +1,22 @@
 
   let roomID = 0;
 
+getCurrentMatches();
+  function getCurrentMatches(){
+    $.get("/getCurrMatches",function(data){
+      if(!data){
+        console.log("no data");
+      }
+      console.log(data.retarray[0].player1);
+      for(let i = 0; i<data.retarray.length; i++){
+        //something like this??
+        $("#currmatches").append('<li>' + data.retarray[i].player1 + " vs " + data.retarray[i].player2 + " in room: "+ data.retarray[i].room + '</li>');
+      }
+    })
 
+
+    //setTimeout(getCurrentMatches, 1000);
+  }
 
 
   $(document).ready(function()
@@ -32,6 +47,7 @@
   }
   function joinClicked(){
     alert("join " + $("#join").val())
+    //$.post("/createRoom")
   }
   function createClicked(){
     alert("create " + $("#create").val())
