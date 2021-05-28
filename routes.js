@@ -15,6 +15,8 @@ var Room = require("./models/rooms")
 let playercharchosen = ""//delete this
 let aiplayerchosen = ""//delete this
 
+let newClientId = 0;
+
 let AIArray = []
 
 
@@ -137,14 +139,32 @@ router.post('/init', function(req, res)
 							ClientNum: user.ident,
 						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 						})
-						var newgame = Game.create(obj,function(error,info){//funtion not called untill this is called
-							console.log(info);//using info you need to set the ai up to it
+						Game.create(obj,function(error,newGame){//funtion not called untill this is called
+							if(error)
+								res.json(null);
+							console.log(newGame);//using info you need to set the ai up to it
 						});
 						//you can to a res.json of the obj to the client so you cn change objects there
 					}
 					else
 					{
 						console.log("game already exists")
+						Game.find({ClientNum: user.ident},function(error,previousGame) {
+							if (error)
+							{
+								console.log("Error");
+								res.json(null);
+							}
+
+							else//set the ai to stuff
+							// the send back the states of the cards
+							{
+								console.log("previous game"+previousGame);
+								//set the ai up to the previous paramiters
+								//send back the stuff pertaining to the client
+							}
+
+						});
 					}
 				})
 			res.json({ident:user.ident});//maybe del?

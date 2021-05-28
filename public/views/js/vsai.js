@@ -738,6 +738,8 @@
     $.post("/init",null,function(data){
       serverId = data.ident
       console.log(serverId)
+      //set upt the player choosen
+      //set up the pictures 
     });
   });
 

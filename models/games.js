@@ -7,6 +7,7 @@ var Game = mongoose.model("games",{//"info" is name opf collection, required is 
   AIBoard: Array,
 	ClientNum: Number,
   ClientBoard: Array,
+	ClientPlayerChoosen:Number
 });
 
 //var Student = mongoose.model("Info",{
