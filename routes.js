@@ -9,16 +9,14 @@ var passport = require("passport");
 var path = require("path");
 
 var User = require("./models/user");
-var Game = require("./models/games")
-var Room = require("./models/rooms")
+var Game = require("./models/games");
 
 let playercharchosen = ""//delete this
 let aiplayerchosen = ""//delete this
 
-let newClientId = 0;
-
 let AIArray = []
 
+let newClientId = 0;
 
 function initAI(){
 
@@ -118,7 +116,7 @@ router.get("/playvsai",function(req,res){
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
 });
-router.get("/joinroom",function(req,res){
+router.get("/multi",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/multiRouting.html");
 	}
@@ -183,42 +181,53 @@ router.post('/init', function(req, res)
 					}
 					if(game==null)
 					{
-						console.log("Game branch")
+						console.log("New Game branch")
 						var obj = new Game({
 							AINum: Math.floor(Math.random()*24),
 						  AIBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 							ClientNum: user.ident,
-						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+							ClientPlayerChoosen:-1
 						})
-						Game.create(obj,function(error,newGame){//funtion not called untill this is called
+						var newgame = Game.create(obj,function(error,newgame)
+						{//funtion not called untill this is called
 							if(error)
+							{
+								console.log("There is an error")
 								res.json(null);
-							console.log(newGame);//using info you need to set the ai up to it
+							}
+							else
+							{
+								console.log("new game " + newgame);//using info you need to set the ai up to it
+								AIArray[user.ident] = new AI;
+								AIArray[user.ident].setCharacter(newgame.AINum)
+								AIArray[user.ident].generateAIBoard(newgame.AIBoard)
+								res.json({ident:user.ident,ClientBoard:newgame.ClientBoard,PlayerChoosen:newgame.ClientPlayerChoosen});
+							}
 						});
-						//you can to a res.json of the obj to the client so you cn change objects there
 					}
 					else
 					{
 						console.log("game already exists")
-						Game.find({ClientNum: user.ident},function(error,previousGame) {
-							if (error)
+						Game.findOne({ ClientNum: user.ident }, function(err, premadegame)
+						{
+							if(err)
 							{
-								console.log("Error");
+								console.log("There is an err")
 								res.json(null);
 							}
-
-							else//set the ai to stuff
-							// the send back the states of the cards
+							else
 							{
-								console.log("previous game"+previousGame);
-								//set the ai up to the previous paramiters
-								//send back the stuff pertaining to the client
+								AIArray[user.ident] = new AI;
+								AIArray[user.ident].setCharacter(premadegame.AINum)
+								AIArray[user.ident].generateAIBoard(premadegame.AIBoard)
+								res.json({ident:user.ident,ClientBoard:premadegame.ClientBoard,PlayerChoosen:premadegame.ClientPlayerChoosen});
 							}
-
-						});
+						})
+						//ai.setupboard
+						//
 					}
 				})
-			res.json({ident:user.ident});//maybe del?
 		})
 	}
 	else
@@ -345,7 +354,7 @@ console.log("get HTP");
 });
 router.get("/getMulti", function(req, res) {
 console.log("get Multi");
-	res.json({redirect:"/joinroom"});
+	res.json({redirect:"/multi"});
 });
 router.get("/getencyclopedia", function(req, res) {
 console.log("get encyclopedia");

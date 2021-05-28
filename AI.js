@@ -31,53 +31,53 @@ AI.prototype.sendAnswer = function(question)
 AI.prototype.setCharacter = function(charnum)
 {
 
-  if(charnum==1)
+  if(charnum==0)
     this.currentCharacter="Alex"
-  else if(charnum==2)
+  else if(charnum==1)
     this.currentCharacter="Andy"
-  else if(charnum==3)
+  else if(charnum==2)
     this.currentCharacter="Ashley"
-  else if(charnum==4)
+  else if(charnum==3)
     this.currentCharacter="Brandon"
-  else if(charnum==5)
+  else if(charnum==4)
     this.currentCharacter="Chris"
-  else if(charnum==6)
+  else if(charnum==5)
     this.currentCharacter="Connor"
-  else if(charnum==7)
+  else if(charnum==6)
     this.currentCharacter="Daniel"
-  else if(charnum==8)
+  else if(charnum==7)
     this.currentCharacter="David"
-  else if(charnum==9)
+  else if(charnum==8)
     this.currentCharacter="Emily"
-  else if(charnum==10)
+  else if(charnum==9)
     this.currentCharacter="Jake"
-  else if(charnum==11)
+  else if(charnum==10)
     this.currentCharacter="James"
-  else if(charnum==12)
+  else if(charnum==11)
     this.currentCharacter="Jon"
-  else if(charnum==13)
+  else if(charnum==12)
     this.currentCharacter="Joseph"
-  else if(charnum==14)
+  else if(charnum==13)
     this.currentCharacter="Joshua"
-  else if(charnum==15)
+  else if(charnum==14)
     this.currentCharacter="Justin"
-  else if(charnum==16)
+  else if(charnum==15)
     this.currentCharacter="Kyle"
-  else if(charnum==17)
+  else if(charnum==16)
     this.currentCharacter="Matt"
-  else if(charnum==18)
+  else if(charnum==17)
     this.currentCharacter="Megan"
-  else if(charnum==19)
+  else if(charnum==18)
     this.currentCharacter="Nick"
-  else if(charnum==20)
+  else if(charnum==19)
     this.currentCharacter="Rachael"
-  else if(charnum==21)
+  else if(charnum==20)
     this.currentCharacter="Sarah"
-  else if(charnum==22)
+  else if(charnum==21)
     this.currentCharacter="Tyler"
-  else if(charnum==23)
+  else if(charnum==22)
     this.currentCharacter="William"
-  else if(charnum==24)
+  else if(charnum==23)
     this.currentCharacter="Zachary"
 
 /*
@@ -87,13 +87,19 @@ AI.prototype.setCharacter = function(charnum)
 */
 
   //console.log(charnum);
-  //console.log(currentCharacter);
+  console.log("AI current character "+this.currentCharacter);
 }
 AI.prototype.getCharacter = function()
 {return(this.currentCharacter)}
-/*
-AI.prototype.generateAIBoard = function(){
-    this.Board[0] = 'Alex';
+
+AI.prototype.generateAIBoard = function(arrayfromServer){
+    for (var i = 0; i < 24; i++)
+    {
+      this.Board[i] = arrayfromServer[i];
+
+    }
+    console.log("board "+this.Board)
+    /*this.Board[0] = 'Alex';
     this.Board[1] = 'Andy';
     this.Board[2] = 'Ashley';
     this.Board[3] = 'Brandon';
@@ -116,9 +122,9 @@ AI.prototype.generateAIBoard = function(){
     this.Board[20] = 'Sarah';
     this.Board[21] = 'Tyler';
     this.Board[22] = 'William';
-    this.Board[23] = 'Zachary';
+    this.Board[23] = 'Zachary';*/
 
-}*/
+}
 
 AI.prototype.EliminateAIBoard = function(numQ, answer, name) {//we need to change all of these to get at the
     /*if(numQ < 14)//for yee mode                                        getCharAnswers in BoardInfo
