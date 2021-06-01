@@ -224,8 +224,6 @@ router.post('/init', function(req, res)
 								res.json({ident:user.ident,ClientBoard:premadegame.ClientBoard,PlayerChoosen:premadegame.ClientPlayerChoosen});
 							}
 						})
-						//ai.setupboard
-						//
 					}
 				})
 		})
@@ -457,6 +455,42 @@ router.post("/login", passport.authenticate("login", {
   failureFlash: true
 }));
 
-
+router.post("/playersubmitchar", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		//console.log(req.body.ident)
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{ClientPlayerChoosen:req.body.num},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+		})
+	}
+})
+router.post("/updatechracterarray", function(req, res) {//not working
+	//console.log(req)
+	if (req.isAuthenticated())
+	{
+	//	console.log("change array"+req.body.changearray[0])
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.$[]":req.body.changearray},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			console.log("game " + game.ClientBoard[0])
+			for(let i = 0; i<24; i++)//can someone tell me why this is not working
+				console.log("change array " + req.body.changearray[i])// Cannot read property '0' of undefined bruhhh
+		//	console.log("ident"+req.body.changeident)
+		//	indexnum=req.body.changeident
+		//	console.log("client board 0 "+game.ClientBoard[indexnum])
+		//	game.ClientBoard[indexnum]=req.body.change
+		//	game.save()
+		})
+	}
+})
 
 module.exports = router;

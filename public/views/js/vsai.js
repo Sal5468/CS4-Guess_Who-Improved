@@ -11,7 +11,17 @@
   let respondedtoaiquestion = false
   let aiguessingplayerchar = false
 
+  let clientboard = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
+
   let serverId = 0;
+
+  //function generateBoard()
+  //{
+  //  for (var i = 0; i < 24; i++)
+  //  {
+  //    clientboard[i] = false;
+  //  }
+  //}
 
   function controller(){
     if(currStep == 0)
@@ -117,9 +127,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Alex").attr("src") == "../images/AlexCard.png")
-      {$("#Alex").attr("src","../images/AlexX.gif")}
+      {
+        $("#Alex").attr("src","../images/AlexX.gif")
+        clientboard[0] = true
+        $.post("/updatechracterarray",{ident:serverId,changearray:clientboard},null)
+      }
       else
-      {$("#Alex").attr("src","../images/AlexCard.png")}
+      {
+        $("#Alex").attr("src","../images/AlexCard.png")
+        clientboard[0] = false
+        $.post("/updatechracterarray",{ident:serverId,changearray:clientboard},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -130,6 +148,7 @@
     {
       $("#playerChar").attr("src", "../images/AlexCard.png")//this changes the src of the guessed player
       characterchosen = true//lets comp know we havechosen a character
+      $.post("/playersubmitchar",{ident:serverId,num:0,characterchosen:characterchosen},null)
     }
   }
 
@@ -149,6 +168,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:1},null)
       $("#playerChar").attr("src", "../images/AndyCard.png")
       characterchosen = true
     }
@@ -170,6 +190,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:2},null)
       $("#playerChar").attr("src", "../images/AshleyCard.png")
       characterchosen = true
     }
@@ -191,6 +212,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:3},null)
       $("#playerChar").attr("src", "../images/BrandonCard.png")
       characterchosen = true
     }
@@ -212,6 +234,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:4},null)
       $("#playerChar").attr("src", "../images/ChrisCard.png")
       characterchosen = true
     }
@@ -233,6 +256,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:5},null)
       $("#playerChar").attr("src", "../images/ConnorCard.png")
       characterchosen = true
     }
@@ -254,6 +278,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:6},null)
       $("#playerChar").attr("src", "../images/DanielCard.png")
       characterchosen = true
     }
@@ -275,6 +300,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:7},null)
       $("#playerChar").attr("src", "../images/DavidCard.png")
       characterchosen = true
     }
@@ -296,6 +322,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:8},null)
       $("#playerChar").attr("src", "../images/EmilyCard.png")
       characterchosen = true
     }
@@ -317,6 +344,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:9},null)
       $("#playerChar").attr("src", "../images/JakeCard.png")
       characterchosen = true
     }
@@ -338,6 +366,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:10},null)
       $("#playerChar").attr("src", "../images/JamesCard.png")
       characterchosen = true
     }
@@ -359,6 +388,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:11},null)
       $("#playerChar").attr("src", "../images/JonCard.png")
       characterchosen = true
     }
@@ -380,6 +410,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:12},null)
       $("#playerChar").attr("src", "../images/JosephCard.png")
       characterchosen = true
     }
@@ -401,6 +432,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:13},null)
       $("#playerChar").attr("src", "../images/JoshuaCard.png")
       characterchosen = true
     }
@@ -422,6 +454,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:14},null)
       $("#playerChar").attr("src", "../images/JustinCard.png")
       characterchosen = true
     }
@@ -443,6 +476,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:15},null)
       $("#playerChar").attr("src", "../images/KyleCard.png")
       characterchosen = true
     }
@@ -464,6 +498,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:16},null)
       $("#playerChar").attr("src", "../images/MattCard.png")
       characterchosen = true
     }
@@ -485,6 +520,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:17},null)
       $("#playerChar").attr("src", "../images/MeganCard.png")
       characterchosen = true
     }
@@ -506,6 +542,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:18},null)
       $("#playerChar").attr("src", "../images/NickCard.png")
       characterchosen = true
     }
@@ -527,6 +564,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:19},null)
       $("#playerChar").attr("src", "../images/RachaelCard.png")
       characterchosen = true
     }
@@ -548,6 +586,7 @@
     }
     else
     {
+      $.post("/playersubmitchar",{ident:serverId,num:20},null)
       $("#playerChar").attr("src", "../images/SarahCard.png")
       characterchosen = true
     }
@@ -564,6 +603,7 @@
     }
     else if(characterchosen && currentlyguessing)
     {
+      $.post("/playersubmitchar",{ident:serverId,num:21},null)
       $.get("/makeaguess",{name:$("#Tyler").attr("id"), id:serverId},sus)
       guessClick()
     }
@@ -585,6 +625,7 @@
     }
     else if(characterchosen && currentlyguessing)
     {
+      $.post("/playersubmitchar",{ident:serverId,num:22},null)
       $.get("/makeaguess",{name:$("#William").attr("id"), id:serverId},sus)
       guessClick()
     }
@@ -606,6 +647,7 @@
     }
     else if(characterchosen && currentlyguessing)
     {
+      $.post("/playersubmitchar",{ident:serverId,num:23},null)
       $.get("/makeaguess",{name:$("#Zachary").attr("id"), id:serverId},sus)
       guessClick()
     }
@@ -736,8 +778,11 @@
   $(document).ready(function()
   {
     $.post("/init",null,function(data){
+      console.log("data "+ data)
       serverId = data.ident
       console.log(serverId)
+
+    //  generateBoard()
 
       console.log("data "+ data.PlayerChoosen)
       if(data.PlayerChoosen !=   -1)
@@ -769,7 +814,150 @@
       }
 
       console.log("data "+ data.ClientBoard)
-      //set upt the player choosen
+      if(data.ClientBoard[0]){
+        $("#Alex").attr("src","../images/AlexX.gif")
+      }
+      else{
+        $("#Alex").attr("src","../images/AlexCard.png")
+      }
+      if(data.ClientBoard[1]){
+        $("#Andy").attr("src","../images/AndyX.gif")
+      }
+      else{
+        $("#Andy").attr("src","../images/AndyCard.png")
+      }
+      if(data.ClientBoard[2]){
+        $("#Ashley").attr("src","../images/AshleyX.gif")
+      }
+      else{
+        $("#Ashley").attr("src","../images/AshleyCard.png")
+      }
+      if(data.ClientBoard[3]){
+        $("#Brandon").attr("src","../images/BrandonX.gif")
+      }
+      else{
+        $("#Brandon").attr("src","../images/BrandonCard.png")
+      }
+      if(data.ClientBoard[4]){
+        $("#Chris").attr("src","../images/ChrisX.gif")
+      }
+      else{
+        $("#Chris").attr("src","../images/ChrisCard.png")
+      }
+      if(data.ClientBoard[5]){
+        $("#Connor").attr("src","../images/ConnorX.gif")
+      }
+      else{
+        $("#Connor").attr("src","../images/ConnorCard.png")
+      }
+      if(data.ClientBoard[6]){
+        $("#Daniel").attr("src","../images/DanielX.gif")
+      }
+      else{
+        $("#Daniel").attr("src","../images/DanielCard.png")
+      }
+      if(data.ClientBoard[7]){
+        $("#David").attr("src","../images/DavidX.gif")
+      }
+      else{
+        $("#David").attr("src","../images/DavidCard.png")
+      }
+      if(data.ClientBoard[8]){
+        $("#Emily").attr("src","../images/EmilyX.gif")
+      }
+      else{
+        $("#Emily").attr("src","../images/EmilyCard.png")
+      }
+      if(data.ClientBoard[9]){
+        $("#Jake").attr("src","../images/JakeX.gif")
+      }
+      else{
+        $("#Jake").attr("src","../images/JakeCard.png")
+      }
+      if(data.ClientBoard[10]){
+        $("#James").attr("src","../images/JamesX.gif")
+      }
+      else{
+        $("#James").attr("src","../images/JamesCard.png")
+      }
+      if(data.ClientBoard[11]){
+        $("#Jon").attr("src","../images/JonX.gif")
+      }
+      else{
+        $("#Jon").attr("src","../images/JonCard.png")
+      }
+      if(data.ClientBoard[12]){
+        $("#Joseph").attr("src","../images/JosephX.gif")
+      }
+      else{
+        $("#Joseph").attr("src","../images/JosephCard.png")
+      }
+      if(data.ClientBoard[13]){
+        $("#Joshua").attr("src","../images/JoshuaX.gif")
+      }
+      else{
+        $("#Joshua").attr("src","../images/JoshuaCard.png")
+      }
+      if(data.ClientBoard[14]){
+        $("#Justin").attr("src","../images/JustinX.gif")
+      }
+      else{
+        $("#Justin").attr("src","../images/JustinCard.png")
+      }
+      if(data.ClientBoard[15]){
+        $("#Kyle").attr("src","../images/KyleX.gif")
+      }
+      else{
+        $("#Kyle").attr("src","../images/KyleCard.png")
+      }
+      if(data.ClientBoard[16]){
+        $("#Matt").attr("src","../images/MattX.gif")
+      }
+      else{
+        $("#Matt").attr("src","../images/MattCard.png")
+      }
+      if(data.ClientBoard[17]){
+        $("#Megan").attr("src","../images/MeganX.gif")
+      }
+      else{
+        $("#Megan").attr("src","../images/MeganCard.png")
+      }
+      if(data.ClientBoard[18]){
+        $("#Nick").attr("src","../images/NickX.gif")
+      }
+      else{
+        $("#Nick").attr("src","../images/NickCard.png")
+      }
+      if(data.ClientBoard[19]){
+        $("#Rachael").attr("src","../images/RachaelX.gif")
+      }
+      else{
+        $("#Rachael").attr("src","../images/RachaelCard.png")
+      }
+      if(data.ClientBoard[20]){
+        $("#Sarah").attr("src","../images/SarahX.gif")
+      }
+      else{
+        $("#Sarah").attr("src","../images/SarahCard.png")
+      }
+      if(data.ClientBoard[21]){
+        $("#Tyler").attr("src","../images/TylerX.gif")
+      }
+      else{
+        $("#Tyler").attr("src","../images/TylerCard.png")
+      }
+      if(data.ClientBoard[22]){
+        $("#William").attr("src","../images/WilliamX.gif")
+      }
+      else{
+        $("#William").attr("src","../images/WilliamCard.png")
+      }
+      if(data.ClientBoard[23]){
+        $("#Zachary").attr("src","../images/ZacharyX.gif")
+      }
+      else{
+        $("#Zachary").attr("src","../images/ZacharyCard.png")
+      }
       //set up the pictures
     });
   });
