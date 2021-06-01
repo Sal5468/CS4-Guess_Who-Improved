@@ -187,7 +187,17 @@ router.post('/init', function(req, res)
 						  AIBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 							ClientNum: user.ident,
 						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-							ClientPlayerChoosen:-1
+							ClientPlayerChoosen:-1,
+
+							currentStep:0,
+
+							characterchosen:false,
+							currentlyguessing:false,
+							currentlyAsking:false,
+							aiturn:false,
+							onequestioncap:false,
+							respondedtoaiquestion:false,
+							aiguessingplayerchar:false
 						})
 						var newgame = Game.create(obj,function(error,newgame)
 						{//funtion not called untill this is called
@@ -202,7 +212,7 @@ router.post('/init', function(req, res)
 								AIArray[user.ident] = new AI;
 								AIArray[user.ident].setCharacter(newgame.AINum)
 								AIArray[user.ident].generateAIBoard(newgame.AIBoard)
-								res.json({ident:user.ident,ClientBoard:newgame.ClientBoard,PlayerChoosen:newgame.ClientPlayerChoosen});
+								res.json({ident:user.ident,ClientBoard:newgame.ClientBoard,PlayerChoosen:newgame.ClientPlayerChoosen});//needs the returns for all the booleans
 							}
 						});
 					}
@@ -221,7 +231,11 @@ router.post('/init', function(req, res)
 								AIArray[user.ident] = new AI;
 								AIArray[user.ident].setCharacter(premadegame.AINum)
 								AIArray[user.ident].generateAIBoard(premadegame.AIBoard)
-								res.json({ident:user.ident,ClientBoard:premadegame.ClientBoard,PlayerChoosen:premadegame.ClientPlayerChoosen});
+								res.json({ident:user.ident,
+									ClientBoard:premadegame.ClientBoard,
+									PlayerChoosen:premadegame.ClientPlayerChoosen,
+									//current step
+									characterchosen:premadegame.characterchosen});
 							}
 						})
 					}
@@ -454,12 +468,27 @@ router.post("/login", passport.authenticate("login", {
   failureRedirect: "/faillogin",
   failureFlash: true
 }));
-
+////////////////////////////////////////////////////////////////////////////////
+router.post("/controller0and1", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentStep:req.body.currStep,
+																											characterchosen:req.body.characterchosen,
+																											currentlyguessing:req.body.currentlyguessing,
+																											currentlyAsking:req.body.currentlyAsking},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+		})
+	}
+})
 router.post("/playersubmitchar", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		//console.log(req.body.ident)
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{ClientPlayerChoosen:req.body.num},function(err, game)
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{ClientPlayerChoosen:req.body.num,characterchosen:req.body.characterchosen},function(err, game)
 		{
 			if(err)
 			{
@@ -470,26 +499,28 @@ router.post("/playersubmitchar", function(req, res) {
 	}
 })
 router.post("/updatechracterarray", function(req, res) {//not working
-	//console.log(req)
+	console.log(req.body.changearray)//?????????????
+	//let array = req.body.changearray
+	//console.log(array.length)
 	if (req.isAuthenticated())
 	{
 	//	console.log("change array"+req.body.changearray[0])
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.$[]":req.body.changearray},function(err, game)
-		{
-			if(err)
-			{
-				console.log("There is an err")
-				res.json(null);
-			}
-			console.log("game " + game.ClientBoard[0])
-			for(let i = 0; i<24; i++)//can someone tell me why this is not working
-				console.log("change array " + req.body.changearray[i])// Cannot read property '0' of undefined bruhhh
+	//	Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.$[]":req.body.changearray},function(err, game)
+	//	{
+		//	if(err)
+		//	{
+		//		console.log("There is an err")
+		//		res.json(null);
+		//	}
+		//	console.log("game " + game.ClientBoard[0])
+		//	for(let i = 0; i<24; i++)//can someone tell me why this is not working
+		//		console.log("change array " + req.body.changearray[i])// Cannot read property '0' of undefined bruhhh
 		//	console.log("ident"+req.body.changeident)
 		//	indexnum=req.body.changeident
 		//	console.log("client board 0 "+game.ClientBoard[indexnum])
 		//	game.ClientBoard[indexnum]=req.body.change
 		//	game.save()
-		})
+		//})
 	}
 })
 

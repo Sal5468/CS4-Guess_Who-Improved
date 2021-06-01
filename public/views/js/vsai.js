@@ -33,6 +33,11 @@
         characterchosen = true;
         currentlyguessing = false;
         currentlyAsking = true;
+        $.post("/controller0and1",{ident:serverId,
+                                currStep:currStep,
+                              characterchosen:characterchosen,
+                              currentlyguessing:currentlyguessing,
+                              currentlyAsking:currentlyAsking },null)
       }
       else
       {
@@ -40,6 +45,11 @@
         characterchosen = false;
         currentlyguessing = false;
         currentlyAsking = false;
+        $.post("/controller0and1",{ident:serverId,
+                                currStep:currStep,
+                              characterchosen:characterchosen,
+                              currentlyguessing:currentlyguessing,
+                              currentlyAsking:currentlyAsking },null)
       }
     }
     else if(currStep == 1)
@@ -54,6 +64,11 @@
       characterchosen = true;
       currentlyguessing = false;
       currentlyAsking = false;
+      $.post("/controller0and1",{ident:serverId,
+                              currStep:currStep,
+                            characterchosen:characterchosen,
+                            currentlyguessing:currentlyguessing,
+                            currentlyAsking:currentlyAsking },null)
     }
     else if(currStep == 2)
     {
@@ -130,6 +145,7 @@
       {
         $("#Alex").attr("src","../images/AlexX.gif")
         clientboard[0] = true
+        console.log("client board "+clientboard)
         $.post("/updatechracterarray",{ident:serverId,changearray:clientboard},null)
       }
       else
@@ -168,9 +184,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:1},null)
       $("#playerChar").attr("src", "../images/AndyCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:1,characterchosen:characterchosen},null)
     }
   }
 
@@ -190,9 +206,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:2},null)
       $("#playerChar").attr("src", "../images/AshleyCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:2,characterchosen:characterchosen},null)
     }
   }
 
@@ -212,9 +228,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:3},null)
       $("#playerChar").attr("src", "../images/BrandonCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:3,characterchosen:characterchosen},null)
     }
   }
 
@@ -234,9 +250,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:4},null)
       $("#playerChar").attr("src", "../images/ChrisCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:4,characterchosen:characterchosen},null)
     }
   }
 
@@ -256,9 +272,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:5},null)
       $("#playerChar").attr("src", "../images/ConnorCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:5,characterchosen:characterchosen},null)
     }
   }
 
@@ -278,9 +294,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:6},null)
       $("#playerChar").attr("src", "../images/DanielCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:6,characterchosen:characterchosen},null)
     }
   }
 
@@ -300,9 +316,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:7},null)
       $("#playerChar").attr("src", "../images/DavidCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:7,characterchosen:characterchosen},null)
     }
   }
 
@@ -322,9 +338,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:8},null)
       $("#playerChar").attr("src", "../images/EmilyCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:8,characterchosen:characterchosen},null)
     }
   }
 
@@ -344,9 +360,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:9},null)
       $("#playerChar").attr("src", "../images/JakeCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:9,characterchosen:characterchosen},null)
     }
   }
 
@@ -366,9 +382,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:10},null)
       $("#playerChar").attr("src", "../images/JamesCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:10,characterchosen:characterchosen},null)
     }
   }
 
@@ -388,9 +404,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:11},null)
       $("#playerChar").attr("src", "../images/JonCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:11,characterchosen:characterchosen},null)
     }
   }
 
@@ -410,9 +426,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:12},null)
       $("#playerChar").attr("src", "../images/JosephCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:12,characterchosen:characterchosen},null)
     }
   }
 
@@ -432,9 +448,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:13},null)
       $("#playerChar").attr("src", "../images/JoshuaCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:13,characterchosen:characterchosen},null)
     }
   }
 
@@ -454,9 +470,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:14},null)
       $("#playerChar").attr("src", "../images/JustinCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:14,characterchosen:characterchosen},null)
     }
   }
 
@@ -476,9 +492,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:15},null)
       $("#playerChar").attr("src", "../images/KyleCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:15,characterchosen:characterchosen},null)
     }
   }
 
@@ -498,9 +514,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:16},null)
       $("#playerChar").attr("src", "../images/MattCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:16,characterchosen:characterchosen},null)
     }
   }
 
@@ -520,9 +536,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:17},null)
       $("#playerChar").attr("src", "../images/MeganCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:17,characterchosen:characterchosen},null)
     }
   }
 
@@ -542,9 +558,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:18},null)
       $("#playerChar").attr("src", "../images/NickCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:18,characterchosen:characterchosen},null)
     }
   }
 
@@ -564,9 +580,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:19},null)
       $("#playerChar").attr("src", "../images/RachaelCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:19,characterchosen:characterchosen},null)
     }
   }
 
@@ -586,9 +602,9 @@
     }
     else
     {
-      $.post("/playersubmitchar",{ident:serverId,num:20},null)
       $("#playerChar").attr("src", "../images/SarahCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:20,characterchosen:characterchosen},null)
     }
   }
 
@@ -603,7 +619,6 @@
     }
     else if(characterchosen && currentlyguessing)
     {
-      $.post("/playersubmitchar",{ident:serverId,num:21},null)
       $.get("/makeaguess",{name:$("#Tyler").attr("id"), id:serverId},sus)
       guessClick()
     }
@@ -611,6 +626,7 @@
     {
       $("#playerChar").attr("src", "../images/TylerCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:21,characterchosen:characterchosen},null)
     }
   }
 
@@ -625,7 +641,6 @@
     }
     else if(characterchosen && currentlyguessing)
     {
-      $.post("/playersubmitchar",{ident:serverId,num:22},null)
       $.get("/makeaguess",{name:$("#William").attr("id"), id:serverId},sus)
       guessClick()
     }
@@ -633,6 +648,7 @@
     {
       $("#playerChar").attr("src", "../images/WilliamCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:22,characterchosen:characterchosen},null)
     }
   }
 
@@ -647,7 +663,6 @@
     }
     else if(characterchosen && currentlyguessing)
     {
-      $.post("/playersubmitchar",{ident:serverId,num:23},null)
       $.get("/makeaguess",{name:$("#Zachary").attr("id"), id:serverId},sus)
       guessClick()
     }
@@ -655,6 +670,7 @@
     {
       $("#playerChar").attr("src", "../images/ZacharyCard.png")
       characterchosen = true
+      $.post("/playersubmitchar",{ident:serverId,num:23,characterchosen:characterchosen},null)
     }
   }
 
@@ -779,10 +795,12 @@
   {
     $.post("/init",null,function(data){
       console.log("data "+ data)
-      serverId = data.ident
-      console.log(serverId)
 
-    //  generateBoard()
+      serverId = data.ident
+      console.log("ID " +serverId)
+
+      characterchosen = data.characterchosen
+      console.log("Character Choosen "+ characterchosen)
 
       console.log("data "+ data.PlayerChoosen)
       if(data.PlayerChoosen !=   -1)
