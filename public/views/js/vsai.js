@@ -23,7 +23,7 @@
   //  }
   //}
 
-  function controller(){
+  function controller(){//clean up this so there is non redundant code
     if(currStep == 0)
     {
       if(characterchosen)
@@ -33,11 +33,12 @@
         characterchosen = true;
         currentlyguessing = false;
         currentlyAsking = true;
-        $.post("/controller0and1",{ident:serverId,
+        $.post("/updatecurrentstep",{ident:serverId},null)
+  /*      $.post("/controller0and1",{ident:serverId,
                                 currStep:currStep,
                               characterchosen:characterchosen,
                               currentlyguessing:currentlyguessing,
-                              currentlyAsking:currentlyAsking },null)
+                              currentlyAsking:currentlyAsking },null)*/
       }
       else
       {
@@ -45,11 +46,11 @@
         characterchosen = false;
         currentlyguessing = false;
         currentlyAsking = false;
-        $.post("/controller0and1",{ident:serverId,
+    /*    $.post("/controller0and1",{ident:serverId,
                                 currStep:currStep,
                               characterchosen:characterchosen,
                               currentlyguessing:currentlyguessing,
-                              currentlyAsking:currentlyAsking },null)
+                              currentlyAsking:currentlyAsking },null)*/
       }
     }
     else if(currStep == 1)
@@ -64,11 +65,12 @@
       characterchosen = true;
       currentlyguessing = false;
       currentlyAsking = false;
-      $.post("/controller0and1",{ident:serverId,
+      $.post("/updatecurrentstep",{ident:serverId},null)
+    /*  $.post("/controller0and1",{ident:serverId,
                               currStep:currStep,
                             characterchosen:characterchosen,
                             currentlyguessing:currentlyguessing,
-                            currentlyAsking:currentlyAsking },null)
+                            currentlyAsking:currentlyAsking },null)*/
     }
     else if(currStep == 2)
     {
@@ -79,6 +81,7 @@
       currentlyAsking = false;
       onequestioncap = false
       aiturn = true
+      $.post("/updatecurrentstep",{ident:serverId},null)
       aiasksquestion()
     }
     else if(currStep == 3)
@@ -96,6 +99,64 @@
       onequestioncap = false
       currStep = 1;
       respondedtoaiquestion = false
+      $.post("/updatecurrentstep",{ident:serverId},null)
+    }
+  }
+
+  function controllernoupdatecurrStep(number){
+    if(number == 0)
+    {
+      if(characterchosen)
+      {
+        $("#prompt1").html("Ask A Question Or Guess The AI's Character")
+        characterchosen = true;
+        currentlyguessing = false;
+        currentlyAsking = true;
+      }
+      else
+      {
+        alert("Please Choose a Character Before Moving On")
+        characterchosen = false;
+        currentlyguessing = false;
+        currentlyAsking = false;
+      }
+    }
+    else if(number == 1)
+    {
+      if(onequestioncap == false)
+      {
+        alert("Please Ask a Question Before Moving On")
+        return
+      }
+      $("#prompt1").html("Eliminate Characters")
+      characterchosen = true;
+      currentlyguessing = false;
+      currentlyAsking = false;
+    }
+    else if(number == 2)
+    {
+      $("#prompt1").html("AI Asks You A Question")
+      characterchosen = true;
+      currentlyguessing = false;
+      currentlyAsking = false;
+      onequestioncap = false
+      aiturn = true
+      aiasksquestion()
+    }
+    else if(number == 3)
+    {
+      if(respondedtoaiquestion == false)
+      {
+        alert("Please Respond To The AI's Question")
+        return
+      }
+      $("#prompt1").html("Ask A Question Or Guess The AI's Character")
+      characterchosen = true;
+      currentlyguessing = false
+      currentlyAsking = true;
+      aiturn = false
+      onequestioncap = false
+      respondedtoaiquestion = false
     }
   }
 
@@ -104,6 +165,7 @@
     if(currStep == 1 && onequestioncap==false)
     {
       currentlyguessing = !currentlyguessing;
+      //update currently guessing in the server
   //    console.log(currentlyguessing);
       if(currentlyguessing){
         $("#makeGuess").attr("style", "color: magenta")
@@ -145,8 +207,8 @@
       {
         $("#Alex").attr("src","../images/AlexX.gif")
         clientboard[0] = true
-        console.log("client board "+clientboard)
-        $.post("/updatechracterarray",{ident:serverId,changearray:clientboard},null)
+      //  console.log("client board "+clientboard)
+        $.post("/updatechracterarray",{ident:serverId,changearray:clientboard},null)//updates the player board in
       }
       else
       {
@@ -723,7 +785,7 @@
   {
     if(currentlyAsking==true && onequestioncap == false)
     {
-      onequestioncap = true
+      onequestioncap = true//update one question cap
       $.get("/askaiaquestion",{num: num, id:serverId},function(data)
       {
         if(currStep = 1)
@@ -769,7 +831,7 @@
       $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"Player: Yes"+'</li>');
       currentmessage++
       respondedtoaiquestion = true
-      aiturn = false;
+      aiturn = false;//update respondedtoaiquestion aiturn
     }
     else{
       alert("You cannot do that now.");
@@ -785,7 +847,7 @@
       $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"Player: No"+'</li>');
       currentmessage++
       respondedtoaiquestion = true
-      aiturn = false;
+      aiturn = false;//update respondedtoaiquestion aiturn
     }
     else{
       alert("You cannot do that now.");
@@ -798,38 +860,6 @@
 
       serverId = data.ident
       console.log("ID " +serverId)
-
-      characterchosen = data.characterchosen
-      console.log("Character Choosen "+ characterchosen)
-
-      console.log("data "+ data.PlayerChoosen)
-      if(data.PlayerChoosen !=   -1)
-      {
-        if(data.PlayerChoosen==0){$("#playerChar").attr("src", "../images/AlexCard.png")}
-        else if(data.PlayerChoosen==1){$("#playerChar").attr("src", "../images/AndyCard.png")}
-        else if(data.PlayerChoosen==2){$("#playerChar").attr("src", "../images/AshleyCard.png")}
-        else if(data.PlayerChoosen==3){$("#playerChar").attr("src", "../images/BrandonCard.png")}
-        else if(data.PlayerChoosen==4){  $("#playerChar").attr("src", "../images/ChrisCard.png")}
-        else if(data.PlayerChoosen==5){$("#playerChar").attr("src", "../images/ConnorCard.png")}
-        else if(data.PlayerChoosen==6){$("#playerChar").attr("src", "../images/DanielCard.png")}
-        else if(data.PlayerChoosen==7){$("#playerChar").attr("src", "../images/DavidCard.png")}
-        else if(data.PlayerChoosen==8){$("#playerChar").attr("src", "../images/EmilyCard.png")}
-        else if(data.PlayerChoosen==9){$("#playerChar").attr("src", "../images/JakeCard.png")}
-        else if(data.PlayerChoosen==10){$("#playerChar").attr("src", "../images/JamesCard.png")}
-        else if(data.PlayerChoosen==11){$("#playerChar").attr("src", "../images/JonCard.png")}
-        else if(data.PlayerChoosen==12){$("#playerChar").attr("src", "../images/JosephCard.png")}
-        else if(data.PlayerChoosen==13){$("#playerChar").attr("src", "../images/JoshuaCard.png")}
-        else if(data.PlayerChoosen==14){$("#playerChar").attr("src", "../images/JustinCard.png")}
-        else if(data.PlayerChoosen==15){$("#playerChar").attr("src", "../images/KyleCard.png")}
-        else if(data.PlayerChoosen==16){$("#playerChar").attr("src", "../images/MattCard.png")}
-        else if(data.PlayerChoosen==17){$("#playerChar").attr("src", "../images/MeganCard.png")}
-        else if(data.PlayerChoosen==18){$("#playerChar").attr("src", "../images/NickCard.png")}
-        else if(data.PlayerChoosen==19){$("#playerChar").attr("src", "../images/RachaelCard.png")}
-        else if(data.PlayerChoosen==20){$("#playerChar").attr("src", "../images/SarahCard.png")}
-        else if(data.PlayerChoosen==21){$("#playerChar").attr("src", "../images/TylerCard.png")}
-        else if(data.PlayerChoosen==22){$("#playerChar").attr("src", "../images/WilliamCard.png")}
-        else if(data.PlayerChoosen==23){$("#playerChar").attr("src", "../images/ZacharyCard.png")}
-      }
 
       console.log("data "+ data.ClientBoard)
       if(data.ClientBoard[0]){
@@ -976,7 +1006,43 @@
       else{
         $("#Zachary").attr("src","../images/ZacharyCard.png")
       }
-      //set up the pictures
+
+      console.log("data "+ data.PlayerChoosen)
+      if(data.PlayerChoosen !=   -1)
+      {
+        if(data.PlayerChoosen==0){$("#playerChar").attr("src", "../images/AlexCard.png")}
+        else if(data.PlayerChoosen==1){$("#playerChar").attr("src", "../images/AndyCard.png")}
+        else if(data.PlayerChoosen==2){$("#playerChar").attr("src", "../images/AshleyCard.png")}
+        else if(data.PlayerChoosen==3){$("#playerChar").attr("src", "../images/BrandonCard.png")}
+        else if(data.PlayerChoosen==4){  $("#playerChar").attr("src", "../images/ChrisCard.png")}
+        else if(data.PlayerChoosen==5){$("#playerChar").attr("src", "../images/ConnorCard.png")}
+        else if(data.PlayerChoosen==6){$("#playerChar").attr("src", "../images/DanielCard.png")}
+        else if(data.PlayerChoosen==7){$("#playerChar").attr("src", "../images/DavidCard.png")}
+        else if(data.PlayerChoosen==8){$("#playerChar").attr("src", "../images/EmilyCard.png")}
+        else if(data.PlayerChoosen==9){$("#playerChar").attr("src", "../images/JakeCard.png")}
+        else if(data.PlayerChoosen==10){$("#playerChar").attr("src", "../images/JamesCard.png")}
+        else if(data.PlayerChoosen==11){$("#playerChar").attr("src", "../images/JonCard.png")}
+        else if(data.PlayerChoosen==12){$("#playerChar").attr("src", "../images/JosephCard.png")}
+        else if(data.PlayerChoosen==13){$("#playerChar").attr("src", "../images/JoshuaCard.png")}
+        else if(data.PlayerChoosen==14){$("#playerChar").attr("src", "../images/JustinCard.png")}
+        else if(data.PlayerChoosen==15){$("#playerChar").attr("src", "../images/KyleCard.png")}
+        else if(data.PlayerChoosen==16){$("#playerChar").attr("src", "../images/MattCard.png")}
+        else if(data.PlayerChoosen==17){$("#playerChar").attr("src", "../images/MeganCard.png")}
+        else if(data.PlayerChoosen==18){$("#playerChar").attr("src", "../images/NickCard.png")}
+        else if(data.PlayerChoosen==19){$("#playerChar").attr("src", "../images/RachaelCard.png")}
+        else if(data.PlayerChoosen==20){$("#playerChar").attr("src", "../images/SarahCard.png")}
+        else if(data.PlayerChoosen==21){$("#playerChar").attr("src", "../images/TylerCard.png")}
+        else if(data.PlayerChoosen==22){$("#playerChar").attr("src", "../images/WilliamCard.png")}
+        else if(data.PlayerChoosen==23){$("#playerChar").attr("src", "../images/ZacharyCard.png")}
+      }
+
+      characterchosen = data.characterchosen
+      console.log("Character Choosen Boolean "+ characterchosen)
+
+      console.log("Character Choosen Boolean "+ characterchosen)
+      controllernoupdatecurrStep(data.currentStep)
+
+
     });
   });
 

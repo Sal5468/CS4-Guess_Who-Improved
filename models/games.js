@@ -12,6 +12,7 @@ var Game = mongoose.model("games",{//"info" is name opf collection, required is 
 	currentStep: Number,//needs work
 
 	characterchosen:Boolean,//implimented
+
 	currentlyguessing:Boolean,//need implimentation
 	currentlyAsking:Boolean,//need implimentation
 	aiturn:Boolean,//need implimentation

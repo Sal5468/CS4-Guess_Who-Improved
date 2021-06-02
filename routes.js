@@ -231,11 +231,11 @@ router.post('/init', function(req, res)
 								AIArray[user.ident] = new AI;
 								AIArray[user.ident].setCharacter(premadegame.AINum)
 								AIArray[user.ident].generateAIBoard(premadegame.AIBoard)
-								res.json({ident:user.ident,
-									ClientBoard:premadegame.ClientBoard,
-									PlayerChoosen:premadegame.ClientPlayerChoosen,
-									//current step
-									characterchosen:premadegame.characterchosen});
+								res.json({ident:user.ident,//in init
+									ClientBoard:premadegame.ClientBoard,//in init
+									PlayerChoosen:premadegame.ClientPlayerChoosen,//in init
+									characterchosen:premadegame.characterchosen,// in init
+									currentStep:premadegame.currentStep});//
 							}
 						})
 					}
@@ -469,13 +469,26 @@ router.post("/login", passport.authenticate("login", {
   failureFlash: true
 }));
 ////////////////////////////////////////////////////////////////////////////////
-router.post("/controller0and1", function(req, res) {
+/*router.post("/controller0and1", function(req, res) {
 	if (req.isAuthenticated())
 	{
 		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentStep:req.body.currStep,
 																											characterchosen:req.body.characterchosen,
 																											currentlyguessing:req.body.currentlyguessing,
 																											currentlyAsking:req.body.currentlyAsking},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+		})
+	}
+})*/
+router.post("/updatecurrentstep", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentStep:req.body.currStep},function(err, game)
 		{
 			if(err)
 			{
