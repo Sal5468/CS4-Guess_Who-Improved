@@ -186,7 +186,7 @@ router.post('/init', function(req, res)
 							AINum: Math.floor(Math.random()*24),
 						  AIBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 							ClientNum: user.ident,
-						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+						  ClientBoard:[{Alex:false}],
 							ClientPlayerChoosen:-1,
 
 							currentStep:0,
@@ -512,28 +512,19 @@ router.post("/playersubmitchar", function(req, res) {
 	}
 })
 router.post("/updatechracterarray", function(req, res) {//not working
-	console.log(req.body.changearray)//?????????????
-	//let array = req.body.changearray
-	//console.log(array.length)
+	//console.log(req)
+	let index = req.body.index
+	let name = "Alex"
 	if (req.isAuthenticated())
 	{
-	//	console.log("change array"+req.body.changearray[0])
-	//	Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.$[]":req.body.changearray},function(err, game)
-	//	{
-		//	if(err)
-		//	{
-		//		console.log("There is an err")
-		//		res.json(null);
-		//	}
-		//	console.log("game " + game.ClientBoard[0])
-		//	for(let i = 0; i<24; i++)//can someone tell me why this is not working
-		//		console.log("change array " + req.body.changearray[i])// Cannot read property '0' of undefined bruhhh
-		//	console.log("ident"+req.body.changeident)
-		//	indexnum=req.body.changeident
-		//	console.log("client board 0 "+game.ClientBoard[indexnum])
-		//	game.ClientBoard[indexnum]=req.body.change
-		//	game.save()
-		//})
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.0.Alex":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+		})
 	}
 })
 

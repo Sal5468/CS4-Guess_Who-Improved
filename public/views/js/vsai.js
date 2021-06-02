@@ -30,27 +30,15 @@
       {
         currStep++;
         $("#prompt1").html("Ask A Question Or Guess The AI's Character")
-        characterchosen = true;
         currentlyguessing = false;
         currentlyAsking = true;
         $.post("/updatecurrentstep",{ident:serverId},null)
-  /*      $.post("/controller0and1",{ident:serverId,
-                                currStep:currStep,
-                              characterchosen:characterchosen,
-                              currentlyguessing:currentlyguessing,
-                              currentlyAsking:currentlyAsking },null)*/
       }
       else
       {
         alert("Please Choose a Character Before Moving On")
-        characterchosen = false;
         currentlyguessing = false;
         currentlyAsking = false;
-    /*    $.post("/controller0and1",{ident:serverId,
-                                currStep:currStep,
-                              characterchosen:characterchosen,
-                              currentlyguessing:currentlyguessing,
-                              currentlyAsking:currentlyAsking },null)*/
       }
     }
     else if(currStep == 1)
@@ -62,21 +50,14 @@
       }
       currStep++;
       $("#prompt1").html("Eliminate Characters")
-      characterchosen = true;
       currentlyguessing = false;
       currentlyAsking = false;
       $.post("/updatecurrentstep",{ident:serverId},null)
-    /*  $.post("/controller0and1",{ident:serverId,
-                              currStep:currStep,
-                            characterchosen:characterchosen,
-                            currentlyguessing:currentlyguessing,
-                            currentlyAsking:currentlyAsking },null)*/
     }
     else if(currStep == 2)
     {
       currStep++;
       $("#prompt1").html("AI Asks You A Question")
-      characterchosen = true;
       currentlyguessing = false;
       currentlyAsking = false;
       onequestioncap = false
@@ -92,7 +73,6 @@
         return
       }
       $("#prompt1").html("Ask A Question Or Guess The AI's Character")
-      characterchosen = true;
       currentlyguessing = false
       currentlyAsking = true;
       aiturn = false
@@ -208,7 +188,7 @@
         $("#Alex").attr("src","../images/AlexX.gif")
         clientboard[0] = true
       //  console.log("client board "+clientboard)
-        $.post("/updatechracterarray",{ident:serverId,changearray:clientboard},null)//updates the player board in
+        $.post("/updatechracterarray",{ident:serverId,index:0,value:true},null)//updates the player board in
       }
       else
       {
@@ -1039,7 +1019,7 @@
       characterchosen = data.characterchosen
       console.log("Character Choosen Boolean "+ characterchosen)
 
-      console.log("Character Choosen Boolean "+ characterchosen)
+      console.log("Current Step"+ data.currentStep)
       controllernoupdatecurrStep(data.currentStep)
 
 

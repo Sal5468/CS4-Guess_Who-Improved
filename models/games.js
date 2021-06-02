@@ -6,7 +6,10 @@ var Game = mongoose.model("games",{//"info" is name opf collection, required is 
 	AINum: Number,//implimented
   AIBoard: Array,//implimented
 	ClientNum: Number,//implimented
-  ClientBoard: Array,//needs work
+  ClientBoard:
+	[
+		{Alex:Boolean}
+	],//needs work
 	ClientPlayerChoosen:Number,//implimented
 
 	currentStep: Number,//needs work
