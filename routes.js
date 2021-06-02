@@ -60,6 +60,7 @@ router.get("/signup",function(req,res){
 router.post("/createRoom",function(req,res){
 	if(req.isAuthenticated()){
 		Room.findOne({roomNum: req.body.roomNum}, function(err, room){
+			console.log(room)
 			if(err){
 				throw err;
 			}
@@ -77,6 +78,23 @@ router.post("/createRoom",function(req,res){
 					}
 					console.log(newRoom);
 				})
+			}
+		})
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/signup.html");
+	}
+});
+
+router.post("/getRoom",function(req,res){
+	if(req.isAuthenticated()){
+		Room.findOne({roomNum: req.body.roomNum}, function(err, room){
+			console.log(room)
+			if(err){
+				throw err;
+			}
+			else if(room != null){
+				res.sendFile(__dirname + "/public/views/multi.html");
 			}
 		})
 	}
