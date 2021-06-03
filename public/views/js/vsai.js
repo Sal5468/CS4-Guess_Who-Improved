@@ -20,13 +20,11 @@
     {
       if(characterchosen)
       {
-        currStep++;
-        $.post("/updatecurrentstep",{ident:serverId},null)
         $("#prompt1").html("Ask A Question Or Guess The AI's Character")
+        currStep++;
+        $.post("/updatecurrentstep",{ident:serverId,currentStep:currStep},null)
         currentlyAsking = true;
-        //update currently asking
-        currentlyguessing = false;
-        //update currently guessing
+        $.post("/updatecurrentlyAsking",{ident:serverId,currentlyAsking:currentlyAsking},null)
       }
       else
       {
@@ -41,26 +39,26 @@
         return
       }
       currStep++;
-      $.post("/updatecurrentstep",{ident:serverId},null)
+      $.post("/updatecurrentstep",{ident:serverId,currentStep:currStep},null)
       $("#prompt1").html("Eliminate Characters")
       currentlyAsking = true;
-      //update currently asking
+      $.post("/updatecurrentlyAsking",{ident:serverId,currentlyAsking:currentlyAsking},null)
       currentlyguessing = false;
-      //update currently guessing
+      $.post("/updatecurrentlyguessing",{ident:serverId,currentlyguessing:currentlyguessing},null)
     }
     else if(currStep == 2)
     {
-      currStep++;
-      $.post("/updatecurrentstep",{ident:serverId},null)
       $("#prompt1").html("AI Asks You A Question")
+      currStep++;
+      $.post("/updatecurrentstep",{ident:serverId,currentStep:currStep},null)
       currentlyAsking = false;
-      //update currently asking
+      $.post("/updatecurrentlyAsking",{ident:serverId,currentlyAsking:currentlyAsking},null)
       currentlyguessing = false;
-      //update currently guessing
+      $.post("/updatecurrentlyguessing",{ident:serverId,currentlyguessing:currentlyguessing},null)
       onequestioncap = false
-      //update one question cap
+      $.post("/updateonequestioncap",{ident:serverId,onequestioncap:onequestioncap},null)
       aiturn = true
-      //update ai turn
+      $.post("/updatecurrentlyAsking",{ident:serverId,aiturn:aiturn},null)
       aiasksquestion()
     }
     else if(currStep == 3)
@@ -71,17 +69,20 @@
         return
       }
       $("#prompt1").html("Ask A Question Or Guess The AI's Character")
-      currentlyguessing = false//update all of these
-      currentlyAsking = true;
-      aiturn = false
-      onequestioncap = false
       currStep = 1;
+      $.post("/updatecurrentstep",{ident:serverId,currentStep:currStep},null)
+      currentlyguessing = false
+      $.post("/updatecurrentlyguessing",{ident:serverId,currentlyguessing:currentlyguessing},null)
+      currentlyAsking = true;
+      $.post("/updatecurrentlyAsking",{ident:serverId,currentlyAsking:currentlyAsking},null)
+      aiturn = false
+      $.post("/updateaiturn",{ident:serverId,aiturn:aiturn},null)
       respondedtoaiquestion = false
-      $.post("/updatecurrentstep",{ident:serverId},null)
+      $.post("/updaterespondedtoaiquestion",{ident:serverId,respondedtoaiquestion:respondedtoaiquestion},null)
     }
   }
 
-  function controllernoupdatecurrStep(number){
+  /*function controllernoupdatecurrStep(number){
     if(number == 0)
     {
       if(characterchosen)
@@ -136,16 +137,14 @@
       onequestioncap = false
       respondedtoaiquestion = false
     }
-  }
+  }*/
 
   function guessClick()
   {
     if(currStep == 1 && onequestioncap==false)
     {
       currentlyguessing = !currentlyguessing;
-
-      //update currently guessing in the server
-  //    console.log(currentlyguessing);
+      $.post("/updatecurrentlyguessing",{ident:serverId,currentlyguessing:currentlyguessing},null)
       if(currentlyguessing){
         $("#makeGuess").attr("style", "color: magenta")
       }
@@ -919,7 +918,7 @@
           //$.get("/aimakeaguess",{name:data.text},sus)
         }
         else
-        {//do buttons instead?
+        {
           $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"AI: "+data.text+'</li>');
         }
     })
@@ -930,7 +929,8 @@
   {
     if(currentlyAsking==true && onequestioncap == false)
     {
-      onequestioncap = true//update one question cap
+      onequestioncap = true
+      $.post("/updateonequestioncap",{ident:serverId,onequestioncap:onequestioncap},null)
       $.get("/askaiaquestion",{num: num, id:serverId},function(data)
       {
         if(currStep = 1)
@@ -976,7 +976,9 @@
       $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"Player: Yes"+'</li>');
       currentmessage++
       respondedtoaiquestion = true
-      aiturn = false;//update respondedtoaiquestion aiturn
+      $.post("/updaterespondedtoaiquestion",{ident:serverId,respondedtoaiquestion:respondedtoaiquestion},null)
+      aiturn = false;
+      $.post("/updateaiturn",{ident:serverId,aiturn:aiturn},null)
     }
     else{
       alert("You cannot do that now.");
@@ -992,7 +994,9 @@
       $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"Player: No"+'</li>');
       currentmessage++
       respondedtoaiquestion = true
-      aiturn = false;//update respondedtoaiquestion aiturn
+      $.post("/updaterespondedtoaiquestion",{ident:serverId,respondedtoaiquestion:respondedtoaiquestion},null)
+      aiturn = false;
+      $.post("/updateaiturn",{ident:serverId,aiturn:aiturn},null)
     }
     else{
       alert("You cannot do that now.");
@@ -1191,7 +1195,7 @@
       console.log("Character Choosen Boolean "+ characterchosen)
 
       console.log("Current Step"+ data.currentStep)
-      controllernoupdatecurrStep(data.currentStep)
+    //  controllernoupdatecurrStep(data.currentStep)
 
 
     });

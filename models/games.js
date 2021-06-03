@@ -3,22 +3,22 @@
 var mongoose = require("mongoose");
 
 var Game = mongoose.model("games",{//"info" is name opf collection, required is an attribute of ident
-	AINum: Number,//implimented
-  AIBoard: [Boolean],//implimented
-	ClientNum: Number,//implimented
-  ClientBoard:[Boolean],//needs work
-	ClientPlayerChoosen:Number,//implimented
+	AINum: Number,//The number of the ai's character
+  AIBoard: [Boolean],//the ai's board xed out or not
+	ClientNum: Number,//The clients ID
+  ClientBoard:[Boolean],//The clients board xed out or not
+	ClientPlayerChoosen:Number,//The number of the clients character
 
-	currentStep: Number,//needs work
+	currentStep: Number,//The number defining state of the game
 
-	characterchosen:Boolean,//implimented
+	characterchosen:Boolean,//if the clients has choosen a character
 
-	currentlyguessing:Boolean,//need implimentation
-	currentlyAsking:Boolean,//need implimentation
-	aiturn:Boolean,//need implimentation
-	onequestioncap:Boolean,//need implimentation
-	respondedtoaiquestion:Boolean,//need implimentation
-	aiguessingplayerchar:Boolean//need implimentation
+	currentlyguessing:Boolean,//if the player is guessing or not
+	currentlyAsking:Boolean,//This is if the character is up to ask a question
+	aiturn:Boolean,//this is if the ai is up to ask a question
+	onequestioncap:Boolean,//This caps the question asking at one
+	respondedtoaiquestion:Boolean,//This checks to make sure you responded to ai questions
+	aiguessingplayerchar:Boolean//This diffecentiates between an ais question and a guess
 });
 
 //var Student = mongoose.model("Info",{

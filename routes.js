@@ -264,20 +264,11 @@ router.post('/init', function(req, res)
 	{
 		res.json(null);
 	}
-	//Client[newClientId] = new AI;
-	//Client[newClientId].setCharacter()
-	//Client[newClientId].generateAIBoard()
-	//aiplayerchosen = Client[req.query.id].getCharacter()
-//	console.log(aiplayerchosen)
-//	res.json({id: newClientId});
-//	console.log(Client[newClientId].getCharacter());
-//	newClientId++;
-//	console.log(Client);
 });
 router.get("/askaiaquestion",function(req,res)
 {
 	numberClicked = req.query.num
-	var returnbool = boardInfo.getCharAnswers(Client[req.query.id].getCharacter(),numberClicked)
+	var returnbool = boardInfo.getCharAnswers(AIArray[req.query.id].getCharacter(),numberClicked)
 	res.json({return:returnbool})
 });
 router.post("/sendplayerresponse",function(req,res)
@@ -490,7 +481,7 @@ router.post("/login", passport.authenticate("login", {
 router.post("/updatecurrentstep", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentStep:req.body.currStep},function(err, game)
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentStep:req.body.currentStep},function(err, game)
 		{
 			if(err)
 			{
@@ -499,7 +490,6 @@ router.post("/updatecurrentstep", function(req, res) {
 			}
 			res.json(null);
 		})
-		res.json(null);
 	}
 })
 router.post("/playersubmitchar", function(req, res) {
@@ -516,6 +506,77 @@ router.post("/playersubmitchar", function(req, res) {
 		})
 	}
 })
+router.post("/updatecurrentlyAsking", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentlyAsking:req.body.currentlyAsking},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatecurrentlyguessing", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentlyguessing:req.body.currentlyguessing},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updateonequestioncap", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{onequestioncap:req.body.onequestioncap},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updateaiturn", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{aiturn:req.body.aiturn},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updaterespondedtoaiquestion", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{respondedtoaiquestion:req.body.respondedtoaiquestion},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+
 router.post("/updatechracterarrayAlex", function(req, res) {
 	if (req.isAuthenticated())
 	{
