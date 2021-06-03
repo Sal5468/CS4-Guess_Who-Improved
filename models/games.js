@@ -4,12 +4,9 @@ var mongoose = require("mongoose");
 
 var Game = mongoose.model("games",{//"info" is name opf collection, required is an attribute of ident
 	AINum: Number,//implimented
-  AIBoard: Array,//implimented
+  AIBoard: [Boolean],//implimented
 	ClientNum: Number,//implimented
-  ClientBoard:
-	[
-		{Alex:Boolean}
-	],//needs work
+  ClientBoard:[Boolean],//needs work
 	ClientPlayerChoosen:Number,//implimented
 
 	currentStep: Number,//needs work

@@ -204,7 +204,7 @@ router.post('/init', function(req, res)
 							AINum: Math.floor(Math.random()*24),
 						  AIBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 							ClientNum: user.ident,
-						  ClientBoard:[{Alex:false}],
+						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 							ClientPlayerChoosen:-1,
 
 							currentStep:0,
@@ -487,22 +487,6 @@ router.post("/login", passport.authenticate("login", {
   failureFlash: true
 }));
 ////////////////////////////////////////////////////////////////////////////////
-/*router.post("/controller0and1", function(req, res) {
-	if (req.isAuthenticated())
-	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentStep:req.body.currStep,
-																											characterchosen:req.body.characterchosen,
-																											currentlyguessing:req.body.currentlyguessing,
-																											currentlyAsking:req.body.currentlyAsking},function(err, game)
-		{
-			if(err)
-			{
-				console.log("There is an err")
-				res.json(null);
-			}
-		})
-	}
-})*/
 router.post("/updatecurrentstep", function(req, res) {
 	if (req.isAuthenticated())
 	{
@@ -513,7 +497,9 @@ router.post("/updatecurrentstep", function(req, res) {
 				console.log("There is an err")
 				res.json(null);
 			}
+			res.json(null);
 		})
+		res.json(null);
 	}
 })
 router.post("/playersubmitchar", function(req, res) {
@@ -526,22 +512,343 @@ router.post("/playersubmitchar", function(req, res) {
 				console.log("There is an err")
 				res.json(null);
 			}
+			res.json(null);
 		})
 	}
 })
-router.post("/updatechracterarray", function(req, res) {//not working
-	//console.log(req)
-	let index = req.body.index
-	let name = "Alex"
+router.post("/updatechracterarrayAlex", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.0.Alex":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.0":req.body.value},function(err, game)
 		{
 			if(err)
 			{
 				console.log("There is an err")
 				res.json(null);
 			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayAndy", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.1":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayAshley", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.2":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayBrandon", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.3":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayChris", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.4":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayConnor", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.5":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayDaniel", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.6":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayDavid", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.7":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayEmily", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.8":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayJake", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.9":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayJames", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.10":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayJon", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.11":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayJoseph", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.12":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayJoshua", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.13":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayJustin", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.14":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayKyle", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.15":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayMatt", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.16":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayMegan", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.17":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayNick", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.18":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayRachael", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.19":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarraySarah", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.20":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayTyler", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.21":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayWillian", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.22":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
+		})
+	}
+})
+router.post("/updatechracterarrayZachary", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.23":req.body.value},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+			res.json(null);
 		})
 	}
 })

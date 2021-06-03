@@ -15,30 +15,22 @@
 
   let serverId = 0;
 
-  //function generateBoard()
-  //{
-  //  for (var i = 0; i < 24; i++)
-  //  {
-  //    clientboard[i] = false;
-  //  }
-  //}
-
   function controller(){//clean up this so there is non redundant code
     if(currStep == 0)
     {
       if(characterchosen)
       {
         currStep++;
-        $("#prompt1").html("Ask A Question Or Guess The AI's Character")
-        currentlyguessing = false;
-        currentlyAsking = true;
         $.post("/updatecurrentstep",{ident:serverId},null)
+        $("#prompt1").html("Ask A Question Or Guess The AI's Character")
+        currentlyAsking = true;
+        //update currently asking
+        currentlyguessing = false;
+        //update currently guessing
       }
       else
       {
         alert("Please Choose a Character Before Moving On")
-        currentlyguessing = false;
-        currentlyAsking = false;
       }
     }
     else if(currStep == 1)
@@ -49,20 +41,26 @@
         return
       }
       currStep++;
-      $("#prompt1").html("Eliminate Characters")
-      currentlyguessing = false;
-      currentlyAsking = false;
       $.post("/updatecurrentstep",{ident:serverId},null)
+      $("#prompt1").html("Eliminate Characters")
+      currentlyAsking = true;
+      //update currently asking
+      currentlyguessing = false;
+      //update currently guessing
     }
     else if(currStep == 2)
     {
       currStep++;
-      $("#prompt1").html("AI Asks You A Question")
-      currentlyguessing = false;
-      currentlyAsking = false;
-      onequestioncap = false
-      aiturn = true
       $.post("/updatecurrentstep",{ident:serverId},null)
+      $("#prompt1").html("AI Asks You A Question")
+      currentlyAsking = false;
+      //update currently asking
+      currentlyguessing = false;
+      //update currently guessing
+      onequestioncap = false
+      //update one question cap
+      aiturn = true
+      //update ai turn
       aiasksquestion()
     }
     else if(currStep == 3)
@@ -73,7 +71,7 @@
         return
       }
       $("#prompt1").html("Ask A Question Or Guess The AI's Character")
-      currentlyguessing = false
+      currentlyguessing = false//update all of these
       currentlyAsking = true;
       aiturn = false
       onequestioncap = false
@@ -145,6 +143,7 @@
     if(currStep == 1 && onequestioncap==false)
     {
       currentlyguessing = !currentlyguessing;
+
       //update currently guessing in the server
   //    console.log(currentlyguessing);
       if(currentlyguessing){
@@ -188,13 +187,13 @@
         $("#Alex").attr("src","../images/AlexX.gif")
         clientboard[0] = true
       //  console.log("client board "+clientboard)
-        $.post("/updatechracterarray",{ident:serverId,index:0,value:true},null)//updates the player board in
+        $.post("/updatechracterarrayAlex",{ident:serverId,value:clientboard[0]},null)//updates the player board in
       }
       else
       {
         $("#Alex").attr("src","../images/AlexCard.png")
         clientboard[0] = false
-        $.post("/updatechracterarray",{ident:serverId,changearray:clientboard},null)
+        $.post("/updatechracterarrayAlex",{ident:serverId,value:clientboard[0]},null)
       }
     }
     else if(characterchosen && currentlyguessing)
@@ -215,9 +214,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Andy").attr("src") == "../images/AndyCard.png")
-      {$("#Andy").attr("src","../images/AndyX.gif")}
+      {
+        $("#Andy").attr("src","../images/AndyX.gif")
+        clientboard[1] = true
+        $.post("/updatechracterarrayAndy",{ident:serverId,value:clientboard[1]},null)
+      }
       else
-      {$("#Andy").attr("src","../images/AndyCard.png")}
+      {
+        $("#Andy").attr("src","../images/AndyCard.png")
+        clientboard[1] = false
+        $.post("/updatechracterarrayAndy",{ident:serverId,value:clientboard[1]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -237,9 +244,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Ashley").attr("src") == "../images/AshleyCard.png")
-      {$("#Ashley").attr("src","../images/AshleyX.gif")}
+      {
+        $("#Ashley").attr("src","../images/AshleyX.gif")
+        clientboard[2] = true
+        $.post("/updatechracterarrayAshley",{ident:serverId,value:clientboard[2]},null)
+      }
       else
-      {$("#Ashley").attr("src","../images/AshleyCard.png")}
+      {
+        $("#Ashley").attr("src","../images/AshleyCard.png")
+        clientboard[2] = false
+        $.post("/updatechracterarrayAshley",{ident:serverId,value:clientboard[2]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -259,9 +274,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Brandon").attr("src") == "../images/BrandonCard.png")
-      {$("#Brandon").attr("src","../images/BrandonX.gif")}
+      {
+        $("#Brandon").attr("src","../images/BrandonX.gif")
+        clientboard[3] = true
+        $.post("/updatechracterarrayBrandon",{ident:serverId,value:clientboard[3]},null)
+      }
       else
-      {$("#Brandon").attr("src","../images/BrandonCard.png")}
+      {
+        $("#Brandon").attr("src","../images/BrandonCard.png")
+        clientboard[3] = false
+        $.post("/updatechracterarrayBrandon",{ident:serverId,value:clientboard[3]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -281,9 +304,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Chris").attr("src") == "../images/ChrisCard.png")
-      {$("#Chris").attr("src","../images/ChrisX.gif")}
+      {
+        $("#Chris").attr("src","../images/ChrisX.gif")
+        clientboard[4] = true
+        $.post("/updatechracterarrayChris",{ident:serverId,value:clientboard[4]},null)
+      }
       else
-      {$("#Chris").attr("src","../images/ChrisCard.png")}
+      {
+        $("#Chris").attr("src","../images/ChrisCard.png")
+        clientboard[4] = false
+        $.post("/updatechracterarrayChris",{ident:serverId,value:clientboard[4]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -303,9 +334,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Connor").attr("src") == "../images/ConnorCard.png")
-      {$("#Connor").attr("src","../images/ConnorX.gif")}
+      {
+        $("#Connor").attr("src","../images/ConnorX.gif")
+        clientboard[5] = true
+        $.post("/updatechracterarrayConnor",{ident:serverId,value:clientboard[5]},null)
+      }
       else
-      {$("#Connor").attr("src","../images/ConnorCard.png")}
+      {
+        $("#Connor").attr("src","../images/ConnorCard.png")
+        clientboard[5] = false
+        $.post("/updatechracterarrayConnor",{ident:serverId,value:clientboard[5]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -325,9 +364,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Daniel").attr("src") == "../images/DanielCard.png")
-      {$("#Daniel").attr("src","../images/DanielX.gif")}
+      {
+        $("#Daniel").attr("src","../images/DanielX.gif")
+        clientboard[6] = true
+        $.post("/updatechracterarrayDaniel",{ident:serverId,value:clientboard[6]},null)
+      }
       else
-      {$("#Daniel").attr("src","../images/DanielCard.png")}
+      {
+        $("#Daniel").attr("src","../images/DanielCard.png")
+        clientboard[6] = false
+        $.post("/updatechracterarrayDaniel",{ident:serverId,value:clientboard[6]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -347,9 +394,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#David").attr("src") == "../images/DavidCard.png")
-      {$("#David").attr("src","../images/DavidX.gif")}
+      {
+        $("#David").attr("src","../images/DavidX.gif")
+        clientboard[7] = true
+        $.post("/updatechracterarrayDavid",{ident:serverId,value:clientboard[7]},null)
+      }
       else
-      {$("#David").attr("src","../images/DavidCard.png")}
+      {
+        $("#David").attr("src","../images/DavidCard.png")
+        clientboard[7] = false
+        $.post("/updatechracterarrayDavid",{ident:serverId,value:clientboard[7]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -369,9 +424,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Emily").attr("src") == "../images/EmilyCard.png")
-      {$("#Emily").attr("src","../images/EmilyX.gif")}
+      {
+        $("#Emily").attr("src","../images/EmilyX.gif")
+        clientboard[8] = true
+        $.post("/updatechracterarrayEmily",{ident:serverId,value:clientboard[8]},null)
+      }
       else
-      {$("#Emily").attr("src","../images/EmilyCard.png")}
+      {
+        $("#Emily").attr("src","../images/EmilyCard.png")
+        clientboard[8] = false
+        $.post("/updatechracterarrayEmily",{ident:serverId,value:clientboard[8]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -391,9 +454,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Jake").attr("src") == "../images/JakeCard.png")
-      {$("#Jake").attr("src","../images/JakeX.gif")}
+      {
+        $("#Jake").attr("src","../images/JakeX.gif")
+        clientboard[9] = true
+        $.post("/updatechracterarrayJake",{ident:serverId,value:clientboard[9]},null)
+      }
       else
-      {$("#Jake").attr("src","../images/JakeCard.png")}
+      {
+        $("#Jake").attr("src","../images/JakeCard.png")
+        clientboard[9] = false
+        $.post("/updatechracterarrayJake",{ident:serverId,value:clientboard[9]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -413,9 +484,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#James").attr("src") == "../images/JamesCard.png")
-      {$("#James").attr("src","../images/JamesX.gif")}
+      {
+        $("#James").attr("src","../images/JamesX.gif")
+        clientboard[10] = true
+        $.post("/updatechracterarrayJames",{ident:serverId,value:clientboard[10]},null)
+      }
       else
-      {$("#James").attr("src","../images/JamesCard.png")}
+      {
+        $("#James").attr("src","../images/JamesCard.png")
+        clientboard[10] = false
+        $.post("/updatechracterarrayJames",{ident:serverId,value:clientboard[10]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -435,9 +514,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Jon").attr("src") == "../images/JonCard.png")
-      {$("#Jon").attr("src","../images/JonX.gif")}
+      {
+        $("#Jon").attr("src","../images/JonX.gif")
+        clientboard[11] = true
+        $.post("/updatechracterarrayJon",{ident:serverId,value:clientboard[11]},null)
+      }
       else
-      {$("#Jon").attr("src","../images/JonCard.png")}
+      {
+        $("#Jon").attr("src","../images/JonCard.png")
+        clientboard[11] = false
+        $.post("/updatechracterarrayJon",{ident:serverId,value:clientboard[11]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -457,9 +544,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Joseph").attr("src") == "../images/JosephCard.png")
-      {$("#Joseph").attr("src","../images/JosephX.gif")}
+      {
+        $("#Joseph").attr("src","../images/JosephX.gif")
+        clientboard[12] = true
+        $.post("/updatechracterarrayJoseph",{ident:serverId,value:clientboard[12]},null)
+      }
       else
-      {$("#Joseph").attr("src","../images/JosephCard.png")}
+      {
+        $("#Joseph").attr("src","../images/JosephCard.png")
+        clientboard[12] = false
+        $.post("/updatechracterarrayJoseph",{ident:serverId,value:clientboard[12]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -479,9 +574,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Joshua").attr("src") == "../images/JoshuaCard.png")
-      {$("#Joshua").attr("src","../images/JoshuaX.gif")}
+      {
+        $("#Joshua").attr("src","../images/JoshuaX.gif")
+        clientboard[13] = true
+        $.post("/updatechracterarrayJoshua",{ident:serverId,value:clientboard[13]},null)
+      }
       else
-      {$("#Joshua").attr("src","../images/JoshuaCard.png")}
+      {
+        $("#Joshua").attr("src","../images/JoshuaCard.png")
+        clientboard[13] = false
+        $.post("/updatechracterarrayJoshua",{ident:serverId,value:clientboard[13]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -501,9 +604,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Justin").attr("src") == "../images/JustinCard.png")
-      {$("#Justin").attr("src","../images/JustinX.gif")}
+      {
+        $("#Justin").attr("src","../images/JustinX.gif")
+        clientboard[14] = true
+        $.post("/updatechracterarrayJustin",{ident:serverId,value:clientboard[14]},null)
+      }
       else
-      {$("#Justin").attr("src","../images/JustinCard.png")}
+      {
+        $("#Justin").attr("src","../images/JustinCard.png")
+        clientboard[14] = false
+        $.post("/updatechracterarrayJustin",{ident:serverId,value:clientboard[14]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -523,9 +634,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Kyle").attr("src") == "../images/KyleCard.png")
-      {$("#Kyle").attr("src","../images/KyleX.gif")}
+      {
+        $("#Kyle").attr("src","../images/KyleX.gif")
+        clientboard[15] = true
+        $.post("/updatechracterarrayKyle",{ident:serverId,value:clientboard[15]},null)
+      }
       else
-      {$("#Kyle").attr("src","../images/KyleCard.png")}
+      {
+        $("#Kyle").attr("src","../images/KyleCard.png")
+        clientboard[15] = false
+        $.post("/updatechracterarrayKyle",{ident:serverId,value:clientboard[15]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -545,9 +664,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Matt").attr("src") == "../images/MattCard.png")
-      {$("#Matt").attr("src","../images/MattX.gif")}
+      {
+        $("#Matt").attr("src","../images/MattX.gif")
+        clientboard[16] = true
+        $.post("/updatechracterarrayMatt",{ident:serverId,value:clientboard[16]},null)
+      }
       else
-      {$("#Matt").attr("src","../images/MattCard.png")}
+      {
+        $("#Matt").attr("src","../images/MattCard.png")
+        clientboard[16] = false
+        $.post("/updatechracterarrayMatt",{ident:serverId,value:clientboard[16]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -567,9 +694,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Megan").attr("src") == "../images/MeganCard.png")
-      {$("#Megan").attr("src","../images/MeganX.gif")}
+      {
+        $("#Megan").attr("src","../images/MeganX.gif")
+        clientboard[17] = true
+        $.post("/updatechracterarrayMegan",{ident:serverId,value:clientboard[17]},null)
+      }
       else
-      {$("#Megan").attr("src","../images/MeganCard.png")}
+      {
+        $("#Megan").attr("src","../images/MeganCard.png")
+        clientboard[17] = false
+        $.post("/updatechracterarrayMegan",{ident:serverId,value:clientboard[17]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -589,9 +724,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Nick").attr("src") == "../images/NickCard.png")
-      {$("#Nick").attr("src","../images/NickX.gif")}
+      {
+        $("#Nick").attr("src","../images/NickX.gif")
+        clientboard[18] = true
+        $.post("/updatechracterarrayNick",{ident:serverId,value:clientboard[18]},null)
+      }
       else
-      {$("#Nick").attr("src","../images/NickCard.png")}
+      {
+        $("#Nick").attr("src","../images/NickCard.png")
+        clientboard[19] = false
+        $.post("/updatechracterarrayNick",{ident:serverId,value:clientboard[19]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -611,9 +754,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Rachael").attr("src") == "../images/RachaelCard.png")
-      {$("#Rachael").attr("src","../images/RachaelX.gif")}
+      {
+        $("#Rachael").attr("src","../images/RachaelX.gif")
+        clientboard[19] = true
+        $.post("/updatechracterarrayRachael",{ident:serverId,value:clientboard[19]},null)
+      }
       else
-      {$("#Rachael").attr("src","../images/RachaelCard.png")}
+      {
+        $("#Rachael").attr("src","../images/RachaelCard.png")
+        clientboard[19] = false
+        $.post("/updatechracterarrayRachael",{ident:serverId,value:clientboard[19]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -633,9 +784,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Sarah").attr("src") == "../images/SarahCard.png")
-      {$("#Sarah").attr("src","../images/SarahX.gif")}
+      {
+        $("#Sarah").attr("src","../images/SarahX.gif")
+        clientboard[20] = true
+        $.post("/updatechracterarraySarah",{ident:serverId,value:clientboard[20]},null)
+      }
       else
-      {$("#Sarah").attr("src","../images/SarahCard.png")}
+      {
+        $("#Sarah").attr("src","../images/SarahCard.png")
+        clientboard[20] = false
+        $.post("/updatechracterarraySarah",{ident:serverId,value:clientboard[20]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -655,9 +814,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Tyler").attr("src") == "../images/TylerCard.png")
-      {$("#Tyler").attr("src","../images/TylerX.gif")}
+      {
+        $("#Tyler").attr("src","../images/TylerX.gif")
+        clientboard[21] = true
+        $.post("/updatechracterarrayTyler",{ident:serverId,value:clientboard[21]},null)
+      }
       else
-      {$("#Tyler").attr("src","../images/TylerCard.png")}
+      {
+        $("#Tyler").attr("src","../images/TylerCard.png")
+        clientboard[21] = false
+        $.post("/updatechracterarrayTyler",{ident:serverId,value:clientboard[21]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -677,9 +844,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#William").attr("src") == "../images/WilliamCard.png")
-      {$("#William").attr("src","../images/WilliamX.gif")}
+      {
+        $("#William").attr("src","../images/WilliamX.gif")
+        clientboard[22] = true
+        $.post("/updatechracterarrayWillian",{ident:serverId,value:clientboard[22]},null)
+      }
       else
-      {$("#William").attr("src","../images/WilliamCard.png")}
+      {
+        $("#William").attr("src","../images/WilliamCard.png")
+        clientboard[22] = false
+        $.post("/updatechracterarrayWillian",{ident:serverId,value:clientboard[22]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -699,9 +874,17 @@
     if(characterchosen && currentlyguessing == false)
     {
       if($("#Zachary").attr("src") == "../images/ZacharyCard.png")
-      {$("#Zachary").attr("src","../images/ZacharyX.gif")}
+      {
+        $("#Zachary").attr("src","../images/ZacharyX.gif")
+        clientboard[23] = true
+        $.post("/updatechracterarrayZachary",{ident:serverId,value:clientboard[23]},null)
+      }
       else
-      {$("#Zachary").attr("src","../images/ZacharyCard.png")}
+      {
+        $("#Zachary").attr("src","../images/ZacharyCard.png")
+        clientboard[23] = false
+        $.post("/updatechracterarrayZachary",{ident:serverId,value:clientboard[23]},null)
+      }
     }
     else if(characterchosen && currentlyguessing)
     {
@@ -738,24 +921,6 @@
         else
         {//do buttons instead?
           $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"AI: "+data.text+'</li>');
-    /*      $.get("/askplayeraquestion",{num:data.num},function(returndata)
-          {
-            if(currStep = 3)
-            {
-              console.log(typeof returndata.return)
-              if(returndata.return == true)
-              {
-                $("#chat").append('<li class ='+currentmessage+'>'+"Player: Yes"+'</li>');
-              }
-              else
-              {
-                $("#chat").append('<li class ='+currentmessage+'>'+"Player: No"+'</li>');
-              }
-            }
-            //eliminate part of the ais board based on response.
-          })*/
-
-        //  console.log(currentmessage)
         }
     })
   }
@@ -841,7 +1006,13 @@
       serverId = data.ident
       console.log("ID " +serverId)
 
-      console.log("data "+ data.ClientBoard)
+      for(let i = 0; i<data.ClientBoard.length; i++)
+      {
+      //  console.log(data.ClientBoard[i])
+        clientboard[i]=data.ClientBoard[i]
+      }
+      console.log("clientboard " + data.ClientBoard[0])
+
       if(data.ClientBoard[0]){
         $("#Alex").attr("src","../images/AlexX.gif")
       }
