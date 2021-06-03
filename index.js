@@ -68,6 +68,7 @@ io.on('connection', function(socket) {
 
 });
 //info for yee server: ssh group2@www.mvhscsf.org  password: B2a7-->
+//mongod --dbpath /usr/local/var/mongodb -- for nick to start mongod
 
 server.listen(4002, function () {
   console.log('Guess who listening on port 4002!');

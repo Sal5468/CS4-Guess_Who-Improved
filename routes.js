@@ -10,6 +10,8 @@ var path = require("path");
 
 var User = require("./models/user");
 var Game = require("./models/games");
+var Room = require("./models/rooms");
+
 
 let playercharchosen = ""//delete this
 let aiplayerchosen = ""//delete this
@@ -72,11 +74,13 @@ router.post("/createRoom",function(req,res){
 					Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 					roomNum: req.body.roomNum
 				})
-				Room.Create(newRoom, function(err, newRoom){
+				Room.create(newRoom, function(err, newRoom2){
+					console.log("room created");
 					if(err){
-						throw err
+						console.log("error");
 					}
-					console.log(newRoom);
+					res.json({message: true});
+					console.log(newRoom2);
 				})
 			}
 		})

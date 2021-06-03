@@ -51,6 +51,14 @@ getCurrentMatches();
   }
   function createClicked(){
     alert("create " + $("#create").val())
+    $.post("/createRoom",{roomNum: $("#create").val()}, function(data){
+      if(data.message == true){
+        $.get("/getRoom",{roomNum: $("#create").val()}, null);
+      }
+      else {
+        alert("bad create");
+      }
+    });
   }
   function guessWhoClicked()
   {
