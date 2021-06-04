@@ -85,20 +85,27 @@ router.post("/createRoom",function(req,res){
 				throw err;
 			}
 			else if(room == null){
+				console.log(req.user.ident);
 				var newRoom = new Room({
-					ClientID: req.user.id,
+					ClientID: req.user.ident,
 					Client2ID: null,
 					ClientBoard: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 					Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 					roomNum: req.body.roomNum
 				})
-				Room.create(newRoom, function(err, newRoom2){
-					console.log("room created");
+				Room.create(newRoom, function(err, room){
 					if(err){
-						console.log("error");
+						console.log(err);
 					}
-					res.json({message: true});
-					console.log(newRoom2);
+					else if(room){
+						console.log("room created");
+						res.json({message: true});
+					}
+					else {
+						res.json({message: false});
+					}
+
+					console.log(room);
 				})
 			}
 		})
@@ -108,7 +115,7 @@ router.post("/createRoom",function(req,res){
 	}
 });
 
-router.post("/getRoom",function(req,res){
+router.get("/getRoom",function(req,res){
 	if(req.isAuthenticated()){
 		Room.findOne({roomNum: req.body.roomNum}, function(err, room){
 			console.log(room)
@@ -116,7 +123,20 @@ router.post("/getRoom",function(req,res){
 				throw err;
 			}
 			else if(room != null){
-				res.sendFile(__dirname + "/public/views/multi.html");
+				if(room.ClientID == req.user.ident){
+					res.sendFile(__dirname + "/public/views/multi.html");
+				}
+				else {
+					Room.findOneAndUpdate({roomNum: req.body.roomNum}, {Client2ID: req.user.ident} ,function(err, room){
+						if(err){
+							console.log(err);
+						}
+						else{
+							res.sendFile(__dirname + "/public/views/multi.html");
+						}
+					});
+				}
+
 			}
 		})
 	}
@@ -459,7 +479,24 @@ router.get("/userInfo",function(req,res){
 		res.json(null);
 	}
 });
+router.get("/getUserName",function(req,res){
+  console.log("getUserName");
+     if (req.isAuthenticated()) {
+			 User.findOne({ident: req.ident}, function(err, user){
+				 if(err){
+					 console.log(err);
+				 }
+				 else if(user != null){
+					 res.json(user.username);
+				 }
 
+			 })
+		 }
+	else {
+  	console.log("req is not Authenticated");
+		res.json(null);
+	}
+});
 
 
 
