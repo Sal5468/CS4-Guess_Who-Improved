@@ -47,12 +47,13 @@ getCurrentMatches();
   }
   function joinClicked(){
     alert("join " + $("#join").val())
-    //$.post("/createRoom")
+    //$.get("/getRoom")
   }
   function createClicked(){
     alert("create " + $("#create").val())
     $.post("/createRoom",{roomNum: $("#create").val()}, function(data){
       if(data.message == true){
+        alert("good create");
         $.get("/getRoom",{roomNum: $("#create").val()}, null);
       }
       else {
@@ -63,7 +64,7 @@ getCurrentMatches();
   function guessWhoClicked()
   {
     let current = $(location).attr('href')
-    let currentreplace = current.replace("joinroom","");
+    let currentreplace = current.replace("multi","");
     window.location.href = currentreplace
   }
 
