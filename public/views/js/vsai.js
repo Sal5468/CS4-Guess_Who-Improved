@@ -82,62 +82,24 @@
     }
   }
 
-  /*function controllernoupdatecurrStep(number){
-    if(number == 0)
+  function controllerofprompt(){//clean up this so there is non redundant code
+    if(currStep == 0)
     {
-      if(characterchosen)
-      {
-        $("#prompt1").html("Ask A Question Or Guess The AI's Character")
-        characterchosen = true;
-        currentlyguessing = false;
-        currentlyAsking = true;
-      }
-      else
-      {
-        alert("Please Choose a Character Before Moving On")
-        characterchosen = false;
-        currentlyguessing = false;
-        currentlyAsking = false;
-      }
+      $("#prompt1").html("Choose your Character")
     }
-    else if(number == 1)
+    else if(currStep == 1)
     {
-      if(onequestioncap == false)
-      {
-        alert("Please Ask a Question Before Moving On")
-        return
-      }
+      $("#prompt1").html("Ask A Question Or Guess The AI's Character")
+    }
+    else if(currStep == 2)
+    {
       $("#prompt1").html("Eliminate Characters")
-      characterchosen = true;
-      currentlyguessing = false;
-      currentlyAsking = false;
     }
-    else if(number == 2)
+    else if(currStep == 3)
     {
       $("#prompt1").html("AI Asks You A Question")
-      characterchosen = true;
-      currentlyguessing = false;
-      currentlyAsking = false;
-      onequestioncap = false
-      aiturn = true
-      aiasksquestion()
     }
-    else if(number == 3)
-    {
-      if(respondedtoaiquestion == false)
-      {
-        alert("Please Respond To The AI's Question")
-        return
-      }
-      $("#prompt1").html("Ask A Question Or Guess The AI's Character")
-      characterchosen = true;
-      currentlyguessing = false
-      currentlyAsking = true;
-      aiturn = false
-      onequestioncap = false
-      respondedtoaiquestion = false
-    }
-  }*/
+  }
 
   function guessClick()
   {
@@ -165,15 +127,17 @@
   {
     if(data.winlose)
     {
-      let current = $(location).attr('href')
-      let currentreplace = current.replace("playvsai","win");
-      window.location.href = currentreplace
+      $.post("/delcurrentgame",{ident:serverId},null)
+      $.get("/getwin",function(data){
+        window.location = data.redirect;
+      });
     }
     else
     {
-      let current = $(location).attr('href')
-      let currentreplace = current.replace("playvsai","lose");
-      window.location.href = currentreplace
+      $.post("/delcurrentgame",{ident:serverId},null)
+      $.get("/getlose",function(data){
+        window.location = data.redirect;
+      });
     }
   }
 
@@ -1004,15 +968,21 @@
   }
   $(document).ready(function()
   {
-    $.post("/init",null,function(data){
+    $.get("/init",null,function(data){
       console.log("data "+ data)
+
+      if(data==null)
+      {
+        $.get("/getmenu",function(data){
+          window.location = data.redirect;
+        });
+      }
 
       serverId = data.ident
       console.log("ID " +serverId)
 
       for(let i = 0; i<data.ClientBoard.length; i++)
       {
-      //  console.log(data.ClientBoard[i])
         clientboard[i]=data.ClientBoard[i]
       }
       console.log("clientboard " + data.ClientBoard[0])
@@ -1194,10 +1164,33 @@
       characterchosen = data.characterchosen
       console.log("Character Choosen Boolean "+ characterchosen)
 
-      console.log("Current Step"+ data.currentStep)
-    //  controllernoupdatecurrStep(data.currentStep)
+      currentlyguessing = data.currentlyguessing
+      console.log("Are you currently guessing? "+ currentlyguessing)
+      if(currentlyguessing){
+        $("#makeGuess").attr("style", "color: magenta")
+      }
+      else{
+        $("#makeGuess").attr("style", "color: white")
+      }
 
+      currentlyAsking = data.currentlyAsking
+      console.log("currentlyAsking "+ currentlyAsking)
 
+      aiturn = data.aiturn
+      console.log("AI Trun "+ aiturn)
+
+      onequestioncap = data.onequestioncap
+      console.log("One question cap "+ onequestioncap)
+
+      respondedtoaiquestion = data.respondedtoaiquestion
+      console.log("responded to ai question "+ respondedtoaiquestion)
+
+      aiguessingplayerchar = data.aiguessingplayerchar
+      console.log("ai guessing player char "+ aiguessingplayerchar)
+
+      currStep = data.currentStep
+      console.log("Current Step"+ currStep)
+      controllerofprompt()
     });
   });
 

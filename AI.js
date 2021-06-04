@@ -96,7 +96,6 @@ AI.prototype.generateAIBoard = function(arrayfromServer){
     for (var i = 0; i < 24; i++)
     {
       this.Board[i] = arrayfromServer[i];
-
     }
     console.log("board "+this.Board)
     /*this.Board[0] = 'Alex';

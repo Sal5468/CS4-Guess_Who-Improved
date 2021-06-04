@@ -184,7 +184,7 @@ router.get("/encyclopedia",function(req,res){
 });
 ////////////////////////////////////////////////////////////////////////////////
 
-router.post('/init', function(req, res)
+router.get('/init', function(req, res)
 {
 	if(req.isAuthenticated())
 	{
@@ -192,22 +192,23 @@ router.post('/init', function(req, res)
 		{
 			if(err)
 			{
+				console.log("cant find a user")
 				res.json(null);
 			}
-				Game.findOne({ ClientNum: user.ident }, function(err, game)
+				Game.findOne({ ident: user.ident }, function(err, game)
 				{
 					if(err)
 					{
-						console.log("There is an err")
+						console.log("error finding game")
 						res.json(null);
 					}
 					if(game==null)
 					{
 						console.log("New Game branch")
 						var obj = new Game({
+							ident: user.ident,
 							AINum: Math.floor(Math.random()*24),
 						  AIBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-							ClientNum: user.ident,
 						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 							ClientPlayerChoosen:-1,
 
@@ -225,7 +226,7 @@ router.post('/init', function(req, res)
 						{//funtion not called untill this is called
 							if(error)
 							{
-								console.log("There is an error")
+								console.log("error creating game")
 								res.json(null);
 							}
 							else
@@ -234,14 +235,24 @@ router.post('/init', function(req, res)
 								AIArray[user.ident] = new AI;
 								AIArray[user.ident].setCharacter(newgame.AINum)
 								AIArray[user.ident].generateAIBoard(newgame.AIBoard)
-								res.json({ident:user.ident,ClientBoard:newgame.ClientBoard,PlayerChoosen:newgame.ClientPlayerChoosen});//needs the returns for all the booleans
+								res.json({ident:user.ident,//in init
+									ClientBoard:newgame.ClientBoard,//in init
+									PlayerChoosen:newgame.ClientPlayerChoosen,//in init
+									characterchosen:newgame.characterchosen,// in init
+									currentlyguessing:newgame.currentlyguessing,//in init
+									currentlyAsking:newgame.currentlyAsking,//in init
+									aiturn:newgame.aiturn,//in initAI
+									onequestioncap:newgame.onequestioncap,//in init
+									respondedtoaiquestion:newgame.respondedtoaiquestion,//in init
+									aiguessingplayerchar:newgame.aiguessingplayerchar,
+									currentStep:newgame.currentStep});
 							}
 						});
 					}
 					else
 					{
 						console.log("game already exists")
-						Game.findOne({ ClientNum: user.ident }, function(err, premadegame)
+						Game.findOne({ ident: user.ident }, function(err, premadegame)
 						{
 							if(err)
 							{
@@ -257,7 +268,13 @@ router.post('/init', function(req, res)
 									ClientBoard:premadegame.ClientBoard,//in init
 									PlayerChoosen:premadegame.ClientPlayerChoosen,//in init
 									characterchosen:premadegame.characterchosen,// in init
-									currentStep:premadegame.currentStep});//
+									currentlyguessing:premadegame.currentlyguessing,//in init
+									currentlyAsking:premadegame.currentlyAsking,//in init
+									aiturn:premadegame.aiturn,//in initAI
+									onequestioncap:premadegame.onequestioncap,//in init
+									respondedtoaiquestion:premadegame.respondedtoaiquestion,//in init
+									aiguessingplayerchar:premadegame.aiguessingplayerchar,
+									currentStep:premadegame.currentStep});//in init
 							}
 						})
 					}
@@ -278,13 +295,13 @@ router.get("/askaiaquestion",function(req,res)
 router.post("/sendplayerresponse",function(req,res)
 {//this was causeing the whole ai board to go null
 	//console.log(typeof req.query.answer);
-	Client[req.body.id].EliminateAIBoard(Client[req.body.id].getCurrentQ(), req.body.answer, Client[req.body.id].getGuessName())
+	AIArray[req.body.id].EliminateAIBoard(AIArray[req.body.id].getCurrentQ(), req.body.answer, AIArray[req.body.id].getGuessName())
 	res.json(null);
 });
 
 router.get("/getaiquestion",function(req,res)
 {
-	let response = Client[req.query.id].ReturnResponse();//will only return one propper response before returning null
+	let response = AIArray[req.query.id].ReturnResponse();//will only return one propper response before returning null
 //	console.log(response)
 	if(typeof response == typeof "hi" ){
 		res.json({num: 13, text: boardInfo.getQuestiontext(response)})
@@ -297,7 +314,7 @@ router.get("/getaiquestion",function(req,res)
 router.get("/makeaguess",function(req,res)
 {
 	let result = false
-	if(req.query.name == Client[req.query.id].getCharacter())
+	if(req.query.name == AIArray[req.query.id].getCharacter())
 	{
 		result=true
 		//console.log("You win")
@@ -482,10 +499,24 @@ router.post("/login", passport.authenticate("login", {
   failureFlash: true
 }));
 ////////////////////////////////////////////////////////////////////////////////
+router.post("/delcurrentgame", function(req, res) {
+	if (req.isAuthenticated())
+	{
+		Game.remove({ident: req.body.ident},function(error,removed) {
+			if (error)
+				console.log(error);
+			else
+			{
+				console.log(removed.result);
+			}
+		})
+	}
+})
+
 router.post("/updatecurrentstep", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentStep:req.body.currentStep},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{currentStep:req.body.currentStep},function(err, game)
 		{
 			if(err)
 			{
@@ -499,7 +530,7 @@ router.post("/updatecurrentstep", function(req, res) {
 router.post("/playersubmitchar", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{ClientPlayerChoosen:req.body.num,characterchosen:req.body.characterchosen},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{ClientPlayerChoosen:req.body.num,characterchosen:req.body.characterchosen},function(err, game)
 		{
 			if(err)
 			{
@@ -513,7 +544,7 @@ router.post("/playersubmitchar", function(req, res) {
 router.post("/updatecurrentlyAsking", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentlyAsking:req.body.currentlyAsking},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{currentlyAsking:req.body.currentlyAsking},function(err, game)
 		{
 			if(err)
 			{
@@ -527,7 +558,7 @@ router.post("/updatecurrentlyAsking", function(req, res) {
 router.post("/updatecurrentlyguessing", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{currentlyguessing:req.body.currentlyguessing},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{currentlyguessing:req.body.currentlyguessing},function(err, game)
 		{
 			if(err)
 			{
@@ -541,7 +572,7 @@ router.post("/updatecurrentlyguessing", function(req, res) {
 router.post("/updateonequestioncap", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{onequestioncap:req.body.onequestioncap},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{onequestioncap:req.body.onequestioncap},function(err, game)
 		{
 			if(err)
 			{
@@ -555,7 +586,7 @@ router.post("/updateonequestioncap", function(req, res) {
 router.post("/updateaiturn", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{aiturn:req.body.aiturn},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{aiturn:req.body.aiturn},function(err, game)
 		{
 			if(err)
 			{
@@ -569,7 +600,7 @@ router.post("/updateaiturn", function(req, res) {
 router.post("/updaterespondedtoaiquestion", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{respondedtoaiquestion:req.body.respondedtoaiquestion},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{respondedtoaiquestion:req.body.respondedtoaiquestion},function(err, game)
 		{
 			if(err)
 			{
@@ -584,7 +615,7 @@ router.post("/updaterespondedtoaiquestion", function(req, res) {
 router.post("/updatechracterarrayAlex", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.0":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.0":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -598,7 +629,7 @@ router.post("/updatechracterarrayAlex", function(req, res) {
 router.post("/updatechracterarrayAndy", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.1":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.1":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -612,7 +643,7 @@ router.post("/updatechracterarrayAndy", function(req, res) {
 router.post("/updatechracterarrayAshley", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.2":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.2":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -626,7 +657,7 @@ router.post("/updatechracterarrayAshley", function(req, res) {
 router.post("/updatechracterarrayBrandon", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.3":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.3":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -640,7 +671,7 @@ router.post("/updatechracterarrayBrandon", function(req, res) {
 router.post("/updatechracterarrayChris", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.4":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.4":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -654,7 +685,7 @@ router.post("/updatechracterarrayChris", function(req, res) {
 router.post("/updatechracterarrayConnor", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.5":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.5":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -668,7 +699,7 @@ router.post("/updatechracterarrayConnor", function(req, res) {
 router.post("/updatechracterarrayDaniel", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.6":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.6":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -682,7 +713,7 @@ router.post("/updatechracterarrayDaniel", function(req, res) {
 router.post("/updatechracterarrayDavid", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.7":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.7":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -696,7 +727,7 @@ router.post("/updatechracterarrayDavid", function(req, res) {
 router.post("/updatechracterarrayEmily", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.8":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.8":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -710,7 +741,7 @@ router.post("/updatechracterarrayEmily", function(req, res) {
 router.post("/updatechracterarrayJake", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.9":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.9":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -724,7 +755,7 @@ router.post("/updatechracterarrayJake", function(req, res) {
 router.post("/updatechracterarrayJames", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.10":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.10":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -738,7 +769,7 @@ router.post("/updatechracterarrayJames", function(req, res) {
 router.post("/updatechracterarrayJon", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.11":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.11":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -752,7 +783,7 @@ router.post("/updatechracterarrayJon", function(req, res) {
 router.post("/updatechracterarrayJoseph", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.12":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.12":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -766,7 +797,7 @@ router.post("/updatechracterarrayJoseph", function(req, res) {
 router.post("/updatechracterarrayJoshua", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.13":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.13":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -780,7 +811,7 @@ router.post("/updatechracterarrayJoshua", function(req, res) {
 router.post("/updatechracterarrayJustin", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.14":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.14":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -794,7 +825,7 @@ router.post("/updatechracterarrayJustin", function(req, res) {
 router.post("/updatechracterarrayKyle", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.15":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.15":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -808,7 +839,7 @@ router.post("/updatechracterarrayKyle", function(req, res) {
 router.post("/updatechracterarrayMatt", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.16":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.16":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -822,7 +853,7 @@ router.post("/updatechracterarrayMatt", function(req, res) {
 router.post("/updatechracterarrayMegan", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.17":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.17":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -836,7 +867,7 @@ router.post("/updatechracterarrayMegan", function(req, res) {
 router.post("/updatechracterarrayNick", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.18":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.18":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -850,7 +881,7 @@ router.post("/updatechracterarrayNick", function(req, res) {
 router.post("/updatechracterarrayRachael", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.19":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.19":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -864,7 +895,7 @@ router.post("/updatechracterarrayRachael", function(req, res) {
 router.post("/updatechracterarraySarah", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.20":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.20":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -878,7 +909,7 @@ router.post("/updatechracterarraySarah", function(req, res) {
 router.post("/updatechracterarrayTyler", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.21":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.21":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -892,7 +923,7 @@ router.post("/updatechracterarrayTyler", function(req, res) {
 router.post("/updatechracterarrayWillian", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.22":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.22":req.body.value},function(err, game)
 		{
 			if(err)
 			{
@@ -906,7 +937,7 @@ router.post("/updatechracterarrayWillian", function(req, res) {
 router.post("/updatechracterarrayZachary", function(req, res) {
 	if (req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ClientNum: req.body.ident},{"ClientBoard.23":req.body.value},function(err, game)
+		Game.findOneAndUpdate({ident: req.body.ident},{"ClientBoard.23":req.body.value},function(err, game)
 		{
 			if(err)
 			{
