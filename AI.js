@@ -98,31 +98,19 @@ AI.prototype.generateAIBoard = function(arrayfromServer){
       this.Board[i] = arrayfromServer[i];
     }
     console.log("board "+this.Board)
-    /*this.Board[0] = 'Alex';
-    this.Board[1] = 'Andy';
-    this.Board[2] = 'Ashley';
-    this.Board[3] = 'Brandon';
-    this.Board[4] = 'Chris';
-    this.Board[5] = 'Connor';
-    this.Board[6] = 'Daniel';
-    this.Board[7] = 'David';
-    this.Board[8] = 'Emily';
-    this.Board[9] = 'Jake';
-    this.Board[10] = 'James';
-    this.Board[11] = 'Jon';
-    this.Board[12] = 'Joseph';
-    this.Board[13] = 'Joshua';
-    this.Board[14] = 'Justin';
-    this.Board[15] = 'Kyle';
-    this.Board[16] = 'Matt';
-    this.Board[17] = 'Megan';
-    this.Board[18] = 'Nick';
-    this.Board[19] = 'Rachael';
-    this.Board[20] = 'Sarah';
-    this.Board[21] = 'Tyler';
-    this.Board[22] = 'William';
-    this.Board[23] = 'Zachary';*/
 
+}
+
+AI.prototype.generateQuestionsAsked = function(arrayfromServer){
+    for (var i = 0; i < arrayfromServer.length; i++)
+    {
+      this.questionsAsked[i] = arrayfromServer[i];
+    }
+    console.log("board questions asked "+this.questionsAsked)
+}
+AI.prototype.submitcurrentQ = function(_currentQ){
+    this.currentQ = _currentQ
+    console.log("board currentQ "+this.currentQ)
 }
 
 AI.prototype.EliminateAIBoard = function(numQ, answer, name) {//we need to change all of these to get at the
@@ -135,76 +123,76 @@ AI.prototype.EliminateAIBoard = function(numQ, answer, name) {//we need to chang
     //console.log(typeof answer);
   //  console.log(answer);
     if(answer != this.boardInfo.Alex[numQ].toString()){//this works
-        this.Board[0] = null;
+        this.Board[0] = true;
     }
     if(answer != this.boardInfo.Andy[numQ].toString()){
-        this.Board[1] = null;
+        this.Board[1] = true;
     }
     if(answer != this.boardInfo.Ashley[numQ].toString()){
-        this.Board[2] = null;
+        this.Board[2] = true;
     }
     if(answer != this.boardInfo.Brandon[numQ].toString()){
-        this.Board[3] = null;
+        this.Board[3] = true;
     }
     if(answer != this.boardInfo.Chris[numQ].toString()){
-        this.Board[4] = null;
+        this.Board[4] = true;
     }
     if(answer != this.boardInfo.Connor[numQ].toString()){
-        this.Board[5] = null;
+        this.Board[5] = true;
     }
     if(answer != this.boardInfo.Daniel[numQ].toString()){
-        this.Board[6] = null;
+        this.Board[6] = true;
     }
     if(answer != this.boardInfo.David[numQ].toString()){
-        this.Board[7] = null;
+        this.Board[7] = true;
     }
     if(answer != this.boardInfo.Emily[numQ].toString()){
-        this.Board[8] = null;
+        this.Board[8] = true;
     }
     if(answer != this.boardInfo.Jake[numQ].toString()){
-        this.Board[9] = null;
+        this.Board[9] = true;
     }
     if(answer != this.boardInfo.James[numQ].toString()){
-        this.Board[10] = null;
+        this.Board[10] = true;
     }
     if(answer != this.boardInfo.Jon[numQ].toString()){
-        this.Board[11] = null;
+        this.Board[11] = true;
     }
     if(answer != this.boardInfo.Joseph[numQ].toString()){
-        this.Board[12] = null;
+        this.Board[12] = true;
     }
     if(answer != this.boardInfo.Joshua[numQ].toString()){
-        this.Board[13] = null;
+        this.Board[13] = true;
     }
     if(answer != this.boardInfo.Justin[numQ].toString()){
-        this.Board[14] = null;
+        this.Board[14] = true;
     }
     if(answer != this.boardInfo.Kyle[numQ].toString()){
-        this.Board[15] = null;
+        this.Board[15] = true;
     }
     if(answer != this.boardInfo.Matt[numQ].toString()){
-        this.Board[16] = null;
+        this.Board[16] = true;
     }
     if(answer != this.boardInfo.Megan[numQ].toString()){
-        this.Board[17] = null;
+        this.Board[17] = true;
     }
     if(answer != this.boardInfo.Nick[numQ].toString()){
-        this.Board[18] = null;
+        this.Board[18] = true;
     }
     if(answer != this.boardInfo.Rachael[numQ].toString()){
-        this.Board[19] = null;
+        this.Board[19] = true;
     }
     if(answer != this.boardInfo.Sarah[numQ].toString()){
-        this.Board[20] = null;
+        this.Board[20] = true;
     }
     if(answer != this.boardInfo.Tyler[numQ].toString()){
-        this.Board[21] = null;
+        this.Board[21] = true;
     }
     if(answer != this.boardInfo.William[numQ].toString()){
-        this.Board[22] = null;
+        this.Board[22] = true;
     }
     if(answer != this.boardInfo.Zachary[numQ].toString()){
-        this.Board[23] = null;
+        this.Board[23] = true;
     }
   //  console.log(Board);
     if(numQ == 13){
@@ -213,89 +201,93 @@ AI.prototype.EliminateAIBoard = function(numQ, answer, name) {//we need to chang
             this.Win = true;
         }
         else if(name == "Alex"){
-            this.Board[0] = null;
+            this.Board[0] = true;
         }
         else if(name == "Andy"){
-            this.Board[1] = null;
+            this.Board[1] = true;
         }
         else if(name == "Ashley"){
-            this.Board[2] = null;
+            this.Board[2] = true;
         }
         else if(name == "Brandon"){
-            this.Board[3] = null;
+            this.Board[3] = true;
         }
         else if(name == "Chris"){
-            this.Board[4] = null;
+            this.Board[4] = true;
         }
         else if(name == "Connor"){
-            this.Board[5] = null;
+            this.Board[5] = true;
         }
         else if(name == "Daniel"){
-            this.Board[6] = null;
+            this.Board[6] = true;
         }
         else if(name == "David"){
-            this.Board[7] = null;
+            this.Board[7] = true;
         }
         else if(name == "Emily"){
-            this.Board[8] = null;
+            this.Board[8] = true;
         }
         else if(name == "Jake"){
-            this.Board[9] = null;
+            this.Board[9] = true;
         }
         else if(name == "James"){
-            this.Board[10] = null;
+            this.Board[10] = true;
         }
         else if(name == "Jon"){
-            this.Board[11] = null;
+            this.Board[11] = true;
         }
         else if(name == "Joseph"){
-            this.Board[12] = null;
+            this.Board[12] = true;
         }
         else if(name == "Joshua"){
-            this.Board[13] = null;
+            this.Board[13] = true;
         }
         else if(name == "Justin"){
-            this.Board[14] = null;
+            this.Board[14] = true;
         }
         else if(name == "Kyle"){
-            this.Board[15] = null;
+            this.Board[15] = true;
         }
         else if(name == "Matt"){
-            this.Board[16] = null;
+            this.Board[16] = true;
         }
         else if(name == "Megan"){
-            this.Board[17] = null;
+            this.Board[17] = true;
         }
         else if(name == "Nick"){
-            this.Board[18] = null;
+            this.Board[18] = true;
         }
         else if(name == "Rachael"){
-            this.Board[19] = null;
+            this.Board[19] = true;
         }
         else if(name == "Sarah"){
-            this.Board[20] = null;
+            this.Board[20] = true;
         }
         else if(name == "Tyler"){
-            this.Board[21] = null;
+            this.Board[21] = true;
         }
         else if(name == "William"){
-            this.Board[22] = null;
+            this.Board[22] = true;
         }
         else if(name == "Zachary"){
-            this.Board[23] = null;
+            this.Board[23] = true;
         }
     }
+    console.log("Ais board is now this "+ this.Board)
+    //submit the ais board
 }
 AI.prototype.ReturnResponse = function(){
+    console.log("return responses "+ this.Board)
     //console.log(Board);
     let playersleft = 0;
     for(let i = 0; i<24; i++)
     {
-        if(this.Board[i] != null)
+        if(this.Board[i] === false)
         {
             playersleft++;//after the second time here it is not coming here and skiping over it
         }
     }
+    console.log("Players left 1 " + playersleft)
     if(playersleft==0)
     {
       return("you have been lying")
@@ -307,7 +299,7 @@ AI.prototype.ReturnResponse = function(){
         for(let i = 0; i<24; i++)
         {//it is somehow getting into the insides of here
       //    console.log("inside bottom of ReturnResponse")
-          if(this.Board[i] != null){
+          if(this.Board[i] != true){
             this.guessName = this.Board[i];
             return(this.Board[i]);//and it is returning null
           }
@@ -316,13 +308,14 @@ AI.prototype.ReturnResponse = function(){
     let keeplooping = true;
     while(keeplooping){
       this.currentQ = Math.floor(Math.random() * 13)
-      if(this.questionsAsked[this.currentQ] == false){
+      console.log("current q " + this.currentQ)
+      if(this.questionsAsked[this.currentQ] == false){//infina loop here
         this.questionsAsked[this.currentQ] = true;
         keeplooping = false;
       }
     }
 
-  //  console.log("currentq: "+currentQ)
+    console.log("currentq: "+this.currentQ)
     return(this.currentQ)
 }
 AI.prototype.getCurrentQ = function(){

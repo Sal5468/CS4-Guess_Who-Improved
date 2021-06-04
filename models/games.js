@@ -6,6 +6,8 @@ var Game = mongoose.model("games",{//"info" is name opf collection, required is 
 	ident: { type: Number, required: true, unique: true },
 	AINum: Number,//The number of the ai's character
   AIBoard: [Boolean],//the ai's board xed out or not
+	currentQ: Number,//the current number of the question asked
+	questionsAsked: [Boolean],//an array of the ais perviously asked questions
   ClientBoard:[Boolean],//The clients board xed out or not
 	ClientPlayerChoosen:Number,//The number of the clients character
 

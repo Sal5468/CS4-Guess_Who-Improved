@@ -20,6 +20,23 @@ let AIArray = []
 
 let newClientId = 0;
 
+function initnewClientId()
+{
+  if (newClientId == 0)
+  {
+    User.find({},function(err,user) {
+      if (!err) {
+        let objs = [];
+        for (let i=0;i<user.length;i++) {
+          if (newClientId < user[i].ident)
+            newClientId = user[i].ident;
+        }
+      }
+    });
+  }
+	return null
+}
+
 function initAI(){
 
 }
@@ -42,6 +59,7 @@ router.get("/login",function(req,res){
 });
 
 router.get("/signup",function(req,res){
+	initnewClientId()
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/index.html");
 	}
@@ -209,6 +227,8 @@ router.get('/init', function(req, res)
 							ident: user.ident,
 							AINum: Math.floor(Math.random()*24),
 						  AIBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+							currentQ:-1,
+							questionsAsked:[false,false,false,false,false,false,false,false,false,false,false,false,false],
 						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 							ClientPlayerChoosen:-1,
 
@@ -235,6 +255,8 @@ router.get('/init', function(req, res)
 								AIArray[user.ident] = new AI;
 								AIArray[user.ident].setCharacter(newgame.AINum)
 								AIArray[user.ident].generateAIBoard(newgame.AIBoard)
+								AIArray[user.ident].submitcurrentQ(newgame.currentQ)
+								AIArray[user.ident].generateQuestionsAsked(newgame.questionsAsked)
 								res.json({ident:user.ident,//in init
 									ClientBoard:newgame.ClientBoard,//in init
 									PlayerChoosen:newgame.ClientPlayerChoosen,//in init
