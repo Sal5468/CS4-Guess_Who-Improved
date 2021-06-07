@@ -21,6 +21,8 @@ let AI = function(){
   this.guessname;
   this.questionsAsked = [];
   this.Win = false;
+  this.namesofchar = ["Alex", "Andy", "Ashley", "Brandon", "Chris", "Connor", "Daniel", "David", "Emily", "Jake", "James", "Jon",
+                      "Joseph", "Joshua", "Justin", "Kyle", "Matt", "Megan", "Nick", "Rachael", "Sarah", "Tyler", "William", "Zachary"];
 }
 
 AI.prototype.getGuessName = function()
@@ -108,12 +110,8 @@ AI.prototype.generateQuestionsAsked = function(arrayfromServer){
     }
     console.log("board questions asked "+this.questionsAsked)
 }
-AI.prototype.submitcurrentQ = function(_currentQ){
-    this.currentQ = _currentQ
-    console.log("board currentQ "+this.currentQ)
-}
 
-AI.prototype.EliminateAIBoard = function(numQ, answer, name) {//we need to change all of these to get at the
+AI.prototype.EliminateAIBoard = function(numQ, answer, name,id) {//we need to change all of these to get at the
     /*if(numQ < 14)//for yee mode                                        getCharAnswers in BoardInfo
         OpponentAnswers[numQ] = answer;*/
   //  console.log("Eliminate: numq = " +numQ+", answer = "+answer+ ", name = "+name );
@@ -274,7 +272,7 @@ AI.prototype.EliminateAIBoard = function(numQ, answer, name) {//we need to chang
         }
     }
     console.log("Ais board is now this "+ this.Board)
-    //submit the ais board
+    return(this.Board)
 }
 AI.prototype.ReturnResponse = function(){
     console.log("return responses "+ this.Board)
@@ -295,13 +293,18 @@ AI.prototype.ReturnResponse = function(){
     //therefore playersleft is 0
 //    console.log("middle of ReturnResponse")
   //  console.log("playersleft = "  + playersleft)
-    if(playersleft<3){//meening this is true
+    if(playersleft<3)
+    {//meening this is true
+      console.log("Lol I should be guessing")
         for(let i = 0; i<24; i++)
         {//it is somehow getting into the insides of here
       //    console.log("inside bottom of ReturnResponse")
-          if(this.Board[i] != true){
-            this.guessName = this.Board[i];
-            return(this.Board[i]);//and it is returning null
+          console.log("Lol I should be guessing 2.0")
+          if(this.Board[i] == false)
+          {
+            console.log("Lol I should be guessing"+this.namesofchar[i])//this is t/f so its not
+            this.guessName = this.namesofchar[i];
+            return(this.namesofchar[i]);//and it is returning null
           }
         }
     }
@@ -316,7 +319,7 @@ AI.prototype.ReturnResponse = function(){
     }
 
     console.log("currentq: "+this.currentQ)
-    return(this.currentQ)
+    return({currentquestion:this.currentQ,thequestionsasked:this.questionsAsked})
 }
 AI.prototype.getCurrentQ = function(){
   return(this.currentQ);

@@ -58,7 +58,7 @@
       onequestioncap = false
       $.post("/updateonequestioncap",{ident:serverId,onequestioncap:onequestioncap},null)
       aiturn = true
-      $.post("/updatecurrentlyAsking",{ident:serverId,aiturn:aiturn},null)
+      $.post("/updateaiturn",{ident:serverId,aiturn:aiturn},null)
       aiasksquestion()
     }
     else if(currStep == 3)
