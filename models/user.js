@@ -7,7 +7,8 @@ var userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   valueJY: { type: Number },
-  ident: { type: Number, required: true, unique: true }
+  ident: { type: Number, required: true, unique: true },
+  multiRoomNum: Number
 });
 
 

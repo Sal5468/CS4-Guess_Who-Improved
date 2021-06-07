@@ -99,6 +99,7 @@ router.post("/createRoom",function(req,res){
 					}
 					else if(room){
 						console.log("room created");
+						User.findOneAndUpdate({ident: req.user.ident}, {multiRoomNum: req.body.roomNum}, null)
 						res.json({message: true});
 					}
 					else {
@@ -108,6 +109,9 @@ router.post("/createRoom",function(req,res){
 					console.log(room);
 				})
 			}
+			else {
+				res.json({message:false});
+			}
 		})
 	}
 	else{
@@ -115,29 +119,40 @@ router.post("/createRoom",function(req,res){
 	}
 });
 
-router.get("/getRoom",function(req,res){
+router.get("/getRoom", function(req,res){
+
 	if(req.isAuthenticated()){
-		Room.findOne({roomNum: req.body.roomNum}, function(err, room){
-			console.log(room)
-			if(err){
-				throw err;
-			}
-			else if(room != null){
-				if(room.ClientID == req.user.ident){
-					res.sendFile(__dirname + "/public/views/multi.html");
-				}
-				else {
-					Room.findOneAndUpdate({roomNum: req.body.roomNum}, {Client2ID: req.user.ident} ,function(err, room){
-						if(err){
-							console.log(err);
-						}
-						else{
-							res.sendFile(__dirname + "/public/views/multi.html");
-						}
-					});
-				}
+		res.sendFile(__dirname + "/public/views/multi.html");
+	}
+	else {
+		res.sendFile(__dirname + "/public/views/signup.html");
+	}
+})
+
+
+
+router.get("/initRoom",function(req,res){
+
+	if(req.isAuthenticated()){
+		User.findOne({ident: req.user.ident}, function(err, user){
+			if(user.multiRoomNum == null || user.multiRoomNum == 0){
 
 			}
+			else {
+				Room.findOne({roomNum: user.multiRoomNum}, function(err, room){
+					console.log(room)
+					if(err){
+						console.log(err);
+					}
+					else if(room != null){
+						res.json(room);
+
+					}
+				})
+			}
+
+		}
+
 		})
 	}
 	else{
