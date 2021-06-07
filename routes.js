@@ -523,12 +523,12 @@ router.get("/logout", function(req, res) {
 
 router.post("/signup", function(req, res, next) {
 console.log("post signup");
-console.log("Id number "+newClientId)
 
+  newClientId++
+  console.log("Id number "+newClientId)
   var username = req.body.username;
   var password = req.body.password;
 	var ident = newClientId
-	newClientId++
 
   User.findOne({ username: username }, function(err, user) {
 console.log("User findOne function callback")
