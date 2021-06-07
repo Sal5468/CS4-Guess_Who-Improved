@@ -14,7 +14,10 @@
 
 
 
+$.get("/initRoom", function(data){
 
+  
+})
 
 
   function controller(){

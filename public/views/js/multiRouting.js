@@ -57,7 +57,7 @@ getCurrentMatches();
         $.get("/getRoom",{roomNum: $("#create").val()}, null);
       }
       else {
-        alert("bad create");
+        alert("room already exists, choose another room number");
       }
     });
   }
