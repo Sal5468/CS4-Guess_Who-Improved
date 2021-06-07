@@ -25,12 +25,9 @@ function initnewClientId()
   if (newClientId == 0)
   {
     User.find({},function(err,user) {
-      console.log(user)
-      if (!err)
-      {
+      if (!err) {
         let objs = [];
-        for (let i=0;i<user.length;i++)
-        {
+        for (let i=0;i<user.length;i++) {
           if (newClientId < user[i].ident)
             newClientId = user[i].ident;
         }
@@ -319,11 +316,9 @@ router.get('/init', function(req, res)
 							}
 							else
 							{
-                console.log("what is " + premadegame)
 								AIArray[user.ident] = new AI;
 								AIArray[user.ident].setCharacter(premadegame.AINum)
 								AIArray[user.ident].generateAIBoard(premadegame.AIBoard)
-								AIArray[user.ident].generateQuestionsAsked(premadegame.questionsAsked)
 								res.json({ident:user.ident,//in init
 									ClientBoard:premadegame.ClientBoard,//in init
 									PlayerChoosen:premadegame.ClientPlayerChoosen,//in init
@@ -348,90 +343,70 @@ router.get('/init', function(req, res)
 });
 router.get("/askaiaquestion",function(req,res)
 {
-	numberClicked = req.query.num
-	var returnbool = boardInfo.getCharAnswers(AIArray[req.query.id].getCharacter(),numberClicked)
-	res.json({return:returnbool})
+  if(req.isAuthenticated())
+	{
+  	numberClicked = req.query.num
+  	var returnbool = boardInfo.getCharAnswers(AIArray[req.query.id].getCharacter(),numberClicked)
+  	res.json({return:returnbool})
+  }
+  else
+  {
+    res.json(null)
+  }
 });
 router.post("/sendplayerresponse",function(req,res)
 {//this was causeing the whole ai board to go null
 	//console.log(typeof req.query.answer);
-	var returnarray = AIArray[req.body.id].EliminateAIBoard(AIArray[req.body.id].getCurrentQ(), req.body.answer, AIArray[req.body.id].getGuessName(),req.body.id)
-  console.log("this is the return array "+returnarray)
-  let obj = {AIBoard:returnarray}
-  console.log(obj)
-	if (req.isAuthenticated())
+  if(req.isAuthenticated())
 	{
-		Game.findOneAndUpdate({ident: req.body.id},{"AIBoard":returnarray},function(err, game)
-		{
-			if(err)
-			{
-				console.log("There is an err")
-				res.json(null);
-			}
-		})
-	}
-	res.json(null);
+    AIArray[req.body.id].EliminateAIBoard(AIArray[req.body.id].getCurrentQ(), req.body.answer, AIArray[req.body.id].getGuessName())
+  	res.json(null);
+  }
+  else
+  {
+    res.json(null)
+  }
 });
 
 router.get("/getaiquestion",function(req,res)
 {
-	let response = AIArray[req.query.id].ReturnResponse();//will only return one propper response before returning null
-  if(typeof response != 'object')
+  if(req.isAuthenticated())
   {
-    res.json({num: 13, text: boardInfo.getQuestiontext(response)})
+  	let response = AIArray[req.query.id].ReturnResponse();//will only return one propper response before returning null
+  //	console.log(response)
+  	if(typeof response == typeof "hi" ){
+  		res.json({num: 13, text: boardInfo.getQuestiontext(response)})
+  	}
+  	else{
+  	//	console.log(boardInfo.getQuestiontext(response))//because of that there is an undefined text here
+  		res.json({num: response, text: boardInfo.getQuestiontext(response)})
+  	}
   }
-  let array = response.thequestionsasked
-  let numq = response.currentquestion
-  if (req.isAuthenticated())
-	{
-		Game.findOneAndUpdate({ident: req.query.id},{"questionsAsked":array},function(err, game)
-		{
-			if(err)
-			{
-				console.log("There is an err")
-				res.json(null);
-			}
-		})
-	}
-  if(typeof numq == typeof "hi" )
+  else
   {
-		res.json({num: 13, text: boardInfo.getQuestiontext(numq)})
-	}
-	else
-  {
-		res.json({num: numq, text: boardInfo.getQuestiontext(numq)})
-	}
+    res.json(null)
+  }
 });
 router.get("/makeaguess",function(req,res)
 {
-	let result = false
-	if(req.query.name == AIArray[req.query.id].getCharacter())
-	{
-		result=true
-		//console.log("You win")
-	}
-	else
-	{
-		result=false
-	//	console.log("You lose")
-	}
-	res.json({winlose : result});
+  if(req.isAuthenticated())
+  {
+    let result = false
+    if(req.query.name == AIArray[req.query.id].getCharacter())
+    {
+      result=true
+    }
+    else
+    {
+      result=false
+    }
+    res.json({winlose : result});
+  }
+  else
+  {
+    res.json(null)
+  }
 });
-/*router.get("/aimakeaguess",function(req,res)
-{
-	let result = false
-	if(req.query.name == playercharchosen)
-	{
-		result=true
-	//	console.log("AI wins")
-	}
-	else
-	{
-		result=false
-	//	console.log("AI loses")
-	}
-	res.json({winlose : result});
-});*/
 router.use(function(req, res, next) {
   res.locals.currentUserjy = req.user;
   res.locals.errors = req.flash("error");
@@ -607,23 +582,6 @@ router.post("/login", passport.authenticate("login", {
   failureFlash: true
 }));
 ////////////////////////////////////////////////////////////////////////////////
-/*router.post("/updatecurrentstep", function(req, res) {
-  let obj = {AIBoard:req.body.board}
-  console.log(obj)
-	if (req.isAuthenticated())
-	{
-		Game.findOneAndUpdate({ident: req.body.ident},obj,function(err, game)
-		{
-			if(err)
-			{
-				console.log("There is an err")
-				res.json(null);
-			}
-			res.json(null);
-		})
-	}
-})*/
-
 router.post("/delcurrentgame", function(req, res) {
 	if (req.isAuthenticated())
 	{
