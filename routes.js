@@ -352,24 +352,36 @@ router.post("/sendplayerresponse",function(req,res)
     res.json(null)
   }
 });
-
-router.get("/getaiquestion",function(req,res)
+router.get("/getaiquestion",function(req,res)//work on this tonight
 {
-  if(req.isAuthenticated())
+	let response = AIArray[req.query.id].ReturnResponse();
+  if(typeof response != 'object')
   {
-  	let response = AIArray[req.query.id].ReturnResponse();//will only return one propper response before returning null
-  //	console.log(response)
-  	if(typeof response == typeof "hi" ){
-  		res.json({num: 13, text: boardInfo.getQuestiontext(response)})
-  	}
-  	else{
-  	//	console.log(boardInfo.getQuestiontext(response))//because of that there is an undefined text here
-  		res.json({num: response, text: boardInfo.getQuestiontext(response)})
-  	}
+    res.json({num: 13, text: boardInfo.getQuestiontext(response)})
   }
-  else
+  let array = response.thequestionsasked
+  let numq = response.currentquestion
+  if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ident: req.query.id},{"questionsAsked":array},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+		})
+	}
+	else
   {
-    res.json(null)
+    if(typeof numq == typeof "hi" )
+    {
+  		res.json({num: 13, text: boardInfo.getQuestiontext(numq)})
+  	}
+  	else
+    {
+  		res.json({num: numq, text: boardInfo.getQuestiontext(numq)})
+  	}
   }
 });
 router.get("/makeaguess",function(req,res)
