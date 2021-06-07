@@ -56,8 +56,8 @@
     <br><br><br>
 
     <div class="button1">
-    <button id = "return" type="button">Play Again?</button>
-    <br><br>
+  <!--  <button id = "return" type="button">Play Again?</button>
+    <br><br>-->
     <button id = "mainmenu" type="button">Main Menu</button>
     </div>
 
@@ -121,15 +121,15 @@
 
     $(document).ready(function()
     {
-      $("#return").click(returnClick);
+    //  $("#return").click(returnClick);
       $("#mainmenu").click(mainmenuclick);
     })
-    function returnClick()
+  /*  function returnClick()
     {
       $.get("/getplayvsai",function(data){
         window.location = data.redirect;
       });
-    }
+    }*/
     function mainmenuclick()
     {
       $.get("/getmenu",function(data){
