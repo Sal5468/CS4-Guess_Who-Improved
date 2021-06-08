@@ -131,28 +131,32 @@ router.get("/getRoom", function(req,res){
 
 
 
-router.get("/initRoom",function(req,res){
-
-	if(req.isAuthenticated()){
-		User.findOne({ident: req.user.ident}, function(err, user){
-			if(user.multiRoomNum == null || user.multiRoomNum == 0){
+router.get("/initRoom",function(req,res)
+{
+	if(req.isAuthenticated())
+  {
+		User.findOne({ident: req.user.ident}, function(err, user)
+    {
+			if(user.multiRoomNum == null || user.multiRoomNum == 0)
+      {
 
 			}
-			else {
-				Room.findOne({roomNum: user.multiRoomNum}, function(err, room){
+			else
+      {
+				Room.findOne({roomNum: user.multiRoomNum}, function(err, room)
+        {
 					console.log(room)
-					if(err){
+					if(err)
+          {
 						console.log(err);
 					}
-					else if(room != null){
+					else if(room != null)
+          {
 						res.json(room);
 
 					}
 				})
 			}
-
-		}
-
 		})
 	}
 	else{
@@ -237,188 +241,7 @@ router.get("/encyclopedia",function(req,res){
 });
 ////////////////////////////////////////////////////////////////////////////////
 
-router.get('/init', function(req, res)
-{
-	if(req.isAuthenticated())
-	{
-		User.findOne({ username: req.user.username }, function(err, user)
-		{
-			if(err)
-			{
-				console.log("cant find a user")
-				res.json(null);
-			}
-				Game.findOne({ ident: user.ident }, function(err, game)
-				{
-					if(err)
-					{
-						console.log("error finding game")
-						res.json(null);
-					}
-					if(game==null)
-					{
-						console.log("New Game branch")
-						var obj = new Game({
-							ident: user.ident,
-							AINum: Math.floor(Math.random()*24),
-						  AIBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-							questionsAsked:[false,false,false,false,false,false,false,false,false,false,false,false,false],
-						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-							ClientPlayerChoosen:-1,
 
-							currentStep:0,
-
-							characterchosen:false,
-							currentlyguessing:false,
-							currentlyAsking:false,
-							aiturn:false,
-							onequestioncap:false,
-							respondedtoaiquestion:false,
-							aiguessingplayerchar:false
-						})
-						var newgame = Game.create(obj,function(error,newgame)
-						{//funtion not called untill this is called
-							if(error)
-							{
-								console.log("error creating game")
-								res.json(null);
-							}
-							else
-							{
-								console.log("new game " + newgame);//using info you need to set the ai up to it
-								AIArray[user.ident] = new AI;
-								AIArray[user.ident].setCharacter(newgame.AINum)
-								AIArray[user.ident].generateAIBoard(newgame.AIBoard)
-								AIArray[user.ident].generateQuestionsAsked(newgame.questionsAsked)
-								res.json({ident:user.ident,//in init
-									ClientBoard:newgame.ClientBoard,//in init
-									PlayerChoosen:newgame.ClientPlayerChoosen,//in init
-									characterchosen:newgame.characterchosen,// in init
-									currentlyguessing:newgame.currentlyguessing,//in init
-									currentlyAsking:newgame.currentlyAsking,//in init
-									aiturn:newgame.aiturn,//in initAI
-									onequestioncap:newgame.onequestioncap,//in init
-									respondedtoaiquestion:newgame.respondedtoaiquestion,//in init
-									aiguessingplayerchar:newgame.aiguessingplayerchar,
-									currentStep:newgame.currentStep});
-							}
-						});
-					}
-					else
-					{
-						console.log("game already exists")
-						Game.findOne({ ident: user.ident }, function(err, premadegame)
-						{
-							if(err)
-							{
-								console.log("There is an err")
-								res.json(null);
-							}
-							else
-							{
-								AIArray[user.ident] = new AI;
-								AIArray[user.ident].setCharacter(premadegame.AINum)
-								AIArray[user.ident].generateAIBoard(premadegame.AIBoard)
-								res.json({ident:user.ident,//in init
-									ClientBoard:premadegame.ClientBoard,//in init
-									PlayerChoosen:premadegame.ClientPlayerChoosen,//in init
-									characterchosen:premadegame.characterchosen,// in init
-									currentlyguessing:premadegame.currentlyguessing,//in init
-									currentlyAsking:premadegame.currentlyAsking,//in init
-									aiturn:premadegame.aiturn,//in initAI
-									onequestioncap:premadegame.onequestioncap,//in init
-									respondedtoaiquestion:premadegame.respondedtoaiquestion,//in init
-									aiguessingplayerchar:premadegame.aiguessingplayerchar,
-									currentStep:premadegame.currentStep});//in init
-							}
-						})
-					}
-				})
-		})
-	}
-	else
-	{
-		res.json(null);
-	}
-});
-router.get("/askaiaquestion",function(req,res)
-{
-  if(req.isAuthenticated())
-	{
-  	numberClicked = req.query.num
-  	var returnbool = boardInfo.getCharAnswers(AIArray[req.query.id].getCharacter(),numberClicked)
-  	res.json({return:returnbool})
-  }
-  else
-  {
-    res.json(null)
-  }
-});
-router.post("/sendplayerresponse",function(req,res)
-{//this was causeing the whole ai board to go null
-	//console.log(typeof req.query.answer);
-  if(req.isAuthenticated())
-	{
-    AIArray[req.body.id].EliminateAIBoard(AIArray[req.body.id].getCurrentQ(), req.body.answer, AIArray[req.body.id].getGuessName())
-  	res.json(null);
-  }
-  else
-  {
-    res.json(null)
-  }
-});
-router.get("/getaiquestion",function(req,res)//work on this tonight
-{
-	let response = AIArray[req.query.id].ReturnResponse();
-  if(typeof response != 'object')
-  {
-    res.json({num: 13, text: boardInfo.getQuestiontext(response)})
-  }
-  let array = response.thequestionsasked
-  let numq = response.currentquestion
-  if (req.isAuthenticated())
-	{
-		Game.findOneAndUpdate({ident: req.query.id},{"questionsAsked":array},function(err, game)
-		{
-			if(err)
-			{
-				console.log("There is an err")
-				res.json(null);
-			}
-		})
-	}
-	else
-  {
-    if(typeof numq == typeof "hi" )
-    {
-  		res.json({num: 13, text: boardInfo.getQuestiontext(numq)})
-  	}
-  	else
-    {
-  		res.json({num: numq, text: boardInfo.getQuestiontext(numq)})
-  	}
-  }
-});
-router.get("/makeaguess",function(req,res)
-{
-  if(req.isAuthenticated())
-  {
-    let result = false
-    if(req.query.name == AIArray[req.query.id].getCharacter())
-    {
-      result=true
-    }
-    else
-    {
-      result=false
-    }
-    res.json({winlose : result});
-  }
-  else
-  {
-    res.json(null)
-  }
-});
 router.use(function(req, res, next) {
   res.locals.currentUserjy = req.user;
   res.locals.errors = req.flash("error");
@@ -593,7 +416,193 @@ router.post("/login", passport.authenticate("login", {
   failureRedirect: "/faillogin",
   failureFlash: true
 }));
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////AI Code
+router.get('/init', function(req, res)
+{
+	if(req.isAuthenticated())
+	{
+		User.findOne({ username: req.user.username }, function(err, user)
+		{
+			if(err)
+			{
+				console.log("cant find a user")
+				res.json(null);
+			}
+				Game.findOne({ ident: user.ident }, function(err, game)
+				{
+					if(err)
+					{
+						console.log("error finding game")
+						res.json(null);
+					}
+					if(game==null)
+					{
+						console.log("New Game branch")
+						var obj = new Game({
+							ident: user.ident,
+							AINum: Math.floor(Math.random()*24),
+						  AIBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+							questionsAsked:[false,false,false,false,false,false,false,false,false,false,false,false,false],
+						  ClientBoard:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+							ClientPlayerChoosen:-1,
+
+							currentStep:0,
+
+							characterchosen:false,
+							currentlyguessing:false,
+							currentlyAsking:false,
+							aiturn:false,
+							onequestioncap:false,
+							respondedtoaiquestion:false,
+							aiguessingplayerchar:false
+						})
+						var newgame = Game.create(obj,function(error,newgame)
+						{//funtion not called untill this is called
+							if(error)
+							{
+								console.log("error creating game")
+								res.json(null);
+							}
+							else
+							{
+								console.log("new game " + newgame);//using info you need to set the ai up to it
+								AIArray[user.ident] = new AI;
+								AIArray[user.ident].setCharacter(newgame.AINum)
+								AIArray[user.ident].generateAIBoard(newgame.AIBoard)
+								AIArray[user.ident].generateQuestionsAsked(newgame.questionsAsked)
+								res.json({ident:user.ident,//in init
+									ClientBoard:newgame.ClientBoard,//in init
+									PlayerChoosen:newgame.ClientPlayerChoosen,//in init
+									characterchosen:newgame.characterchosen,// in init
+									currentlyguessing:newgame.currentlyguessing,//in init
+									currentlyAsking:newgame.currentlyAsking,//in init
+									aiturn:newgame.aiturn,//in initAI
+									onequestioncap:newgame.onequestioncap,//in init
+									respondedtoaiquestion:newgame.respondedtoaiquestion,//in init
+									aiguessingplayerchar:newgame.aiguessingplayerchar,
+									currentStep:newgame.currentStep});
+							}
+						});
+					}
+					else
+					{
+						console.log("game already exists")
+						Game.findOne({ ident: user.ident }, function(err, premadegame)
+						{
+              console.log("new game " + premadegame)
+							if(err)
+							{
+								console.log("There is an err")
+								res.json(null);
+							}
+							else
+							{
+								AIArray[user.ident] = new AI;
+								AIArray[user.ident].setCharacter(premadegame.AINum)
+								AIArray[user.ident].generateAIBoard(premadegame.AIBoard)
+                AIArray[user.ident].generateQuestionsAsked(premadegame.questionsAsked)
+								res.json({ident:user.ident,//in init
+									ClientBoard:premadegame.ClientBoard,//in init
+									PlayerChoosen:premadegame.ClientPlayerChoosen,//in init
+									characterchosen:premadegame.characterchosen,// in init
+									currentlyguessing:premadegame.currentlyguessing,//in init
+									currentlyAsking:premadegame.currentlyAsking,//in init
+									aiturn:premadegame.aiturn,//in initAI
+									onequestioncap:premadegame.onequestioncap,//in init
+									respondedtoaiquestion:premadegame.respondedtoaiquestion,//in init
+									aiguessingplayerchar:premadegame.aiguessingplayerchar,
+									currentStep:premadegame.currentStep});//in init
+							}
+						})
+					}
+				})
+		})
+	}
+	else
+	{
+		res.json(null);
+	}
+});
+
+router.get("/askaiaquestion",function(req,res){
+  if(req.isAuthenticated())
+	{
+  	numberClicked = req.query.num
+  	var returnbool = boardInfo.getCharAnswers(AIArray[req.query.id].getCharacter(),numberClicked)
+  	res.json({return:returnbool})
+  }
+  else
+  {
+    res.json(null)
+  }
+});
+router.post("/sendplayerresponse",function(req,res){
+  var returnarray = AIArray[req.body.id].EliminateAIBoard(AIArray[req.body.id].getCurrentQ(), req.body.answer, AIArray[req.body.id].getGuessName(),req.body.id)
+  console.log("this is the return array "+returnarray)
+	if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ident: req.body.id},{"AIBoard":returnarray},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+		})
+	}
+	res.json(null);
+});
+router.get("/getaiquestion",function(req,res){
+  let response = AIArray[req.query.id].ReturnResponse();//will only return one propper response before returning null
+  if(typeof response != 'object')
+  {
+    res.json({num: 13, text: boardInfo.getQuestiontext(response)})
+  }
+  let array = response.thequestionsasked
+  let numq = response.currentquestion
+  if (req.isAuthenticated())
+	{
+		Game.findOneAndUpdate({ident: req.query.id},{"questionsAsked":array},function(err, game)
+		{
+			if(err)
+			{
+				console.log("There is an err")
+				res.json(null);
+			}
+		})
+	}
+  else
+  {
+    res.json(null);
+  }
+  if(typeof numq == typeof "hi" )
+  {
+		res.json({num: 13, text: boardInfo.getQuestiontext(numq)})
+	}
+	else
+  {
+		res.json({num: numq, text: boardInfo.getQuestiontext(numq)})
+	}
+});
+router.get("/makeaguess",function(req,res){
+  if(req.isAuthenticated())
+  {
+    let result = false
+    if(req.query.name == AIArray[req.query.id].getCharacter())
+    {
+      result=true
+    }
+    else
+    {
+      result=false
+    }
+    res.json({winlose : result});
+  }
+  else
+  {
+    res.json(null)
+  }
+});
 router.post("/delcurrentgame", function(req, res) {
 	if (req.isAuthenticated())
 	{
