@@ -91,16 +91,18 @@ getCurrentMatches();
     alert("create " + $("#create").val())
     $.post("/createRoom",{roomNum: $("#create").val()}, function(data){
       if(data.message == true){
-        alert("good create");
+        //alert("good create");
+        alert("join " + $("#join").val())
         $.get("/getRoom",{roomNum: $("#create").val()}, function(data2){
-          if(typeof data2.redirect == String){
-            window.location = data.redirect;
+          if(typeof data2.redirect == typeof "hi"){
+            window.location = data2.redirect;
           }
           else{
             alert("Error: Could not join room.")
           }
 
         });
+
       }
       else {
         alert("room already exists, choose another room number");

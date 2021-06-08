@@ -122,22 +122,32 @@ router.get("/getRoom", function(req,res){
 
 	if(req.isAuthenticated()){
 		Room.findOne({roomNum: req.query.roomNum}, function(err, room){
-			if(room.ClientID == null){
+      if(room != null){
+        if(room.ClientID == null){
 
-				Room.findOneAndUpdate({roomNum: room.roomNum}, {ClientID: req.user.ident}, null)
-				res.json({redirect: "/multiplayer"})
-			}
-			else if(room.Client2ID == null){
+  				room.ClientID == req.user.ident;
+          User.findOne({ident: req.user.ident}, function(err, user){
+            user.changeRoom(req.query.roomNum)
+            user.currRoom = req.query.roomNum
+            res.json({redirect: "/multiplayer"})
+          })
 
-				Room.findOneAndUpdate({roomNum: room.roomNum}, {Client2ID: req.user.ident}, null)
-				res.json({redirect: "/multiplayer"})
-			}
-			else{
-				res.json({redirect: false})
-			}
+  			}
+  			else if(room.Client2ID == null){
+
+  				room.Client2ID = req.user.ident;
+          User.findOne({ident: req.user.ident}, function(err, user){
+            user.changeRoom(req.query.roomNum)
+            user.currRoom = req.query.roomNum
+            res.json({redirect: "/multiplayer"})
+          })
+
+  			}
+  			else{
+  				res.json({redirect: false})
+  			}
+      }
 		})
-
-
 		}
 
 	else {
@@ -151,11 +161,12 @@ router.get("/initRoom",function(req,res){
 
 	if(req.isAuthenticated()){
 		User.findOne({ident: req.user.ident}, function(err, user){
-			if(user.currRoom == null || user.currRoom == 0){
+      console.log(user.getRoom());
+			if(user.currRoom == null){
 
 			}
 			else {
-				Room.findOne({roomNum: user.currRoom}, function(err, room){
+				Room.findOne({roomNum: user.getRoom()}, function(err, room){
 					console.log(room)
 					if(err)
           {
@@ -188,7 +199,7 @@ router.get("/getCurrMatches",function(req,res){
       if (!err) {
         let objs = [];
         //console.log(room);
-				console.log(room[0]);
+				//console.log(room[0]);
 				res.json({retarray: room})
       }
     });

@@ -16,7 +16,7 @@
 
 $.get("/initRoom", function(data){
 
-  
+
 })
 
 
@@ -706,7 +706,7 @@ $.get("/initRoom", function(data){
   function guessWhoClicked()
   {
     let current = $(location).attr('href')
-    let currentreplace = current.replace("playvsai","");
+    let currentreplace = current.replace("multiplayer","");
     window.location.href = currentreplace
   }
 

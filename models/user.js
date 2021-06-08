@@ -50,7 +50,10 @@ userSchema.methods.name = function() {
   return this.displayName || this.username;
 };
 userSchema.methods.changeRoom = function(num){
-  currRoom = num
+  this.currRoom = num
+}
+userSchema.methods.getRoom = function(){
+  return(this.currRoom)
 }
 
 var User = mongoose.model("User", userSchema);

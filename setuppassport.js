@@ -1,4 +1,4 @@
-var passport = require("passport"); 
+var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 
 var User = require("./models/user");
@@ -29,7 +29,7 @@ module.exports = function() {
       user.checkPassword(password, function(err, isMatch) {
         if (err) { return done(err); }
         if (isMatch) {
-    console.log("yes there is a match")
+          console.log("yes there is a match")
 
           return done(null, user);
 
