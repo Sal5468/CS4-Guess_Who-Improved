@@ -90,8 +90,10 @@ router.post("/createRoom",function(req,res){
 					ClientID: req.user.ident,
 					Client2ID: null,
 					ClientBoard: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-					Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-					roomNum: req.body.roomNum
+          Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+          ClientChar: -1,
+					Client2Char: -1,
+          roomNum: req.body.roomNum
 				})
 				Room.create(newRoom, function(err, room){
 					if(err){
@@ -175,6 +177,12 @@ router.get("/initRoom",function(req,res){
 		res.sendFile(__dirname + "/public/views/signup.html");
 	}
 });
+
+router.post("/submitMultiPlayerchoosen",function(req,res){
+  //there will be an if statemtn chicking the secnd player status of the client.
+  //then it will slot into the acording room.find cause it will check room client id
+  // then it will go and update the clients char
+})
 
 router.get("/getCurrMatches",function(req,res){
 

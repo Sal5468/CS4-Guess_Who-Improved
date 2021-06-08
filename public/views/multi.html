@@ -37,7 +37,6 @@
 
   <body>
       <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg" height="100" onclick="guessWhoClicked()">
-      <img style="float: right" src="../images/green-arrow.png" alt="green arrow img" class="greenarrowimg" height="100" onclick="controller()">
       <h1 style="text-align: left" id="roomNum">Room:</h1>
       <div style="text-align: center"><h1 id="prompt1" style="display: inline-block">Choose your Character</h1></div>
 
@@ -48,10 +47,11 @@
         <p>Chat</p>
         <ul id="chat">
         </ul>
-        <div>
-          <h1 style="display: inline-block; color: white;" onclick="Yes()">Yes</h1>
-          <h1 style="display: inline-block; color: white; padding-left: 50px; padding-right: 25px;" onclick="No()">No</h1>
-        </div>
+        <label>Name</label>
+        <input id="name" name="a" type="text"/><br>
+        <label>Comment</label>
+        <input type="text" id="comment" value="">
+        <input type="button" value="Send" onclick="doit()">
       </div>
 
       <img src="../images/AlexCard.png" alt="Alex" height="150" id="Alex" onclick="Alex()">
@@ -82,45 +82,20 @@
     <br><br>
     <div>
       <h1 style="display: inline-block">Character Chosen:</h1>
-      <h1 style="display: inline-block; float: right; color: #ff0000 ">Questions</h1>
     </div>
     <img src="../images/YEE.png" alt="Player" id="playerChar" height="300" style="display: inline-block">
 
-
-
     <div style="float: right; display: inline-block">
       <div style="display: inline-block;  padding-left: 50px">
-        <h2>Other Questions</h2>
-        <p onclick="questionClick(8)" id="8">Does your character have glasses?</p>
-        <p onclick="questionClick(9)" id="9">Does your character have a hat?</p>
-        <p onclick="questionClick(10)" id="10">Does your character have earrings?</p>
-        <p onclick="questionClick(11)" id="11">Is your character a male?</p>
-        <p onclick="questionClick(12)" id="12">Does your character have light skin?</p>
         <h2 style="color: white;" onclick="guessClick()" id="makeGuess">Make a Guess</h2>
       </div>
-      <div style="display: inline-block;  padding-left: 50px">
-        <h2>Hair Questions</h2>
-        <p onclick="questionClick(0)" id="0">Does your character have long hair?</p>
-        <p onclick="questionClick(1)" id="1">Does your character have gray hair?</p>
-        <p onclick="questionClick(2)" id="2">Does your character have orange hair?</p>
-        <p onclick="questionClick(3)" id="3">Does your character have black hair?</p>
-        <p onclick="questionClick(4)" id="4">Does your character have blonde hair?</p>
-        <p onclick="questionClick(5)" id="5">Does your character have facial hair?</p>
-        <p onclick="questionClick(6)" id="6">Does your character have a moustache?</p>
-        <p onclick="questionClick(7)" id="7">Does your character have a beard?</p>
-      </div>
+    </div>
 
     </div>
     <br><br><br><br><br>
     <img style="float: right;" alt="" class="thismusicicon" id="musicicon" src="../images/1024px-Mute_Icon.png" />
     <audio id="player" autoplay="autoplay" src="../sound/1-hour-of-silence.mp3"></audio>
 
-    <label>Name</label>
-    <input id="name" name="a" type="text"/><br>
-    <label>Comment</label>
-    <input type="text" id="comment" value="">
-    <input type="button" value="Send" onclick="doit()">
-    <ul id='messages'></ul>
     <script>
       let ident;
 
