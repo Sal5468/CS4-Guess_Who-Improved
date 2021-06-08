@@ -80,12 +80,12 @@ router.get("/signup",function(req,res){
 router.post("/createRoom",function(req,res){
 	if(req.isAuthenticated()){
 		Room.findOne({roomNum: req.body.roomNum}, function(err, room){
-			console.log(room)
+			//console.log(room)
 			if(err){
 				throw err;
 			}
 			else if(room == null){
-				console.log(req.user.ident);
+				//console.log(req.user.ident);
 				var newRoom = new Room({
 					ClientID: req.user.ident,
 					Client2ID: null,
@@ -99,14 +99,13 @@ router.post("/createRoom",function(req,res){
 					}
 					else if(room){
 						console.log("room created");
-						User.findOneAndUpdate({ident: req.user.ident}, {multiRoomNum: req.body.roomNum}, null)
 						res.json({message: true});
 					}
 					else {
 						res.json({message: false});
 					}
 
-					console.log(room);
+					//console.log(room);
 				})
 			}
 			else {
@@ -122,8 +121,25 @@ router.post("/createRoom",function(req,res){
 router.get("/getRoom", function(req,res){
 
 	if(req.isAuthenticated()){
-		res.sendFile(__dirname + "/public/views/multi.html");
-	}
+		Room.findOne({roomNum: req.query.roomNum}, function(err, room){
+			if(room.ClientID == null){
+
+				Room.findOneAndUpdate({roomNum: room.roomNum}, {ClientID: req.user.ident}, null)
+				res.json({redirect: "/multiplayer"})
+			}
+			else if(room.Client2ID == null){
+
+				Room.findOneAndUpdate({roomNum: room.roomNum}, {Client2ID: req.user.ident}, null)
+				res.json({redirect: "/multiplayer"})
+			}
+			else{
+				res.json({redirect: false})
+			}
+		})
+
+
+		}
+
 	else {
 		res.sendFile(__dirname + "/public/views/signup.html");
 	}
@@ -135,11 +151,11 @@ router.get("/initRoom",function(req,res){
 
 	if(req.isAuthenticated()){
 		User.findOne({ident: req.user.ident}, function(err, user){
-			if(user.multiRoomNum == null || user.multiRoomNum == 0){
+			if(user.currRoom == null || user.currRoom == 0){
 
 			}
 			else {
-				Room.findOne({roomNum: user.multiRoomNum}, function(err, room){
+				Room.findOne({roomNum: user.currRoom}, function(err, room){
 					console.log(room)
 					if(err){
 						console.log(err);
@@ -150,8 +166,6 @@ router.get("/initRoom",function(req,res){
 					}
 				})
 			}
-
-		}
 
 		})
 	}
@@ -165,19 +179,26 @@ router.get("/getCurrMatches",function(req,res){
 	if(req.isAuthenticated()){
 		console.log(req.user.username+ " is in multirouting");
 		//ADD CODE
-		let retarray = [{player1: req.user.username}];
+		//let retarray = [{player1: req.user.username}];
 		//console.log(Room.count());
-		/*
-		Room.find({}, {projection: {ClientID: 1,Client2ID: 1,ClientBoard: 0,Client2Board: 0,Roomnum: 1}}).toArray(function(err, result){
-			if(err){
-				throw err;
-			}
-			else{
-				console.log(result);
-				res.json({retarray: result})
-			}
-		})*/
-		res.json({retarray: retarray})
+
+		Room.find({},function(err,room) {
+      if (!err) {
+        let objs = [];
+        //console.log(room);
+				console.log(room[0]);
+				res.json({retarray: room})
+      }
+    });
+		//res.json({retarray: retarray})
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+});
+router.get("/multiplayer",function(req,res){
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/multi.html");
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
@@ -515,15 +536,20 @@ router.get("/userInfo",function(req,res){
 		res.json(null);
 	}
 });
+
+
 router.get("/getUserName",function(req,res){
   console.log("getUserName");
+	console.log(req.query.ident);
      if (req.isAuthenticated()) {
-			 User.findOne({ident: req.ident}, function(err, user){
+			 User.findOne({ident: req.query.ident}, function(err, user){
+
 				 if(err){
 					 console.log(err);
 				 }
 				 else if(user != null){
-					 res.json(user.username);
+					 console.log("getUserName " + user.username);
+					 res.json({name: user.username});
 				 }
 
 			 })

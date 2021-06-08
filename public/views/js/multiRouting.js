@@ -3,19 +3,49 @@
 
 getCurrentMatches();
   function getCurrentMatches(){
+
+    //add polling evetually
+    $("#currmatches").empty()
     $.get("/getCurrMatches",function(data){
+
       if(!data){
         console.log("no data");
       }
-      console.log(data.retarray[0].player1);
+
+      //console.log(data.retarray[0]);
       for(let i = 0; i<data.retarray.length; i++){
         //something like this??
-        $("#currmatches").append('<li>' + data.retarray[i].player1 + " vs " + data.retarray[i].player2 + " in room: "+ data.retarray[i].room + '</li>');
+        console.log(data.retarray.length);
+        let name1;
+        let name2;
+
+        //console.log(data.retarray[i].ClientID);
+        //console.log(data.retarray[i].Client2ID);
+
+
+        //asynchronous programming applies here, need to solve in reliable way...
+        if(data.retarray[i].ClientID != null){
+          $.get("/getUserName", {ident: data.retarray[i].ClientID}, function(data2){
+            name1 = data2.name;
+            console.log("name1 " + name1 + " = " + data2.name);
+            $("#currmatches").append('<li>' + name1 + " vs " + name2 + " in room: "+ data.retarray[i].roomNum + '</li>');
+          })
+          console.log("name1 " + name1);
+        }
+        if(data.retarray[i].Client2ID != null){
+          $.get("/getUserName",{ident: data.retarray[i].Client2ID},function(data3){
+            name2 = data3.name;
+            console.log(typeof name2);
+
+          })
+        }
+
+
       }
     })
 
 
-    //setTimeout(getCurrentMatches, 1000);
+    setTimeout(getCurrentMatches, 5000);
   }
 
 
@@ -47,14 +77,30 @@ getCurrentMatches();
   }
   function joinClicked(){
     alert("join " + $("#join").val())
-    //$.get("/getRoom")
+    $.get("/getRoom",{roomNum: $("#join").val()}, function(data2){
+      if(typeof data2.redirect == typeof "hi"){
+        window.location = data2.redirect;
+      }
+      else{
+        alert("Error: Could not join room.")
+      }
+
+    });
   }
   function createClicked(){
     alert("create " + $("#create").val())
     $.post("/createRoom",{roomNum: $("#create").val()}, function(data){
       if(data.message == true){
         alert("good create");
-        $.get("/getRoom",{roomNum: $("#create").val()}, null);
+        $.get("/getRoom",{roomNum: $("#create").val()}, function(data2){
+          if(typeof data2.redirect == String){
+            window.location = data.redirect;
+          }
+          else{
+            alert("Error: Could not join room.")
+          }
+
+        });
       }
       else {
         alert("room already exists, choose another room number");

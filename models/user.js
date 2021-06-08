@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
   password: { type: String, required: true },
   valueJY: { type: Number },
   ident: { type: Number, required: true, unique: true },
-  multiRoomNum: Number
+  currRoom: {type: Number}
 });
 
 
@@ -23,15 +23,16 @@ console.log("userSchema.pre(sav...")
     console.log("!user.isModified")
     return done();
   }
-console.log("bcrypt.genSalt")
+//console.log("bcrypt.genSalt")
   bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
-console.log("bcrypt.genSalt function callback")
+//console.log("bcrypt.genSalt function callback")
     if (err) { return done(err); }
     bcrypt.hash(user.password, salt, noop, function(err, hashedPassword) {
-console.log("bcrypt.hash function callback  " + hashedPassword)
+//console.log("bcrypt.hash function callback  " + hashedPassword)
       if (err) { return done(err); }
       user.password = hashedPassword;
       user.valueJY = Math.floor(Math.random()*1000);
+      user.currRoom = null;
       done();
     });
   });
@@ -48,6 +49,9 @@ userSchema.methods.checkPassword = function(guess, done) {
 userSchema.methods.name = function() {
   return this.displayName || this.username;
 };
+userSchema.methods.changeRoom = function(num){
+  currRoom = num
+}
 
 var User = mongoose.model("User", userSchema);
 
