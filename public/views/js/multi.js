@@ -1,13 +1,9 @@
 //types: guessChar, setchar, askQ
   let characterchosen = false;
   let currentlyguessing = false
-  let currentlyAsking = false;
-  let aiturn = false
-  let onequestioncap = false
-  let currStep = 0;
-  let haveyouwon = -1
   let currentmessage = 1
   let currentmessagetodel = 1
+  let areyousecondplayer = false//false = the first player true = second player
 
   let roomID = 0;
 
@@ -20,89 +16,21 @@ $.get("/initRoom", function(data){
 })
 
 
-  function controller(){
-    if(currStep == 0)
-    {
-      if(characterchosen)
-      {
-        currStep++;
-        $("#prompt1").html("Ask A Question Or Guess The AI's Character")
-        characterchosen = true;
-        currentlyguessing = false;
-        currentlyAsking = true;
-      }
-      else
-      {
-        alert("Please Choose a Character Before Moving On")
-        characterchosen = false;
-        currentlyguessing = false;
-        currentlyAsking = false;
-      }
-    }
-    else if(currStep == 1)
-    {
-      if(onequestioncap == false)
-      {
-        alert("Please Ask a Question Before Moving On")
-        return
-      }
-      currStep++;
-      $("#prompt1").html("Eliminate Characters")
-      characterchosen = true;
-      currentlyguessing = false;
-      currentlyAsking = false;
-    }
-    else if(currStep == 2)
-    {
-      currStep++;
-      $("#prompt1").html("AI Asks You A Question")
-      characterchosen = true;
-      currentlyguessing = false;
-      currentlyAsking = false;
-      onequestioncap = false
-    }
-    else if(currStep == 3)
-    {
-      if(respondedtoaiquestion == false)
-      {
-        alert("Please Respond To The AI's Question")
-        return
-      }
-      $("#prompt1").html("Ask A Question Or Guess The AI's Character")
-      characterchosen = true;
-      currentlyguessing = false
-      currentlyAsking = true;
-      onequestioncap = false
-      currStep = 1;
-    }
-  }
 
   function guessClick()
   {
-    if(currStep == 1 && onequestioncap==false)
+    currentlyguessing = !currentlyguessing
+    if(currentlyguessing)
     {
-      currentlyguessing = !currentlyguessing;
-  //    console.log(currentlyguessing);
-      if(currentlyguessing){
-        $("#makeGuess").attr("style", "color: magenta")
-      }
-      else{
-        $("#makeGuess").attr("style", "color: white")
-      }
-    }
-    else if(onequestioncap)
-    {
-      alert("You Have Already Used Your Turn To Ask A Question")
+      $("#makeGuess").attr("style", "color: magenta")
     }
     else
     {
-      alert("Please Wait For Your Turn To Guess")
+      $("#makeGuess").attr("style", "color: white")
     }
   }
-  function sus(data)
+  function sus(data)//update the code to be like the other ones
   {
-//    console.log("I am here")
-  //  console.log("data.winlose"+data.winlose)
     if(data.winlose)
     {
       let current = $(location).attr('href')
@@ -115,6 +43,12 @@ $.get("/initRoom", function(data){
       let currentreplace = current.replace("playmulti","lose");
       window.location.href = currentreplace
     }
+  }
+  function guessWhoClicked()
+  {
+    let current = $(location).attr('href')
+    let currentreplace = current.replace("playmulti","");
+    window.location.href = currentreplace
   }
 
   function Alex()
@@ -135,6 +69,7 @@ $.get("/initRoom", function(data){
     {
       $("#playerChar").attr("src", "../images/AlexCard.png")//this changes the src of the guessed player
       characterchosen = true//lets comp know we havechosen a character
+      $.post("/multiplayer",{ident:serverId,num:0,secondplayer:areyousecondplayer},null)
     }
   }
 
@@ -620,81 +555,7 @@ $.get("/initRoom", function(data){
       characterchosen = true
     }
   }
-
-
-
-  function questionClick(num)
-  {
-    if(currentlyAsking==true && onequestioncap == false)
-    {
-      onequestioncap = true
-      $.get("/askaiaquestion",{num: num, id:roomID},function(data)
-      {
-        if(currStep = 1)
-        {
-          if(currentmessage>9)
-          {
-            $("."+currentmessagetodel).remove()
-            currentmessagetodel++
-          }
-          $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"Player: "+$("#"+num).html()+'</li>');
-          if(data.return)
-          {
-            $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"AI: Yes"+'</li>');
-          }
-          else
-          {
-            $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"AI: No"+'</li>');
-          }
-          currentmessage++
-  //console.log(currentmessage)
-        }
-      })
-    }
-    else if(onequestioncap)
-    {
-      alert("You Have Already Guessed This Round!")
-    }
-    else
-    {
-      alert("You cannot do that now!")
-    }
-
-  }
 ////////////////////////////////////////////////////////////////////////////////////
-
-
-  function Yes(){
-    if(aiturn)
-    {
-      if(aiguessingplayerchar)
-      {sus({winlose:false})}
-      $.post("/sendplayerresponse",{answer: true, id: roomID},null)
-      $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"Player: Yes"+'</li>');
-      currentmessage++
-      respondedtoaiquestion = true
-      aiturn = false;
-    }
-    else{
-      alert("You cannot do that now.");
-    }
-  }
-
-  function No(){
-    if(aiturn)
-    {
-      if(aiguessingplayerchar)
-      {sus({winlose:true})}
-      $.post("/sendplayerresponse",{answer: false, id:roomID},null)
-      $("#chat").append('<li style="color: white;" class ='+currentmessage+'>'+"Player: No"+'</li>');
-      currentmessage++
-      respondedtoaiquestion = true
-      aiturn = false;
-    }
-    else{
-      alert("You cannot do that now.");
-    }
-  }
   $(document).ready(function()
   {
     //$.post("/init",null,function(data){
@@ -702,13 +563,6 @@ $.get("/initRoom", function(data){
       //console.log(roomID);
     //});
   });
-
-  function guessWhoClicked()
-  {
-    let current = $(location).attr('href')
-    let currentreplace = current.replace("multiplayer","");
-    window.location.href = currentreplace
-  }
 
   $("#musicicon").click(trialfunction);
 
