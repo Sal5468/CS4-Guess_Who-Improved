@@ -71,6 +71,39 @@ router.get("/signup",function(req,res){
 	}
 });*/
 
+router.post("/multiinit",function(req,res)
+{
+  if(req.isAuthenticated())
+  {
+    console.log("finding stuff")
+    User.findOne({ username: req.user.username }, function(err, user)
+    {
+      console.log("room of user is " + user.currRoom)
+      Room.findOne({ roomNum: user.currRoom }, function(err, room)
+      {
+        console.log("room is " + room)
+        if(user.ident == room.ClientID)
+        {
+          res.json({secondplayer:false,
+                    roomId:room.roomNum,
+                    clientID:room.ClientID,
+                    charchosen:room.ClientChar,
+                    board:room.ClientBoard})
+        }
+        else if(user.ident == room.Client2ID)
+        {
+          res.json({secondplayer:true,
+                    roomId:room.roomNum,
+                    clientID:room.Client2ID,
+                    charchosen:room.Client2Char,
+                    board:room.Client2Board})
+        }
+      })
+    })
+  }
+})
+
+
 router.post("/createRoom",function(req,res){
 	if(req.isAuthenticated()){
 		Room.findOne({roomNum: req.body.roomNum}, function(err, room){
@@ -81,7 +114,7 @@ router.post("/createRoom",function(req,res){
 			else if(room == null){
 				//console.log(req.user.ident);
 				var newRoom = new Room({
-					ClientID: req.user.ident,
+					ClientID: null,//simple fix here will change all the code down below
 					Client2ID: null,
 					ClientBoard: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
           Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
@@ -119,25 +152,29 @@ router.get("/getRoom", function(req,res){//I have a few questions
     {
       if(room != null)
       {
-        if(room.ClientID == null)//look into this. coming from the cration of the room clientid will be already set to the clients id
+        if(room.ClientID == null||room.ClientID==req.user.ident)//look into this. coming from the cration of the room clientid will be already set to the clients id
         {//meaning that it would never get into here
-  				room.ClientID = req.user.ident;
-          User.findOne({ident: req.user.ident}, function(err, user)
+          console.log("I am first player")
+          Room.findOneAndUpdate({roomNum: req.query.roomNum}, {ClientID: req.user.ident},function(err, user){})
+  			//	room.ClientID = req.user.ident;
+          User.findOneAndUpdate({ident: req.user.ident}, {currRoom: req.query.roomNum},function(err, user)//should these be find one and updates?
           {
-            user.changeRoom(req.query.roomNum)//also what is this function?
-            user.currRoom = req.query.roomNum
+          //  user.changeRoom(req.query.roomNum)//also what is this function?
+        //    user.currRoom = req.query.roomNum
             res.json({redirect: "/multiplayer"})
           })
   			}
-  			else if(room.Client2ID == null)//so would go to here and it would be basicly vs yourself?
+  			else if(room.Client2ID == null||room.Client2ID==req.user.ident)//so would go to here and it would be basicly vs yourself?
         {
-  				room.Client2ID = req.user.ident;
-          User.findOne({ident: req.user.ident}, function(err, user)
-          {
-            user.changeRoom(req.query.roomNum)//also what is this function?
-            user.currRoom = req.query.roomNum
-            res.json({redirect: "/multiplayer"})
-          })
+          console.log("I am second player")
+          Room.findOneAndUpdate({roomNum: req.query.roomNum}, {Client2ID: req.user.ident},function(err, user){})
+  			//	room.Client2ID = req.user.ident;
+        User.findOneAndUpdate({ident: req.user.ident}, {currRoom: req.query.roomNum},function(err, user)//should these be find one and updates?
+        {
+        //  user.changeRoom(req.query.roomNum)//also what is this function?
+      //    user.currRoom = req.query.roomNum
+          res.json({redirect: "/multiplayer"})
+        })
 			  }
 	      else
         {
@@ -197,7 +234,7 @@ router.get("/getCurrMatches",function(req,res){
 		//ADD CODE
 		//let retarray = [{player1: req.user.username}];
 		//console.log(Room.count());
-
+    console.log("get current matches")
 		Room.find({},function(err,room) {
       if (!err) {
         let objs = [];
@@ -417,6 +454,7 @@ console.log("post signup");
   var username = req.body.username;
   var password = req.body.password;
 	var ident = newClientId
+  var currentRoom = -1
 
   User.findOne({ username: username }, function(err, user) {
 console.log("User findOne function callback")
@@ -434,7 +472,8 @@ console.log("new User")
     var newUser = new User({
       username: username,
       password: password,
-			ident: ident
+			ident: ident,
+      currRoom : currentRoom
     });
     newUser.save(next);    //goes to user.js (userSchema.pre(save))
   });
