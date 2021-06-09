@@ -1,4 +1,4 @@
-//types: guessChar, setchar, askQ
+
   let characterchosen = -1;
   let currentlyguessing = false
   let currentmessage = 1
@@ -560,6 +560,7 @@ $.get("/initRoom", function(data){
 ////////////////////////////////////////////////////////////////////////////////////
   $(document).ready(function()
   {
+    //instead of this whole new post, could use the initroom already?  if you want the extra security that is all good too.
     $.post("/multiinit",null,function(data){
       console.log(data)
       areyousecondplayer = data.secondplayer

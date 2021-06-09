@@ -116,7 +116,7 @@ router.post("/createRoom",function(req,res){
 			else if(room == null){
 				//console.log(req.user.ident);
 				var newRoom = new Room({
-					ClientID: null,//simple fix here will change all the code down below
+					ClientID: req.user.ident,//pretty sure i fixed this issue.
 					Client2ID: null,
 					ClientBoard: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
           Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
@@ -147,7 +147,7 @@ router.post("/createRoom",function(req,res){
 	}
 });
 
-router.get("/getRoom", function(req,res){//I have a few questions
+router.get("/getRoom", function(req,res){
 	if(req.isAuthenticated())
   {
 		Room.findOne({roomNum: req.query.roomNum}, function(err, room)
@@ -159,8 +159,8 @@ router.get("/getRoom", function(req,res){//I have a few questions
           currRooms[req.user.ident] = room.roomNum;
           res.json({redirect: "/multiplayer"})
         }
-        else if(room.ClientID == null)//look into this. coming from the cration of the room clientid will be already set to the clients id
-        {//meaning that it would never get into here
+        else if(room.ClientID == null)
+        {
           console.log(req.user.username + " is joining room " + room.roomNum + " as client1");
           Room.findOneAndUpdate({roomNum: req.query.roomNum}, {ClientID: req.user.ident}, function(err, room){
             if(err){console.log(err);}
@@ -171,7 +171,7 @@ router.get("/getRoom", function(req,res){//I have a few questions
             })
           })
   			}
-  			else if(room.Client2ID == null)//so would go to here and it would be basicly vs yourself?  //added changes?
+  			else if(room.Client2ID == null)
         {
           console.log(req.user.username + " is joining room " + room.roomNum + " as client2");
           Room.findOneAndUpdate({roomNum: req.query.roomNum}, {ClientID: req.user.ident}, function(err, room){
