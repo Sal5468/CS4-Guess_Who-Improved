@@ -1,11 +1,12 @@
 //types: guessChar, setchar, askQ
-  let characterchosen = false;
+  let characterchosen = -1;
   let currentlyguessing = false
   let currentmessage = 1
   let currentmessagetodel = 1
   let areyousecondplayer = false//false = the first player true = second player
 
-  let roomID = 0;
+  let roomID = -1;
+  let clientID = 0
 
 
 
@@ -70,7 +71,7 @@ $.get("/initRoom", function(data){
     {
       $("#playerChar").attr("src", "../images/AlexCard.png")//this changes the src of the guessed player
       characterchosen = true//lets comp know we havechosen a character
-      $.post("/multiplayer",{ident:serverId,num:0,secondplayer:areyousecondplayer},null)
+    //  $.post("/multiplayer",{ident:serverId,num:0,secondplayer:areyousecondplayer},null)
     }
   }
 
@@ -559,11 +560,192 @@ $.get("/initRoom", function(data){
 ////////////////////////////////////////////////////////////////////////////////////
   $(document).ready(function()
   {
+    $.post("/multiinit",null,function(data){
+      console.log(data)
+      areyousecondplayer = data.secondplayer
+      console.log("Are you a second player? "+ areyousecondplayer)
 
-    //$.post("/init",null,function(data){
-      //roomID = data.id;
-      //console.log(roomID);
-    //});
+      roomID = data.roomId//also have to set the room number thing to this
+      console.log("Room number? "+ roomID)
+
+      clientID = data.clientID
+      console.log("what is your client id? "+ clientID)
+
+      console.log("data "+ data.charchosen)
+      if(data.charchosen !=   -1)
+      {
+        if(data.charchosen==0){$("#playerChar").attr("src", "../images/AlexCard.png")}
+        else if(data.charchosen==1){$("#playerChar").attr("src", "../images/AndyCard.png")}
+        else if(data.charchosen==2){$("#playerChar").attr("src", "../images/AshleyCard.png")}
+        else if(data.charchosen==3){$("#playerChar").attr("src", "../images/BrandonCard.png")}
+        else if(data.charchosen==4){  $("#playerChar").attr("src", "../images/ChrisCard.png")}
+        else if(data.charchosen==5){$("#playerChar").attr("src", "../images/ConnorCard.png")}
+        else if(data.charchosen==6){$("#playerChar").attr("src", "../images/DanielCard.png")}
+        else if(data.charchosen==7){$("#playerChar").attr("src", "../images/DavidCard.png")}
+        else if(data.charchosen==8){$("#playerChar").attr("src", "../images/EmilyCard.png")}
+        else if(data.charchosen==9){$("#playerChar").attr("src", "../images/JakeCard.png")}
+        else if(data.charchosen==10){$("#playerChar").attr("src", "../images/JamesCard.png")}
+        else if(data.charchosen==11){$("#playerChar").attr("src", "../images/JonCard.png")}
+        else if(data.charchosen==12){$("#playerChar").attr("src", "../images/JosephCard.png")}
+        else if(data.charchosen==13){$("#playerChar").attr("src", "../images/JoshuaCard.png")}
+        else if(data.charchosen==14){$("#playerChar").attr("src", "../images/JustinCard.png")}
+        else if(data.charchosen==15){$("#playerChar").attr("src", "../images/KyleCard.png")}
+        else if(data.charchosen==16){$("#playerChar").attr("src", "../images/MattCard.png")}
+        else if(data.charchosen==17){$("#playerChar").attr("src", "../images/MeganCard.png")}
+        else if(data.charchosen==18){$("#playerChar").attr("src", "../images/NickCard.png")}
+        else if(data.charchosen==19){$("#playerChar").attr("src", "../images/RachaelCard.png")}
+        else if(data.charchosen==20){$("#playerChar").attr("src", "../images/SarahCard.png")}
+        else if(data.charchosen==21){$("#playerChar").attr("src", "../images/TylerCard.png")}
+        else if(data.charchosen==22){$("#playerChar").attr("src", "../images/WilliamCard.png")}
+        else if(data.charchosen==23){$("#playerChar").attr("src", "../images/ZacharyCard.png")}
+      }
+
+      if(data.board[0]){
+        $("#Alex").attr("src","../images/AlexX.gif")
+      }
+      else{
+        $("#Alex").attr("src","../images/AlexCard.png")
+      }
+      if(data.board[1]){
+        $("#Andy").attr("src","../images/AndyX.gif")
+      }
+      else{
+        $("#Andy").attr("src","../images/AndyCard.png")
+      }
+      if(data.board[2]){
+        $("#Ashley").attr("src","../images/AshleyX.gif")
+      }
+      else{
+        $("#Ashley").attr("src","../images/AshleyCard.png")
+      }
+      if(data.board[3]){
+        $("#Brandon").attr("src","../images/BrandonX.gif")
+      }
+      else{
+        $("#Brandon").attr("src","../images/BrandonCard.png")
+      }
+      if(data.board[4]){
+        $("#Chris").attr("src","../images/ChrisX.gif")
+      }
+      else{
+        $("#Chris").attr("src","../images/ChrisCard.png")
+      }
+      if(data.board[5]){
+        $("#Connor").attr("src","../images/ConnorX.gif")
+      }
+      else{
+        $("#Connor").attr("src","../images/ConnorCard.png")
+      }
+      if(data.board[6]){
+        $("#Daniel").attr("src","../images/DanielX.gif")
+      }
+      else{
+        $("#Daniel").attr("src","../images/DanielCard.png")
+      }
+      if(data.board[7]){
+        $("#David").attr("src","../images/DavidX.gif")
+      }
+      else{
+        $("#David").attr("src","../images/DavidCard.png")
+      }
+      if(data.board[8]){
+        $("#Emily").attr("src","../images/EmilyX.gif")
+      }
+      else{
+        $("#Emily").attr("src","../images/EmilyCard.png")
+      }
+      if(data.board[9]){
+        $("#Jake").attr("src","../images/JakeX.gif")
+      }
+      else{
+        $("#Jake").attr("src","../images/JakeCard.png")
+      }
+      if(data.board[10]){
+        $("#James").attr("src","../images/JamesX.gif")
+      }
+      else{
+        $("#James").attr("src","../images/JamesCard.png")
+      }
+      if(data.board[11]){
+        $("#Jon").attr("src","../images/JonX.gif")
+      }
+      else{
+        $("#Jon").attr("src","../images/JonCard.png")
+      }
+      if(data.board[12]){
+        $("#Joseph").attr("src","../images/JosephX.gif")
+      }
+      else{
+        $("#Joseph").attr("src","../images/JosephCard.png")
+      }
+      if(data.board[13]){
+        $("#Joshua").attr("src","../images/JoshuaX.gif")
+      }
+      else{
+        $("#Joshua").attr("src","../images/JoshuaCard.png")
+      }
+      if(data.board[14]){
+        $("#Justin").attr("src","../images/JustinX.gif")
+      }
+      else{
+        $("#Justin").attr("src","../images/JustinCard.png")
+      }
+      if(data.board[15]){
+        $("#Kyle").attr("src","../images/KyleX.gif")
+      }
+      else{
+        $("#Kyle").attr("src","../images/KyleCard.png")
+      }
+      if(data.board[16]){
+        $("#Matt").attr("src","../images/MattX.gif")
+      }
+      else{
+        $("#Matt").attr("src","../images/MattCard.png")
+      }
+      if(data.board[17]){
+        $("#Megan").attr("src","../images/MeganX.gif")
+      }
+      else{
+        $("#Megan").attr("src","../images/MeganCard.png")
+      }
+      if(data.board[18]){
+        $("#Nick").attr("src","../images/NickX.gif")
+      }
+      else{
+        $("#Nick").attr("src","../images/NickCard.png")
+      }
+      if(data.board[19]){
+        $("#Rachael").attr("src","../images/RachaelX.gif")
+      }
+      else{
+        $("#Rachael").attr("src","../images/RachaelCard.png")
+      }
+      if(data.board[20]){
+        $("#Sarah").attr("src","../images/SarahX.gif")
+      }
+      else{
+        $("#Sarah").attr("src","../images/SarahCard.png")
+      }
+      if(data.board[21]){
+        $("#Tyler").attr("src","../images/TylerX.gif")
+      }
+      else{
+        $("#Tyler").attr("src","../images/TylerCard.png")
+      }
+      if(data.board[22]){
+        $("#William").attr("src","../images/WilliamX.gif")
+      }
+      else{
+        $("#William").attr("src","../images/WilliamCard.png")
+      }
+      if(data.board[23]){
+        $("#Zachary").attr("src","../images/ZacharyX.gif")
+      }
+      else{
+        $("#Zachary").attr("src","../images/ZacharyCard.png")
+      }
+
+    });
   });
 
   $("#musicicon").click(trialfunction);

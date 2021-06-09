@@ -14,7 +14,8 @@ var userSchema = mongoose.Schema({
 
 var noop = function() {};
 
-userSchema.pre("save", function(done) {
+userSchema.pre("save", function(done)
+{
   var user = this;
 
 console.log("userSchema.pre(sav...")
@@ -24,7 +25,8 @@ console.log("userSchema.pre(sav...")
     return done();
   }
 //console.log("bcrypt.genSalt")
-  bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
+  bcrypt.genSalt(SALT_FACTOR, function(err, salt)
+  {
 //console.log("bcrypt.genSalt function callback")
     if (err) { return done(err); }
     bcrypt.hash(user.password, salt, noop, function(err, hashedPassword) {

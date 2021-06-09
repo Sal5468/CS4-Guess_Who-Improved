@@ -99,12 +99,13 @@ getCurrentMatches();
     });
   }
   function createClicked(){
-    alert("create " + $("#create").val())//should add a check to make sure the create is not nothing
-    $.post("/createRoom",{roomNum: $("#create").val()}, function(data){
+    var roomNum = $("#create").val()
+    alert("create " + roomNum)//should add a check to make sure the create is not nothing and if the user already has a roomz
+    $.post("/createRoom",{roomNum: roomNum}, function(data){
       if(data.message == true){
         //alert("good create");
-        alert("join " + $("#join").val())
-        $.get("/getRoom",{roomNum: $("#create").val()}, function(data2){
+        alert("join " + roomNum)
+        $.get("/getRoom",{roomNum: roomNum}, function(data2){
           if(typeof data2.redirect == typeof "hi"){
             window.location = data2.redirect;
           }
