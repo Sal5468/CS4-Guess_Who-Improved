@@ -88,7 +88,7 @@ getCurrentMatches();
     });
   }
   function createClicked(){
-    alert("create " + $("#create").val())
+    alert("create " + $("#create").val())//should add a check to make sure the create is not nothing
     $.post("/createRoom",{roomNum: $("#create").val()}, function(data){
       if(data.message == true){
         //alert("good create");

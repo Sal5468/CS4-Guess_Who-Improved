@@ -558,6 +558,7 @@ $.get("/initRoom", function(data){
 ////////////////////////////////////////////////////////////////////////////////////
   $(document).ready(function()
   {
+    
     //$.post("/init",null,function(data){
       //roomID = data.id;
       //console.log(roomID);

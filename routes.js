@@ -12,10 +12,6 @@ var User = require("./models/user");
 var Game = require("./models/games");
 var Room = require("./models/rooms");
 
-
-let playercharchosen = ""//delete this
-let aiplayerchosen = ""//delete this
-
 let AIArray = []
 
 let newClientId = 0;
@@ -37,9 +33,7 @@ function initnewClientId()
 	return null
 }
 
-function initAI(){
 
-}
 router.get("/",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/index.html");
@@ -106,8 +100,6 @@ router.post("/createRoom",function(req,res){
 					else {
 						res.json({message: false});
 					}
-
-					//console.log(room);
 				})
 			}
 			else {
@@ -120,39 +112,42 @@ router.post("/createRoom",function(req,res){
 	}
 });
 
-router.get("/getRoom", function(req,res){
-
-	if(req.isAuthenticated()){
-		Room.findOne({roomNum: req.query.roomNum}, function(err, room){
-      if(room != null){
-        if(room.ClientID == null){
-
-  				room.ClientID == req.user.ident;
-          User.findOne({ident: req.user.ident}, function(err, user){
-            user.changeRoom(req.query.roomNum)
+router.get("/getRoom", function(req,res){//I have a few questions
+	if(req.isAuthenticated())
+  {
+		Room.findOne({roomNum: req.query.roomNum}, function(err, room)
+    {
+      if(room != null)
+      {
+        if(room.ClientID == null)//look into this. coming from the cration of the room clientid will be already set to the clients id
+        {//meaning that it would never get into here
+  				room.ClientID = req.user.ident;
+          User.findOne({ident: req.user.ident}, function(err, user)
+          {
+            user.changeRoom(req.query.roomNum)//also what is this function?
             user.currRoom = req.query.roomNum
             res.json({redirect: "/multiplayer"})
           })
-
   			}
-  			else if(room.Client2ID == null){
-
+  			else if(room.Client2ID == null)//so would go to here and it would be basicly vs yourself?
+        {
   				room.Client2ID = req.user.ident;
-          User.findOne({ident: req.user.ident}, function(err, user){
-            user.changeRoom(req.query.roomNum)
+          User.findOne({ident: req.user.ident}, function(err, user)
+          {
+            user.changeRoom(req.query.roomNum)//also what is this function?
             user.currRoom = req.query.roomNum
             res.json({redirect: "/multiplayer"})
           })
-
-  			}
-  			else{
+			  }
+	      else
+        {
   				res.json({redirect: false})
   			}
       }
 		})
-		}
-
-	else {
+	}
+	else
+  {
 		res.sendFile(__dirname + "/public/views/signup.html");
 	}
 })
@@ -519,7 +514,7 @@ router.get('/init', function(req, res)
 									characterchosen:newgame.characterchosen,// in init
 									currentlyguessing:newgame.currentlyguessing,//in init
 									currentlyAsking:newgame.currentlyAsking,//in init
-									aiturn:newgame.aiturn,//in initAI
+									aiturn:newgame.aiturn,//in init
 									onequestioncap:newgame.onequestioncap,//in init
 									respondedtoaiquestion:newgame.respondedtoaiquestion,//in init
 									aiguessingplayerchar:newgame.aiguessingplayerchar,
@@ -550,7 +545,7 @@ router.get('/init', function(req, res)
 									characterchosen:premadegame.characterchosen,// in init
 									currentlyguessing:premadegame.currentlyguessing,//in init
 									currentlyAsking:premadegame.currentlyAsking,//in init
-									aiturn:premadegame.aiturn,//in initAI
+									aiturn:premadegame.aiturn,//in init
 									onequestioncap:premadegame.onequestioncap,//in init
 									respondedtoaiquestion:premadegame.respondedtoaiquestion,//in init
 									aiguessingplayerchar:premadegame.aiguessingplayerchar,
