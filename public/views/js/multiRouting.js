@@ -15,28 +15,39 @@ getCurrentMatches();
       //console.log(data.retarray[0]);
       for(let i = 0; i<data.retarray.length; i++){
         //something like this??
-        console.log(data.retarray.length);
-        let name1;
-        let name2;
+        console.log("Number of Active Rooms: "+data.retarray.length);
+
 
         //console.log(data.retarray[i].ClientID);
         //console.log(data.retarray[i].Client2ID);
 
 
         //asynchronous programming applies here, need to solve in reliable way...
-        if(data.retarray[i].ClientID != null){
+        if(data.retarray[i].ClientID != null && data.retarray[i].Client2ID != null){
           $.get("/getUserName", {ident: data.retarray[i].ClientID}, function(data2){
-            name1 = data2.name;
-            console.log("name1 " + name1 + " = " + data2.name);
-            $("#currmatches").append('<li>' + name1 + " vs " + name2 + " in room: "+ data.retarray[i].roomNum + '</li>');
-          })
-          console.log("name1 " + name1);
-        }
-        if(data.retarray[i].Client2ID != null){
-          $.get("/getUserName",{ident: data.retarray[i].Client2ID},function(data3){
-            name2 = data3.name;
-            console.log(typeof name2);
 
+            //console.log("name1 " + name1 + " = " + data2.name);
+            $.get("/getUserName",{ident: data.retarray[i].Client2ID},function(data3){
+
+              //console.log(typeof name2);
+              $("#currmatches").append('<li>' + data2.name + " vs " + data3.name + " in room: "+ data.retarray[i].roomNum + '</li>');
+            })
+
+          })
+          //console.log("name1 " + name1);
+        }
+        else if(data.retarray[i].ClientID != null){
+          $.get("/getUserName", {ident: data.retarray[i].ClientID}, function(data2){
+
+            //console.log("name1 " + name1 + " = " + data2.name);
+            $("#currmatches").append('<li>' + data2.name + " vs null in room: "+ data.retarray[i].roomNum + '</li>');
+          })
+        }
+        else if(data.retarray[i].Client2ID != null){
+          $.get("/getUserName", {ident: data.retarray[i].ClientID}, function(data2){
+
+            //console.log("name1 " + name1 + " = " + data2.name);
+            $("#currmatches").append('<li>' +  "null vs " + data2.name + " in room: "+ data.retarray[i].roomNum + '</li>');
           })
         }
 

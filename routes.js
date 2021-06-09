@@ -14,6 +14,8 @@ var Room = require("./models/rooms");
 
 let AIArray = []
 
+let currRooms = [];
+
 let newClientId = 0;
 
 function initnewClientId()
@@ -119,25 +121,36 @@ router.get("/getRoom", function(req,res){//I have a few questions
     {
       if(room != null)
       {
-        if(room.ClientID == null)//look into this. coming from the cration of the room clientid will be already set to the clients id
+
+        if(room.ClientID == req.user.ident || room.Client2ID == req.user.ident){
+          currRooms[req.user.ident] = room.roomNum;
+          res.json({redirect: "/multiplayer"})
+        }
+        else if(room.ClientID == null)//look into this. coming from the cration of the room clientid will be already set to the clients id
         {//meaning that it would never get into here
-  				room.ClientID = req.user.ident;
-          User.findOne({ident: req.user.ident}, function(err, user)
-          {
-            user.changeRoom(req.query.roomNum)//also what is this function?
-            user.currRoom = req.query.roomNum
-            res.json({redirect: "/multiplayer"})
+          console.log(req.user.username + " is joining room " + room.roomNum + " as client1");
+          Room.findOneAndUpdate({roomNum: req.query.roomNum}, {ClientID: req.user.ident}, function(err, room){
+            if(err){console.log(err);}
+            User.findOneAndUpdate({ident: req.user.ident}, {currRoom: room.roomNum},function(err, user)
+            {
+              currRooms[req.user.ident] = room.roomNum;//using this as backup??
+              res.json({redirect: "/multiplayer"})
+            })
           })
   			}
-  			else if(room.Client2ID == null)//so would go to here and it would be basicly vs yourself?
+  			else if(room.Client2ID == null)//so would go to here and it would be basicly vs yourself?  //added changes?
         {
-  				room.Client2ID = req.user.ident;
-          User.findOne({ident: req.user.ident}, function(err, user)
-          {
-            user.changeRoom(req.query.roomNum)//also what is this function?
-            user.currRoom = req.query.roomNum
-            res.json({redirect: "/multiplayer"})
+          console.log(req.user.username + " is joining room " + room.roomNum + " as client2");
+          Room.findOneAndUpdate({roomNum: req.query.roomNum}, {ClientID: req.user.ident}, function(err, room){
+            if(err){console.log(err);}
+            User.findOneAndUpdate({ident: req.user.ident}, {currRoom: room.roomNum},function(err, user)
+            {
+              currRooms[req.user.ident] = room.roomNum;
+              res.json({redirect: "/multiplayer"})
+            })
           })
+
+
 			  }
 	      else
         {
@@ -158,13 +171,13 @@ router.get("/initRoom",function(req,res){
 
 	if(req.isAuthenticated()){
 		User.findOne({ident: req.user.ident}, function(err, user){
-      console.log(user.getRoom());
-			if(user.currRoom == null){
+      console.log(currRooms[req.user.ident]);
+			if(currRooms[req.user.ident] == null){
 
 			}
 			else {
-				Room.findOne({roomNum: user.getRoom()}, function(err, room){
-					console.log(room)
+				Room.findOne({roomNum: currRooms[req.user.ident]}, function(err, room){
+					//console.log(room)
 					if(err)
           {
 						console.log(err);

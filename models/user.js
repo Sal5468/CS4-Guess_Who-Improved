@@ -32,7 +32,7 @@ console.log("userSchema.pre(sav...")
       if (err) { return done(err); }
       user.password = hashedPassword;
       user.valueJY = Math.floor(Math.random()*1000);
-      user.currRoom = null;
+      //user.currRoom = null;
       done();
     });
   });

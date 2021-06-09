@@ -11,7 +11,8 @@
 
 
 $.get("/initRoom", function(data){
-
+  console.log(data);
+  $("#roomNum").html("Room: " + data.roomNum)
 
 })
 
@@ -558,7 +559,7 @@ $.get("/initRoom", function(data){
 ////////////////////////////////////////////////////////////////////////////////////
   $(document).ready(function()
   {
-    
+
     //$.post("/init",null,function(data){
       //roomID = data.id;
       //console.log(roomID);
@@ -614,3 +615,10 @@ $.get("/initRoom", function(data){
 
   }
   $("#player").on('ended', playAudio);
+
+  function guessWhoClicked()
+  {
+    let current = $(location).attr('href')
+    let currentreplace = current.replace("multiplayer","");
+    window.location.href = currentreplace
+  }
