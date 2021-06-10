@@ -65,6 +65,10 @@ io.on('connection', function(socket) {
         // Broadcast to everyone (including self)
         io.emit('update', data);
     });
+    socket.on('request', function (data) {
+        // Broadcast to everyone (including self)
+        io.emit('request', data);
+    });
 
 });
 //info for yee server: ssh group2@www.mvhscsf.org  password: B2a7-->

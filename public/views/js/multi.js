@@ -11,12 +11,6 @@
   let clientboard = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]
 
 
-$.get("/initRoom", function(data){
-  console.log(data);
-  $("#roomNum").html("Room: " + data.roomNum)
-
-})
-
 
 
   function guessClick()
@@ -1242,4 +1236,46 @@ $.get("/initRoom", function(data){
     let current = $(location).attr('href')
     let currentreplace = current.replace("multiplayer","");
     window.location.href = currentreplace
+  }
+
+
+  //Socket Stuffs
+  let ident;
+
+  let socket = io();
+//Get message from server.
+  socket.on('welcome', function(data) {
+        ident = data.id;
+        console.log(ident);
+        $("#chat").append('<li>' + data.message + " " + data.id + '</li>');
+  });
+
+//Get message from server.
+  socket.on('update', (data) => {
+    if(data.roomNum == roomID)
+        $("#chat").append('<li>' + data.name + ": " + data.text + '</li>');
+  });
+
+
+
+  function doit() {
+//Send message to server.\
+    $.get("/getUserName",{ident: clientID},function(data){
+      socket.emit('update', {'ident': ident, 'text': $("#message").val(), 'name': data.name, 'roomNum': roomID});
+      //socket.to('some room').emit('some event');
+
+      $("#message").val("");
+      return false;
+
+
+    })
+
+  }
+  function request(){
+    $.get("/getUserName",{ident: clientID},function(data){
+      socket.emit('request', {'ident': ident,'name': data.name, 'roomNum': roomID});
+      return false;
+
+
+    })
   }

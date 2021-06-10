@@ -648,25 +648,28 @@ router.post("/multiinit",function(req,res)
     User.findOne({ username: req.user.username }, function(err, user)
     {
       console.log("room of user is " + user.currRoom)
-      Room.findOne({ roomNum: user.currRoom }, function(err, room)
+      Room.findOne({ roomNum: currRooms[user.ident] }, function(err, room)
       {
-        console.log("room is " + room)
-        if(user.ident == room.ClientID)
-        {
-          res.json({secondplayer:false,
-                    roomId:room.roomNum,
-                    clientID:room.ClientID,
-                    charchosen:room.ClientChar,
-                    board:room.ClientBoard})
+        if(room != null){
+          console.log("room is " + room)
+          if(user.ident == room.ClientID)
+          {
+            res.json({secondplayer:false,
+                      roomId:room.roomNum,
+                      clientID:room.ClientID,
+                      charchosen:room.ClientChar,
+                      board:room.ClientBoard})
+          }
+          else if(user.ident == room.Client2ID)
+          {
+            res.json({secondplayer:true,
+                      roomId:room.roomNum,
+                      clientID:room.Client2ID,
+                      charchosen:room.Client2Char,
+                      board:room.Client2Board})
+          }
         }
-        else if(user.ident == room.Client2ID)
-        {
-          res.json({secondplayer:true,
-                    roomId:room.roomNum,
-                    clientID:room.Client2ID,
-                    charchosen:room.Client2Char,
-                    board:room.Client2Board})
-        }
+
       })
     })
   }
@@ -766,37 +769,6 @@ router.get("/getRoom", function(req,res){
 	}
 })
 
-
-
-router.get("/initRoom",function(req,res){
-
-	if(req.isAuthenticated()){
-		User.findOne({ident: req.user.ident}, function(err, user){
-      console.log(currRooms[req.user.ident]);
-			if(currRooms[req.user.ident] == null){
-
-			}
-			else {
-				Room.findOne({roomNum: currRooms[req.user.ident]}, function(err, room){
-					//console.log(room)
-					if(err)
-          {
-						console.log(err);
-					}
-					else if(room != null)
-          {
-						res.json(room);
-
-					}
-				})
-			}
-
-		})
-	}
-	else{
-		res.sendFile(__dirname + "/public/views/signup.html");
-	}
-});
 
 router.get("/getCurrMatches",function(req,res){
 

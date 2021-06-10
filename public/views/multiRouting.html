@@ -33,6 +33,7 @@
 
       <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <link rel="icon" type="image/png" href="../images/YEE.png">
+      <script src='/socket.io/socket.io.js'></script>
   </head>
 
   <body>
@@ -52,12 +53,18 @@
         <input type="number" id="create" value="0" min="0">
         <button type="button" id="createbutton">Go</button>
       </div>
-      <div style="float: center; display: inline-block; margin-left: 100px">
+      <div style="float: center; display: inline-block">
         <h2>Current Matches</h2>
         <ul id="currmatches">
         </ul>
         <!-- implement this https://socket.io/docs/v4/rooms/ -->
-
+      </div>
+      <div style=" float: right; display: inline-block; margin-left: 100px">
+        <h2>Opponent Requests</h2>
+        <ul id="requests">
+        </ul>
+        <!-- implement this https://socket.io/docs/v4/rooms/ -->
+      </div>
 
 
     <br><br><br><br><br>

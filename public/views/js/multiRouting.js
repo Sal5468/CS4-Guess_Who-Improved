@@ -58,14 +58,13 @@ getCurrentMatches();
 
     setTimeout(getCurrentMatches, 5000);
   }
-
+let socket = io();
+  socket.on('request', (data) => {
+      $("#requests").append('<li>' + data.name + " needs an opponent in room: " + data.roomNum + '</li>');
+  });
 
   $(document).ready(function()
   {
-    //$.post("/init",null,function(data){
-      //roomID = data.id;
-      //console.log(roomID);
-    //});
 
     $("#join").keydown( function( event ) {
         if ( event.which === 13 ) {

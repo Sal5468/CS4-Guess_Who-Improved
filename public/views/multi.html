@@ -39,6 +39,7 @@
   <body>
       <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg" height="100" onclick="guessWhoClicked()">
       <h1 style="text-align: left" id="roomNum">Room:</h1>
+      <h1>Opponent:</h1>
       <div style="text-align: center"><h1 id="prompt1" style="display: inline-block">Choose your Character</h1></div>
 
 
@@ -48,11 +49,10 @@
         <p>Chat</p>
         <ul id="chat">
         </ul>
-        <label>Name</label>
-        <input id="name" name="a" type="text"/><br>
-        <label>Comment</label>
-        <input type="text" id="comment" value="">
-        <input type="button" value="Send" onclick="doit()">
+
+        <input type="text" id="message" value="">
+        <input type="button" value="Send" onclick="doit()"><br>
+        <input type="button" id="reqPlayer" value="Request an Opponent" onclick="request()">
       </div>
 
       <img src="../images/AlexCard.png" alt="Alex" height="150" id="Alex" onclick="Alex()">
@@ -98,27 +98,6 @@
     <audio id="player" autoplay="autoplay" src="../sound/1-hour-of-silence.mp3"></audio>
 
     <script>
-      let ident;
-
-      let socket = io();
-//Get message from server.
-      socket.on('welcome', function(data) {
-            ident = data.id;
-            console.log(ident);
-            //$("#messages").append('<li>' + data.message + " " + data.id + '</li>');
-      });
-
-//Get message from server.
-      socket.on('update', (data) => {
-            $("#messages").append('<li>' + data.name + ": " + data.text + '</li>');
-      });
-
-      function doit() {
-//Send message to server.
-            socket.emit('update', {'ident': ident, 'text': $("#comment").val(), 'name': $("#name").val()});
-            $("#comment").val("");
-            return false;
-      }
 
       $(document).ready(function(){
         $("#comment").keypress(function(event) {
