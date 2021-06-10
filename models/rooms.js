@@ -9,7 +9,9 @@ var Room = mongoose.model("rooms",mongoose.Schema({
 	Client2Board: [Boolean],
   ClientChar: Number,
   Client2Char: Number,
-  roomNum: Number
+  roomNum: Number,
+  PlayerOneSetOut:Boolean,
+  PlayerTwoSetOut:Boolean
 }));
 
 
