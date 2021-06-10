@@ -64,7 +64,98 @@ router.get("/signup",function(req,res){
 	}
 });
 
+router.get("/getSetOut",function(req,res)
+{
+  if(req.isAuthenticated())
+  {
+    Room.findOne({roomNum: req.body.roomNum}, function(err, room){
+      if(err){
+				throw err;
+			}
+      if(room!=null)
+        res.json({P1:room.PlayerOneSetOut,P2:room.PlayerTwoSetOut})
+      else
+        res.json(null)
+    })
+  }
+})
 
+router.post("/makeaguessmultiPlayerOne",function(req,res)
+{
+  //console.log(req)
+  let guess = req.body.numGuess
+  console.log("player one guesses " + guess)
+  Room.findOne({roomNum:req.body.ident},function(err,game)
+  {
+    if(err)
+    {
+      console.log("There is an err")
+      res.json(null);
+    }
+    if(guess == game.Client2Char)
+    {
+      console.log("player ones guess was correct")
+      Room.findOneAndUpdate({roomNum:req.body.ident},{PlayerOneSetOut:true,PlayerTwoSetOut:false},function(err,game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+      })
+    }
+    else
+    {
+      Room.findOneAndUpdate({roomNum:req.body.ident},{PlayerOneSetOut:false,PlayerTwoSetOut:true},function(err,game)
+      {
+        console.log("player ones guess was not correct")
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+      })
+    }
+  })
+})
+router.post("/makeaguessmultiPlayerTwo",function(req,res)
+{
+  //console.log(req)
+  let guess = req.body.numGuess
+  console.log("player two guesses " + guess)
+  Room.findOne({roomNum:req.body.ident},function(err,game)
+  {
+    if(err)
+    {
+      console.log("There is an err")
+      res.json(null);
+    }
+    if(guess == game.ClientChar)
+    {
+      console.log("player twos guess was correct")
+      Room.findOneAndUpdate({roomNum:req.body.ident},{PlayerOneSetOut:false,PlayerTwoSetOut:true},function(err,game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+      })
+    }
+    else
+    {
+      Room.findOneAndUpdate({roomNum:req.body.ident},{PlayerOneSetOut:true,PlayerTwoSetOut:false},function(err,game)
+      {
+        console.log("player twos guess was not correct")
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+      })
+    }
+  })
+})
 
 router.post("/multiplayerupdateArrayPlayerOne",function(req,res)
 {
@@ -690,7 +781,9 @@ router.post("/createRoom",function(req,res)
           Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
           ClientChar: -1,
 					Client2Char: -1,
-          roomNum: req.body.roomNum
+          roomNum: req.body.roomNum,
+          PlayerOneSetOut:null,
+          PlayerTwoSetOut:null
 				})
 				Room.create(newRoom, function(err, room){
 					if(err){
@@ -785,7 +878,6 @@ router.get("/initRoom",function(req,res)
 					else if(room != null)
           {
 						res.json(room);
-
 					}
 				})
 			}
@@ -796,16 +888,16 @@ router.get("/initRoom",function(req,res)
 		res.sendFile(__dirname + "/public/views/signup.html");
 	}
 });
-router.get("/getCurrMatches",function(req,res){
-	if(req.isAuthenticated()
+router.get("/getCurrMatches",function(req,res)
+{
+  if(req.isAuthenticated())
   {
 		console.log(req.user.username+ " is in multirouting");
-		//ADD CODE
-		//let retarray = [{player1: req.user.username}];
-		//console.log(Room.count());
     console.log("get current matches")
-		Room.find({},function(err,room) {
-      if (!err) {
+		Room.find({},function(err,room)
+    {
+      if (!err)
+      {
         let objs = [];
         //console.log(room);
 				//console.log(room[0]);
@@ -814,7 +906,8 @@ router.get("/getCurrMatches",function(req,res){
     });
 		//res.json({retarray: retarray})
 	}
-	else{
+	else
+  {
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
 });

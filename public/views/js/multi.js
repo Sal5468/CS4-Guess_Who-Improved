@@ -17,7 +17,7 @@ $.get("/initRoom", function(data){
 
 })
 
-
+  //update the code that will be here to have the polling function 
 
   function guessClick()
   {
@@ -79,7 +79,10 @@ $.get("/initRoom", function(data){
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Alex").attr("id"), id:roomID},sus)//null will eventually be replaced with a method to check to see if you win or lose.
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:0,ident:roomID},sus)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:0, ident:roomID},sus)//null will eventually be replaced with a method to check to see if you win or lose.
       guessClick()
     }// this is a method to guess the current character being guessed
     else
