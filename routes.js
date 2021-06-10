@@ -116,7 +116,7 @@ router.post("/createRoom",function(req,res){
 			else if(room == null){
 				//console.log(req.user.ident);
 				var newRoom = new Room({
-					ClientID: req.user.ident,//pretty sure i fixed this issue.
+					ClientID: null,//trust me 
 					Client2ID: null,
 					ClientBoard: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
           Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
@@ -156,6 +156,7 @@ router.get("/getRoom", function(req,res){
       {
 
         if(room.ClientID == req.user.ident || room.Client2ID == req.user.ident){
+          console.log("premade room")
           currRooms[req.user.ident] = room.roomNum;
           res.json({redirect: "/multiplayer"})
         }
