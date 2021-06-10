@@ -64,14 +64,581 @@ router.get("/signup",function(req,res){
 	}
 });
 
-/*router.get("/menu",function(req,res){
-	if(req.isAuthenticated()){
-		res.sendFile(__dirname + "/public/views/index.html");
-	}
-	else{
-		res.sendFile(__dirname + "/public/views/login.html");
-	}
-});*/
+router.post("/multiplayerupdateArrayPlayerOne",function(req,res)
+{
+  console.log("update the playerone array")
+  if(req.isAuthenticated())
+  {
+    if(req.body.numtoupdate==0){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.0":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==1){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.1":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==2){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.2":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==3){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.3":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==4){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.4":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==5){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.5":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==6){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.6":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==7){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.7":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==8){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.8":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==9){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.9":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==10){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.10":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==11){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.11":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==12){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.12":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==13){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.13":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==14){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.14":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==15){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.15":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==16){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.16":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==17){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.17":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==18){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.18":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==19){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.19":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==20){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.20":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==21){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.21":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==22){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.22":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==23){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.23":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+  }
+})
+router.post("/multiplayerupdateArrayPlayerTwo",function(req,res)
+{
+  console.log("update the playetwo array")
+  if(req.isAuthenticated())
+  {
+    if(req.body.numtoupdate==0){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.0":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==1){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.1":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==2){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.2":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==3){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.3":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==4){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.4":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==5){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.5":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==6){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.6":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==7){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.7":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==8){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.8":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==9){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.9":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==10){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.10":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==11){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.11":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==12){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.12":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==13){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.13":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==14){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.14":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==15){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.15":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==16){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.16":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==17){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.17":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==18){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.18":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==19){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.19":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==20){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.20":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==21){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.21":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==22){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.22":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+    else if(req.body.numtoupdate==23){
+      Room.findOneAndUpdate({roomNum: req.body.ident},{"Client2Board.23":req.body.array},function(err, game)
+      {
+        if(err)
+        {
+          console.log("There is an err")
+          res.json(null);
+        }
+        res.json(null);
+      })
+    }
+  }
+})
+
+router.post("/multiplayersubmitCharPlayerOne",function(req,res)
+{
+  console.log("inside submit char for player one")
+  if(req.isAuthenticated())
+  {
+    console.log("authenticated")
+    Room.findOneAndUpdate({ roomNum: req.body.ident }, {ClientChar:req.body.num},function(err, room)
+    {
+      //console.log(room)
+      if(err){
+        throw err;
+      }
+      res.json(null)
+    })
+  }
+});
+router.post("/multiplayersubmitCharPlayerTwo",function(req,res)//broken need to make two of them
+{
+  console.log("inside submit char for player two")
+  if(req.isAuthenticated())
+  {
+    console.log("authenticated")
+    Room.findOneAndUpdate({ roomNum: req.body.ident }, {Client2Char:req.body.num},function(err, room)
+    {
+    //  console.log(room)
+      if(err){
+        throw err;
+      }
+      res.json(null)
+    })
+  }
+})
 
 router.post("/multiinit",function(req,res)
 {
@@ -116,7 +683,7 @@ router.post("/createRoom",function(req,res){
 			else if(room == null){
 				//console.log(req.user.ident);
 				var newRoom = new Room({
-					ClientID: null,//trust me 
+					ClientID: null,//trust me
 					Client2ID: null,
 					ClientBoard: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
           Client2Board:[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
@@ -175,7 +742,7 @@ router.get("/getRoom", function(req,res){
   			else if(room.Client2ID == null)
         {
           console.log(req.user.username + " is joining room " + room.roomNum + " as client2");
-          Room.findOneAndUpdate({roomNum: req.query.roomNum}, {ClientID: req.user.ident}, function(err, room){
+          Room.findOneAndUpdate({roomNum: req.query.roomNum}, {Client2ID: req.user.ident}, function(err, room){
             if(err){console.log(err);}
             User.findOneAndUpdate({ident: req.user.ident}, {currRoom: room.roomNum},function(err, user)
             {
@@ -230,12 +797,6 @@ router.get("/initRoom",function(req,res){
 		res.sendFile(__dirname + "/public/views/signup.html");
 	}
 });
-
-router.post("/submitMultiPlayerchoosen",function(req,res){
-  //there will be an if statemtn chicking the secnd player status of the client.
-  //then it will slot into the acording room.find cause it will check room client id
-  // then it will go and update the clients char
-})
 
 router.get("/getCurrMatches",function(req,res){
 

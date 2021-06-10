@@ -151,7 +151,7 @@
     	});
     }
     function MultiClicked()
-    {
+    {//so change here to check to see if a game with your id has already been created? 
       $.get("/getMulti",function(data){
     		window.location = data.redirect;
     	});
