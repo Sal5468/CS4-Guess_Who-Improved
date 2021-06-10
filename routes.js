@@ -64,6 +64,8 @@ router.get("/signup",function(req,res){
 	}
 });
 
+
+
 router.post("/multiplayerupdateArrayPlayerOne",function(req,res)
 {
   console.log("update the playerone array")
@@ -623,7 +625,7 @@ router.post("/multiplayersubmitCharPlayerOne",function(req,res)
     })
   }
 });
-router.post("/multiplayersubmitCharPlayerTwo",function(req,res)//broken need to make two of them
+router.post("/multiplayersubmitCharPlayerTwo",function(req,res)
 {
   console.log("inside submit char for player two")
   if(req.isAuthenticated())
@@ -671,9 +673,8 @@ router.post("/multiinit",function(req,res)
     })
   }
 })
-
-
-router.post("/createRoom",function(req,res){
+router.post("/createRoom",function(req,res)
+{
 	if(req.isAuthenticated()){
 		Room.findOne({roomNum: req.body.roomNum}, function(err, room){
 			//console.log(room)
@@ -713,8 +714,8 @@ router.post("/createRoom",function(req,res){
 		res.sendFile(__dirname + "/public/views/signup.html");
 	}
 });
-
-router.get("/getRoom", function(req,res){
+router.get("/getRoom", function(req,res)
+{
 	if(req.isAuthenticated())
   {
 		Room.findOne({roomNum: req.query.roomNum}, function(err, room)
@@ -765,10 +766,8 @@ router.get("/getRoom", function(req,res){
 		res.sendFile(__dirname + "/public/views/signup.html");
 	}
 })
-
-
-
-router.get("/initRoom",function(req,res){
+router.get("/initRoom",function(req,res)
+{
 
 	if(req.isAuthenticated()){
 		User.findOne({ident: req.user.ident}, function(err, user){
@@ -797,10 +796,9 @@ router.get("/initRoom",function(req,res){
 		res.sendFile(__dirname + "/public/views/signup.html");
 	}
 });
-
 router.get("/getCurrMatches",function(req,res){
-
-	if(req.isAuthenticated()){
+	if(req.isAuthenticated()
+  {
 		console.log(req.user.username+ " is in multirouting");
 		//ADD CODE
 		//let retarray = [{player1: req.user.username}];
@@ -820,6 +818,7 @@ router.get("/getCurrMatches",function(req,res){
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
 });
+
 router.get("/multiplayer",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/multi.html");
