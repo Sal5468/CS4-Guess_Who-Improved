@@ -6,21 +6,48 @@
     <meta charset="utf-8"/>
     <style type="text/css">
 
+
+    .center
+    {
+      text-align:center;
+      color: white
+    }
+    .centered
+    {
+      text-align:center;
+    }
+    .guesswhoimg
+    {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+    body
+    {
+      background-image: url("../images/Background(Red).png");
+      background-size: 100% 300%;
+      background-repeat: no-repeat;
+    }
+
     </style>
     <link rel="icon" type="image/png" href="../images/YEE.png">
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   </head>
 
   <body>
-<h1>Login</h1>
-<form>
-  User name:<br>
-  <input id="username" type="text" name="username"><br>
-  User password:<br>
-  <input id="psw" type="password" name="psw">
-</form>
-<br>
-<a href="./signup">signup</a>
+    <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg">
+    <h1 class="center">Welcome to Guess Who!</h1>
+    <h1 class="center">Login</h1>
+    <form class="center">
+      User name:<br>
+      <input id="username" type="text" name="username" class="centered"><br>
+      User password:<br>
+      <input id="psw" type="password" name="psw" class="centered">
+    </form>
+    <br>
+    <p class="center">New User? Sign Up <a href='./signup'class="center">Here!</a></p>
+<!--<a href="./signup">signup</a>-->
 
 
 	<script src="/views/js/login.js"></script>

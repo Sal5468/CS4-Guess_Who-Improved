@@ -19,6 +19,11 @@
         {
           text-align:center;
         }
+        .centeredwhite
+        {
+          text-align:center;
+          color: white
+        }
         .guesswhoimg
         {
           display: block;
@@ -49,9 +54,9 @@
   <body>
     <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg">
 
-    <br><br><br>
-      <h1 id="session">Session</h1>
-    <br><br><br>
+    <br><br>
+      <h1 id="session" class="centeredwhite">Session</h1>
+    <br><br>
 
     <div class="button1">
     <button id = "buttonPlayAI" type="button">Player VS. AI</button>
@@ -151,7 +156,7 @@
     	});
     }
     function MultiClicked()
-    {//so change here to check to see if a game with your id has already been created? 
+    {//so change here to check to see if a game with your id has already been created?
       $.get("/getMulti",function(data){
     		window.location = data.redirect;
     	});
