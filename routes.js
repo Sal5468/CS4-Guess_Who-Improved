@@ -878,6 +878,9 @@ router.get("/getRoom", function(req,res)
   				res.json({redirect: false})
   			}
       }
+      else {
+        res.json({redirect: null})
+      }
 		})
 	}
 	else
@@ -991,27 +994,39 @@ router.use(function(req, res, next) {
 router.get("/oppActive", function(req,res){
   if(req.isAuthenticated()){
     console.log("oppAuthenticaed")
-    console.log("are you second player?"+req.query.secondPlayer)
-    if(req.query.secondPlayer == true){
+    console.log("are you second player?"+ req.query.secondPlayer)
+    console.log(typeof req.query.secondPlayer);//is a string for whatever reason.  changed test accordingly
+    if(req.query.secondPlayer == "true"){
       console.log("I am here 3")
-      Room.findOne({Client2ID: req.user.ident}, function(err, room)
+      Room.findOne({roomNum: req.query.roomNum}, function(err, room)
       {
         console.log("I am here 1")
         if(room != null)
         {
           activePlayers[req.user.ident] = true;
-          res.json({active: activePlayers[room.ClientID], oppID: room.ClientID})
+          if(room.ClientID == null){
+            res.json({active: false, oppID: room.ClientID})
+          }
+          else{
+            res.json({active: activePlayers[room.ClientID], oppID: room.ClientID})
+          }
         }
       })
     }
     else{
-      Room.findOne({ClientID: req.user.ident}, function(err, room)
+      Room.findOne({roomNum: req.query.roomNum}, function(err, room)
       {
         if(room != null)
         {
           console.log("I am here 2 " )
           activePlayers[req.user.ident] = true;
-          res.json({active: activePlayers[room.Client2ID], oppID: room.Client2ID})
+          if(room.Client2ID == null){
+            res.json({active: false, oppID: room.Client2ID})
+          }
+          else{
+            res.json({active: activePlayers[room.Client2ID], oppID: room.Client2ID})
+          }
+
         }
       })
     }

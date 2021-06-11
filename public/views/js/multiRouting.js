@@ -91,6 +91,9 @@ let socket = io();
       if(typeof data2.redirect == typeof "hi"){
         window.location = data2.redirect;
       }
+      else if(data2.redirect == null){
+        alert("That room does not exist, create it!")
+      }
       else{
         alert("Error: Could not join room.")
       }

@@ -86,16 +86,21 @@
       }
     })
 
-    $.get("/oppActive",{secondPlayer: areyousecondplayer},function(data){
-      console.log("oppactive data")
-      $.get("/getUserName", {ident: data.oppID},function(data2){
-        if(data.active){
-          $("#opp").html("Opponent " + data2.name + " is in the room")
-        }
-        else{
-          $("#opp").html("Opponent " + data2.name + " is not in the room")
-        }
-      })
+    $.get("/oppActive",{secondPlayer: areyousecondplayer, roomNum: roomID},function(data){
+      //console.log("oppactive data")
+      if(data.oppID != null){
+        $.get("/getUserName", {ident: data.oppID},function(data2){
+          if(data.active){
+            $("#opp").html("Opponent Status: " + data2.name + " is in the room")
+            $("#opp").css("color","#000000")//this works
+          }
+          else{
+            $("#opp").html("Opponent Status: " + data2.name + " is not in the room")
+
+          }
+        })
+      }
+
 
 
     })
@@ -1329,6 +1334,10 @@
       }
       else{
         $("#Zachary").attr("src","../images/ZacharyCard.png")
+      }
+
+      if(data.charchosen == -1){
+        alert("To choose your character, click 'choose your character' then select one of the character tiles.")
       }
 
     });
