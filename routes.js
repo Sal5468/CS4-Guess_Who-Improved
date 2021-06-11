@@ -990,9 +990,13 @@ router.use(function(req, res, next) {
 
 router.get("/oppActive", function(req,res){
   if(req.isAuthenticated()){
+    console.log("oppAuthenticaed")
+    console.log("are you second player?"+req.query.secondPlayer)
     if(req.query.secondPlayer == true){
+      console.log("I am here 3")
       Room.findOne({Client2ID: req.user.ident}, function(err, room)
       {
+        console.log("I am here 1")
         if(room != null)
         {
           activePlayers[req.user.ident] = true;
@@ -1005,6 +1009,7 @@ router.get("/oppActive", function(req,res){
       {
         if(room != null)
         {
+          console.log("I am here 2 " )
           activePlayers[req.user.ident] = true;
           res.json({active: activePlayers[room.Client2ID], oppID: room.Client2ID})
         }

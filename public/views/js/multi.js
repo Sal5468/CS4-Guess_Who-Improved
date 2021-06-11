@@ -87,7 +87,7 @@
     })
 
     $.get("/oppActive",{secondPlayer: areyousecondplayer},function(data){
-
+      console.log("oppactive data")
       $.get("/getUserName", {ident: data.oppID},function(data2){
         if(data.active){
           $("#opp").html("Opponent " + data2.name + " is in the room")
