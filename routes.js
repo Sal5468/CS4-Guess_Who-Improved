@@ -64,14 +64,29 @@ router.get("/signup",function(req,res){
 	}
 });
 
+router.post("/delcurrentmultigame", function(req, res) {
+  console.log("try to del")
+	if (req.isAuthenticated())
+	{
+    console.log("authenticate")
+		Room.remove({roomNum: req.body.ident},function(error,removed) {
+			if (error)
+				console.log(error);
+			else
+			{
+				console.log(removed.result);
+			}
+		})
+	}
+})
+
 router.get("/getSetOut",function(req,res)
 {
   if(req.isAuthenticated())
   {
-    Room.findOne({roomNum: req.body.roomNum}, function(err, room){
-      if(err){
-				throw err;
-			}
+    Room.findOne({roomNum: req.query.ident}, function(err, room)
+    {
+      if(err){throw err;}
       if(room!=null)
         res.json({P1:room.PlayerOneSetOut,P2:room.PlayerTwoSetOut})
       else
@@ -116,6 +131,7 @@ router.post("/makeaguessmultiPlayerOne",function(req,res)
         }
       })
     }
+    res.json(null)
   })
 })
 router.post("/makeaguessmultiPlayerTwo",function(req,res)

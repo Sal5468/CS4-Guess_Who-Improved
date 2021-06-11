@@ -122,9 +122,9 @@ let socket = io();
   }
   function guessWhoClicked()
   {
-    let current = $(location).attr('href')
-    let currentreplace = current.replace("multi","");
-    window.location.href = currentreplace
+    $.get("/getmenu",function(data){
+      window.location = data.redirect;
+    });
   }
 
   $("#musicicon").click(trialfunction);

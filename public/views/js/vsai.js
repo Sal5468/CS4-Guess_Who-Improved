@@ -123,7 +123,7 @@
       alert("Please Wait For Your Turn To Guess")
     }
   }
-  function sus(data)//replace with how other do it and also del the game that was being played
+  function sus(data)
   {
     if(data.winlose)
     {

@@ -25,26 +25,68 @@
       $("#makeGuess").attr("style", "color: white")
     }
   }
-  function sus(data)//update the code to be like the other ones
-  {
-    if(data.winlose)
-    {
-      let current = $(location).attr('href')
-      let currentreplace = current.replace("playmulti","win");
-      window.location.href = currentreplace
-    }
-    else
-    {
-      let current = $(location).attr('href')
-      let currentreplace = current.replace("playmulti","lose");
-      window.location.href = currentreplace
-    }
-  }
+
   function guessWhoClicked()
   {
-    let current = $(location).attr('href')
-    let currentreplace = current.replace("playmulti","");
-    window.location.href = currentreplace
+    $.get("/getmenu",function(data){
+      window.location = data.redirect;
+    });
+  }
+
+  getSetOuts()
+  function getSetOuts()
+  {
+    console.log("checking setouts");
+    $.get("/getSetOut",{ident:roomID},function(data)
+    {
+      console.log(data)
+      if(data!=null)
+      {
+        if(data.P1==null||data.P2==null)
+        {
+          console.log("Nothing sent out yet")
+        }
+        else if(areyousecondplayer)
+        {
+          if(data.P2)
+          {
+            console.log("player 2 win")
+            $.post("/delcurrentmultigame",{ident:roomID},null)
+            $.get("/getwin",function(data){
+              window.location = data.redirect;
+            });
+        }
+        else
+        {
+          console.log("player 2 lose")
+          $.post("/delcurrentmultigame",{ident:roomID},null)
+          $.get("/getlose",function(data){
+            window.location = data.redirect;
+          });
+        }}
+        else
+        {
+          if(data.P1)
+          {
+            console.log("player 1 win")
+            $.post("/delcurrentmultigame",{ident:roomID},null)
+            $.get("/getwin",function(data){
+              window.location = data.redirect;
+            });
+          }
+          else
+          {
+            console.log("player 1 lose")
+            $.post("/delcurrentmultigame",{ident:roomID},null)
+            $.get("/getlose",function(data){
+              window.location = data.redirect;
+            });
+          }
+        }
+      }
+    })
+    let numMilliSeconds = 1000;   // 1000 milliseconds = 1 second
+    setTimeout(getSetOuts, numMilliSeconds);//recall this function after this number of miliseconds.
   }
 
   function Alex()
@@ -74,14 +116,15 @@
     else if(characterchosen != -1 && currentlyguessing)
     {
       if(areyousecondplayer)
-        $.post("/makeaguessmultiPlayerTwo",{numGuess:0,ident:roomID},sus)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:0,ident:roomID},null)
       else
-        $.post("/makeaguessmultiPlayerOne",{numGuess:0, ident:roomID},sus)//null will eventually be replaced with a method to check to see if you win or lose.
+        $.post("/makeaguessmultiPlayerOne",{numGuess:0, ident:roomID},null)//null will eventually be replaced with a method to check to see if you win or lose.
       guessClick()
     }// this is a method to guess the current character being guessed
     else
     {
       $("#playerChar").attr("src", "../images/AlexCard.png")//this changes the src of the guessed player
+      $("#prompt1").text("")
       characterchosen = 0//replacing  the old boolean
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -115,12 +158,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Andy").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:1,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:1, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/AndyCard.png")
+      $("#prompt1").text("")
       characterchosen = 1
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -154,12 +201,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Ashley").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:2,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:2, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/AshleyCard.png")
+      $("#prompt1").text("")
       characterchosen = 2
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -193,12 +244,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Brandon").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:3,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:3, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/BrandonCard.png")
+      $("#prompt1").text("")
       characterchosen = 3
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -232,12 +287,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Chris").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:4,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:4, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/ChrisCard.png")
+      $("#prompt1").text("")
       characterchosen = 4
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -271,12 +330,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Connor").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:5,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:5, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/ConnorCard.png")
+      $("#prompt1").text("")
       characterchosen = 5
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -310,12 +373,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Daniel").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:6,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:6, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/DanielCard.png")
+      $("#prompt1").text("")
       characterchosen = 6
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -349,12 +416,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#David").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:7,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:7, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/DavidCard.png")
+      $("#prompt1").text("")
       characterchosen = 7
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -388,12 +459,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Emily").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:8,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:8, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/EmilyCard.png")
+      $("#prompt1").text("")
       characterchosen = 8
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -427,12 +502,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Jake").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:9,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:9, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/JakeCard.png")
+      $("#prompt1").text("")
       characterchosen = 9
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -466,12 +545,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#James").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:10,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:10, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/JamesCard.png")
+      $("#prompt1").text("")
       characterchosen = 10
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -505,12 +588,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Jon").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:11,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:11, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/JonCard.png")
+      $("#prompt1").text("")
       characterchosen = 11
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -544,12 +631,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Joseph").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:12,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:12, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/JosephCard.png")
+      $("#prompt1").text("")
       characterchosen = 12
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -583,12 +674,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Joshua").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:13,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:13, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/JoshuaCard.png")
+      $("#prompt1").text("")
       characterchosen = 13
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -622,12 +717,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Justin").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:14,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:14, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/JustinCard.png")
+      $("#prompt1").text("")
       characterchosen = 14
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -661,12 +760,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Kyle").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:15,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:15, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/KyleCard.png")
+      $("#prompt1").text("")
       characterchosen = 15
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -700,12 +803,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Matt").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:16,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:16, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/MattCard.png")
+      $("#prompt1").text("")
       characterchosen = 16
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -739,12 +846,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Megan").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:17,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:17, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/MeganCard.png")
+      $("#prompt1").text("")
       characterchosen = 17
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -778,12 +889,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Nick").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:18,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:18, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/NickCard.png")
+      $("#prompt1").text("")
       characterchosen = 18
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -817,12 +932,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Rachael").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:19,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:19, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/RachaelCard.png")
+      $("#prompt1").text("")
       characterchosen = 19
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -856,12 +975,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Sarah").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:20,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:20, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/SarahCard.png")
+      $("#prompt1").text("")
       characterchosen = 20
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -895,12 +1018,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Tyler").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:21,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:21, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/TylerCard.png")
+      $("#prompt1").text("")
       characterchosen = 21
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -934,12 +1061,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#William").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:22,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:22, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/WilliamCard.png")
+      $("#prompt1").text("")
       characterchosen = 22
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -973,12 +1104,16 @@
     }
     else if(characterchosen != -1 && currentlyguessing)
     {
-      $.get("/makeaguess",{name:$("#Zachary").attr("id"), id:roomID},sus)
+      if(areyousecondplayer)
+        $.post("/makeaguessmultiPlayerTwo",{numGuess:23,ident:roomID},null)
+      else
+        $.post("/makeaguessmultiPlayerOne",{numGuess:23, ident:roomID},null)
       guessClick()
     }
     else
     {
       $("#playerChar").attr("src", "../images/ZacharyCard.png")
+      $("#prompt1").text("")
       characterchosen = 23
       if(areyousecondplayer)
         $.post("/multiplayersubmitCharPlayerTwo",{ident:roomID,num:characterchosen},null)
@@ -989,13 +1124,12 @@
 ////////////////////////////////////////////////////////////////////////////////////
   $(document).ready(function()
   {
-    //instead of this whole new post, could use the initroom already?  if you want the extra security that is all good too.
     $.post("/multiinit",null,function(data){
       console.log(data)
       areyousecondplayer = data.secondplayer
       console.log("Are you a second player? "+ areyousecondplayer)
 
-      roomID = data.roomId//also have to set the room number thing to this
+      roomID = data.roomId
       console.log("Room number? "+ roomID)
       $("#roomNum").text("Room:" + roomID)
 
@@ -1006,6 +1140,7 @@
       console.log("data "+ characterchosen)
       if(data.charchosen !=   -1)
       {
+        $("#prompt1").text("")
         if(data.charchosen==0){$("#playerChar").attr("src", "../images/AlexCard.png")}
         else if(data.charchosen==1){$("#playerChar").attr("src", "../images/AndyCard.png")}
         else if(data.charchosen==2){$("#playerChar").attr("src", "../images/AshleyCard.png")}
@@ -1233,13 +1368,6 @@
 
   }
   $("#player").on('ended', playAudio);
-
-  function guessWhoClicked()
-  {
-    let current = $(location).attr('href')
-    let currentreplace = current.replace("multiplayer","");
-    window.location.href = currentreplace
-  }
 
 
   //Socket Stuffs
