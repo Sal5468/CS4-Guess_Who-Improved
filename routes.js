@@ -15,6 +15,7 @@ var Room = require("./models/rooms");
 let AIArray = []
 
 let currRooms = [];
+let activePlayers = [];
 
 let newClientId = 0;
 
@@ -39,6 +40,7 @@ function initnewClientId()
 router.get("/",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/index.html");
+    activePlayers[req.user.ident] = false;
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
@@ -48,6 +50,7 @@ router.get("/",function(req,res){
 router.get("/login",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/index.html");
+    activePlayers[req.user.ident] = false;
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
@@ -58,6 +61,7 @@ router.get("/signup",function(req,res){
 	initnewClientId()
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/index.html");
+    activePlayers[req.user.ident] = false;
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/signup.html");
@@ -68,6 +72,7 @@ router.post("/delcurrentmultigame", function(req, res) {
   console.log("try to del")
 	if (req.isAuthenticated())
 	{
+    activePlayers[req.user.ident] = false;
     console.log("authenticate")
 		Room.remove({roomNum: req.body.ident},function(error,removed) {
 			if (error)
@@ -84,6 +89,7 @@ router.get("/getSetOut",function(req,res)
 {
   if(req.isAuthenticated())
   {
+    activePlayers[req.user.ident] = false;
     Room.findOne({roomNum: req.query.ident}, function(err, room)
     {
       if(err){throw err;}
@@ -178,6 +184,7 @@ router.post("/multiplayerupdateArrayPlayerOne",function(req,res)
   console.log("update the playerone array")
   if(req.isAuthenticated())
   {
+
     if(req.body.numtoupdate==0){
       Room.findOneAndUpdate({roomNum: req.body.ident},{"ClientBoard.0":req.body.array},function(err, game)
       {
@@ -883,6 +890,7 @@ router.get("/getRoom", function(req,res)
 router.get("/getCurrMatches",function(req,res){
 
 	if(req.isAuthenticated()){
+    activePlayers[req.user.ident] = false;
 		console.log(req.user.username+ " is in multirouting");
     console.log("get current matches")
 		Room.find({},function(err,room)
@@ -914,6 +922,7 @@ router.get("/multiplayer",function(req,res){
 router.get("/playvsai",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/vsai.html");
+    activePlayers[req.user.ident] = false;
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
@@ -922,6 +931,7 @@ router.get("/playvsai",function(req,res){
 router.get("/multi",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/multiRouting.html");
+    activePlayers[req.user.ident] = false;
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
@@ -931,6 +941,7 @@ router.get("/multi",function(req,res){
 router.get("/HTP",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/HTP.html");
+    activePlayers[req.user.ident] = false;
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
@@ -940,6 +951,7 @@ router.get("/HTP",function(req,res){
 router.get("/win",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/win.html");
+    activePlayers[req.user.ident] = false;
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
@@ -949,6 +961,7 @@ router.get("/win",function(req,res){
 router.get("/lose",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/lose.html");
+    activePlayers[req.user.ident] = false;
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
@@ -958,6 +971,7 @@ router.get("/lose",function(req,res){
 router.get("/encyclopedia",function(req,res){
 	if(req.isAuthenticated()){
 		res.sendFile(__dirname + "/public/views/encyclo.html");
+    activePlayers[req.user.ident] = false;
 	}
 	else{
 		res.sendFile(__dirname + "/public/views/login.html");
@@ -974,7 +988,34 @@ router.use(function(req, res, next) {
 });
 
 
+router.get("/oppActive", function(req,res){
+  if(req.isAuthenticated()){
+    if(req.query.secondPlayer == true){
+      Room.findOne({Client2ID: req.user.ident}, function(err, room)
+      {
+        if(room != null)
+        {
+          activePlayers[req.user.ident] = true;
+          res.json({active: activePlayers[room.ClientID], oppID: room.ClientID})
+        }
+      })
+    }
+    else{
+      Room.findOne({ClientID: req.user.ident}, function(err, room)
+      {
+        if(room != null)
+        {
+          activePlayers[req.user.ident] = true;
+          res.json({active: activePlayers[room.Client2ID], oppID: room.Client2ID})
+        }
+      })
+    }
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
 
+})
 
 
 
@@ -1043,6 +1084,7 @@ router.get("/menu", function(req, res) {
     console.log("sendFile menu.html")
 	let thePath = path.resolve(__dirname,"public/views/index.html");
 	res.sendFile(thePath);
+  activePlayers[req.user.ident] = false;
   } else {
     console.log("sendFile login.html")
   	let thePath = path.resolve(__dirname,"public/views/login.html");
@@ -1152,6 +1194,7 @@ router.get('/init', function(req, res)
 {
 	if(req.isAuthenticated())
 	{
+    activePlayers[req.user.ident] = false;
 		User.findOne({ username: req.user.username }, function(err, user)
 		{
 			if(err)

@@ -85,6 +85,21 @@
         }
       }
     })
+
+    $.get("/oppActive",{secondPlayer: areyousecondplayer},function(data){
+
+      $.get("/getUserName", {ident: data.oppID},function(data2){
+        if(data.active){
+          $("#opp").html("Opponent " + data2.name + " is in the room")
+        }
+        else{
+          $("#opp").html("Opponent " + data2.name + " is not in the room")
+        }
+      })
+
+
+    })
+
     let numMilliSeconds = 1000;   // 1000 milliseconds = 1 second
     setTimeout(getSetOuts, numMilliSeconds);//recall this function after this number of miliseconds.
   }
@@ -1375,11 +1390,11 @@
 
   let socket = io();
 //Get message from server.
-  socket.on('welcome', function(data) {
+/*  socket.on('welcome', function(data) {
         ident = data.id;
         console.log(ident);
         $("#chat").append('<li>' + data.message + " " + data.id + '</li>');
-  });
+  });*/
 
 //Get message from server.
   socket.on('update', (data) => {
