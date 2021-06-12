@@ -68,6 +68,56 @@ router.get("/signup",function(req,res){
 	}
 });
 
+router.get("/spectateroomUpdate", function(req, res) {
+  console.log("spectate room update")
+	if (req.isAuthenticated())
+	{
+    Room.findOne({ roomNum: req.query.roomNum }, function(err, room)
+    {
+      console.log(room)
+      if(err){
+        console.log(err);
+        res.json(null)
+      }
+      if(room!=null)
+      {
+        console.log("room is not null")
+        User.findOneAndUpdate({ident: req.user.ident}, {currRoom: room.roomNum},function(err, user)
+        {
+          if(err){
+            console.log(err);
+            res.json(null)
+          }
+          res.json({redirect: "/spectate"})
+        })
+      }
+      else
+      {
+        console.log("room is null")
+        res.json({redirect:null})
+      }
+    })
+	}
+})
+router.post("/spectateGet", function(req, res) {
+  console.log("spectate room update")
+	if (req.isAuthenticated())
+	{
+    User.findOne({ username: req.user.username }, function(err, user)
+    {
+      console.log("room to spectate is " + user.currRoom)
+      Room.findOne({ roomNum: user.currRoom }, function(err, room)
+      {
+        if(room == null)
+          res.json(null)
+        else if(room!=null)
+          res.json(room)
+      })
+    })
+	}
+})
+
+
 router.post("/delcurrentmultigame", function(req, res) {
   console.log("try to del")
 	if (req.isAuthenticated())
@@ -980,6 +1030,16 @@ router.get("/encyclopedia",function(req,res){
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
 });
+
+router.get("/spectate",function(req,res){
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/spectate.html");
+    activePlayers[req.user.ident] = false;
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+});
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1134,11 +1194,15 @@ router.get("/getUserName",function(req,res){
 
 				 if(err){
 					 console.log(err);
+            res.json({name:null})
 				 }
 				 else if(user != null){
 					 console.log("getUserName " + user.username);
 					 res.json({name: user.username});
 				 }
+         else{
+           res.json({name:null})
+         }
 
 			 })
 		 }

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--   -->
+<html>
+  <head>
+    <title>Spectate</title>
+      <meta charset="utf-8"/>
+
+      <style>
+      .thismusicicon
+      {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50px;
+        height: 50px
+      }
+      .chat {
+        color: white
+        border: 2px solid white ;
+      }
+      p {
+        color: white;
+      }
+      h2 {
+        color: #00ff00;
+      }
+      body{
+        background-image: url("../images/Background(Red).png");
+        background-size: 100% 300%;
+        background-repeat: no-repeat;
+      }
+      </style>
+
+      <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+      <link rel="icon" type="image/png" href="../images/YEE.png">
+      <script src='/socket.io/socket.io.js'></script>
+  </head>
+
+  <body>
+      <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg" height="100" onclick="guessWhoClicked()">
+      <h1 style="text-align: left" id="roomNum">Spectating Room:</h1>
+      <h1 style="text-align: left" id="playervsplayer">null vs null</h1>
+      <h1 id="boardone" style="color: #33DB33">Player 1 Board : </h1>
+
+
+
+    <div class="board"><!--There are 24 Characters-->
+      <div style="float: right" class="chat">
+        <p>Chat</p>
+        <ul id="chat">
+        </ul>
+      </div>
+
+      <img src="../images/AlexCard.png" alt="Alex" height="125" id="Alex1">
+      <img src="../images/AndyCard.png" alt="Andy" height="125" id="Andy1">
+      <img src="../images/AshleyCard.png" alt="Ashley" height="125" id="Ashley1">
+      <img src="../images/BrandonCard.png" alt="Brandon" height="125" id="Brandon1">
+      <img src="../images/ChrisCard.png" alt="Chris" height="125" id="Chris1">
+      <img src="../images/ConnorCard.png" alt="Connor" height="125" id="Connor1">
+      <img src="../images/DanielCard.png" alt="Daniel" height="125" id="Daniel1">
+      <img src="../images/DavidCard.png" alt="David" height="125" id="David1"><br>
+      <img src="../images/EmilyCard.png" alt="Emily" height="125" id="Emily1">
+      <img src="../images/JakeCard.png" alt="Jake" height="125" id="Jake1">
+      <img src="../images/JamesCard.png" alt="James" height="125" id="James1">
+      <img src="../images/JonCard.png" alt="Jon" height="125" id="Jon1">
+      <img src="../images/JosephCard.png" alt="Joseph" height="125" id="Joseph1">
+      <img src="../images/JoshuaCard.png" alt="Joshua" height="125" id="Joshua1">
+      <img src="../images/JustinCard.png" alt="Justin" height="125" id="Justin1">
+      <img src="../images/KyleCard.png" alt="Kyle" height="125" id="Kyle1"><br>
+      <img src="../images/MattCard.png" alt="Matt" height="125" id="Matt1">
+      <img src="../images/MeganCard.png" alt="Megan" height="125" id="Megan1">
+      <img src="../images/NickCard.png" alt="Nick" height="125" id="Nick1">
+      <img src="../images/RachaelCard.png" alt="Rachael" height="125" id="Rachael1">
+      <img src="../images/SarahCard.png" alt="Sarah" height="125" id="Sarah1">
+      <img src="../images/TylerCard.png" alt="Tyler" height="125" id="Tyler1">
+      <img src="../images/WilliamCard.png" alt="William" height="125" id="William1">
+      <img src="../images/ZacharyCard.png" alt="Zachary" height="125" id="Zachary1">
+      <br>
+      <h1 id="boardtwo" style="color: #33DB33">Player 2 Board : </h1>
+      <br>
+      <img src="../images/AlexCard.png" alt="Alex" height="125" id="Alex2">
+      <img src="../images/AndyCard.png" alt="Andy" height="125" id="Andy2">
+      <img src="../images/AshleyCard.png" alt="Ashley" height="125" id="Ashley2">
+      <img src="../images/BrandonCard.png" alt="Brandon" height="125" id="Brandon2">
+      <img src="../images/ChrisCard.png" alt="Chris" height="125" id="Chris2">
+      <img src="../images/ConnorCard.png" alt="Connor" height="125" id="Connor2">
+      <img src="../images/DanielCard.png" alt="Daniel" height="125" id="Daniel2">
+      <img src="../images/DavidCard.png" alt="David" height="125" id="David2"><br>
+      <img src="../images/EmilyCard.png" alt="Emily" height="125" id="Emily2">
+      <img src="../images/JakeCard.png" alt="Jake" height="125" id="Jake2">
+      <img src="../images/JamesCard.png" alt="James" height="125" id="James2">
+      <img src="../images/JonCard.png" alt="Jon" height="125" id="Jon2">
+      <img src="../images/JosephCard.png" alt="Joseph" height="125" id="Joseph2">
+      <img src="../images/JoshuaCard.png" alt="Joshua" height="125" id="Joshua2">
+      <img src="../images/JustinCard.png" alt="Justin" height="125" id="Justin2">
+      <img src="../images/KyleCard.png" alt="Kyle" height="125" id="Kyle2"><br>
+      <img src="../images/MattCard.png" alt="Matt" height="125" id="Matt2">
+      <img src="../images/MeganCard.png" alt="Megan" height="125" id="Megan2">
+      <img src="../images/NickCard.png" alt="Nick" height="125" id="Nick2">
+      <img src="../images/RachaelCard.png" alt="Rachael" height="125" id="Rachael2">
+      <img src="../images/SarahCard.png" alt="Sarah" height="125" id="Sarah2">
+      <img src="../images/TylerCard.png" alt="Tyler" height="125" id="Tyler2">
+      <img src="../images/WilliamCard.png" alt="William" height="125" id="William2">
+      <img src="../images/ZacharyCard.png" alt="Zachary" height="125" id="Zachary2">
+    </div>
+
+
+    <br><br><br><br><br>
+    <img style="float: right;" alt="" class="thismusicicon" id="musicicon" src="../images/1024px-Mute_Icon.png" />
+    <audio id="player" autoplay="autoplay" src="../sound/1-hour-of-silence.mp3"></audio>
+
+    <script>
+    //nothing will be here
+    </script>
+
+  </body>
+  <script src="/views/js/spectate.js"></script>
+
+</html>

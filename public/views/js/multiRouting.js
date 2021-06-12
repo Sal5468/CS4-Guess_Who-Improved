@@ -84,6 +84,15 @@ let socket = io();
   });
   function spectateClicked(){
     alert("spectate " + $("#spectate").val())
+    $.get("/spectateroomUpdate",{roomNum: $("#spectate").val()}, function(data){
+      console.log(data)
+      if(typeof data.redirect == typeof "hi"){
+        window.location = data.redirect;
+      }
+      else if(data.redirect == null){
+        alert("Error: Room Does Not Exist")
+      }
+    })
   }
   function joinClicked(){
     alert("join " + $("#join").val())
