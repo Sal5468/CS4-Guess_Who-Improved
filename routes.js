@@ -1040,6 +1040,26 @@ router.get("/spectate",function(req,res){
 		res.sendFile(__dirname + "/public/views/login.html");
 	}
 });
+
+router.get("/P1Win",function(req,res){
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/P1Win.html");
+    activePlayers[req.user.ident] = false;
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+});
+
+router.get("/P2Win",function(req,res){
+	if(req.isAuthenticated()){
+		res.sendFile(__dirname + "/public/views/P2Win.html");
+    activePlayers[req.user.ident] = false;
+	}
+	else{
+		res.sendFile(__dirname + "/public/views/login.html");
+	}
+});
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1155,6 +1175,14 @@ console.log("get win");
 router.get("/getlose", function(req, res) {
 console.log("get lose");
 	res.json({redirect:"/lose"});
+});
+router.get("/getP1Win", function(req, res) {
+console.log("get win");
+	res.json({redirect:"/P1Win"});
+});
+router.get("/getP2Win", function(req, res) {
+console.log("get lose");
+	res.json({redirect:"/P2Win"});
 });
 
 

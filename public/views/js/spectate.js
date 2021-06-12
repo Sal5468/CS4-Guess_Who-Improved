@@ -6,87 +6,469 @@
     });
   }
 
-  /*getSetOuts()
-  function getSetOuts()
+  getSpectateGame()
+  function getSpectateGame()
   {
-    console.log("checking setouts");
-    $.get("/getSetOut",{ident:roomID},function(data)
-    {
-      console.log(data)
-      if(data!=null)
+      $.post("/spectateGet",null,function(data)
       {
-        if(data.P1==null||data.P2==null)
+        //console.log(data)
+
+        $("#roomNum").html("Spectating Room: "+ data.roomNum)
+
+        if(data.ClientChar == -1)
         {
-          console.log("Nothing sent out yet")
+          $("#boardone").html("Player 1 Board : Character Not Choosen" )
         }
-        else if(areyousecondplayer)
+        if(data.Client2Char == -1)
         {
-          if(data.P2)
-          {
-            console.log("player 2 win")
-            $.post("/delcurrentmultigame",{ident:roomID},null)
-            $.get("/getwin",function(data){
-              window.location = data.redirect;
-            });
+          $("#boardtwo").html("Player 2 Board : Character Not Choosen" )
+        }
+
+        if(data.ClientChar !=   -1)
+        {
+          if(data.ClientChar==0){$("#boardone").html("Player 1 Board Character Choosen : Alex" )}
+          else if(data.ClientChar==1){$("#boardone").html("Player 1 Board Character Choosen : Andy" )}
+          else if(data.ClientChar==2){$("#boardone").html("Player 1 Board Character Choosen : Ashley" )}
+          else if(data.ClientChar==3){$("#boardone").html("Player 1 Board Character Choosen : Brandon" )}
+          else if(data.ClientChar==4){$("#boardone").html("Player 1 Board Character Choosen : Chris" )}
+          else if(data.ClientChar==5){$("#boardone").html("Player 1 Board Character Choosen : Connor" )}
+          else if(data.ClientChar==6){$("#boardone").html("Player 1 Board Character Choosen : Daniel" )}
+          else if(data.ClientChar==7){$("#boardone").html("Player 1 Board Character Choosen : David" )}
+          else if(data.ClientChar==8){$("#boardone").html("Player 1 Board Character Choosen : Emily" )}
+          else if(data.ClientChar==9){$("#boardone").html("Player 1 Board Character Choosen : Jake" )}
+          else if(data.ClientChar==10){$("#boardone").html("Player 1 Board Character Choosen : James" )}
+          else if(data.ClientChar==11){$("#boardone").html("Player 1 Board Character Choosen : Jon" )}
+          else if(data.ClientChar==12){$("#boardone").html("Player 1 Board Character Choosen : Joseph" )}
+          else if(data.ClientChar==13){$("#boardone").html("Player 1 Board Character Choosen : Joshua" )}
+          else if(data.ClientChar==14){$("#boardone").html("Player 1 Board Character Choosen : Justin" )}
+          else if(data.ClientChar==15){$("#boardone").html("Player 1 Board Character Choosen : Kyle" )}
+          else if(data.ClientChar==16){$("#boardone").html("Player 1 Board Character Choosen : Matt" )}
+          else if(data.ClientChar==17){$("#boardone").html("Player 1 Board Character Choosen : Megan" )}
+          else if(data.ClientChar==18){$("#boardone").html("Player 1 Board Character Choosen : Nick" )}
+          else if(data.ClientChar==19){$("#boardone").html("Player 1 Board Character Choosen : Rachael" )}
+          else if(data.ClientChar==20){$("#boardone").html("Player 1 Board Character Choosen : Sarah" )}
+          else if(data.ClientChar==21){$("#boardone").html("Player 1 Board Character Choosen : Tyler" )}
+          else if(data.ClientChar==22){$("#boardone").html("Player 1 Board Character Choosen : William" )}
+          else if(data.ClientChar==23){$("#boardone").html("Player 1 Board Character Choosen : Zachary" )}
+        }
+        if(data.Client2Char !=   -1)
+        {
+          if(data.Client2Char==0){$("#boardtwo").html("Player 2 Board Character Choosen : Alex" )}
+          else if(data.Client2Char==1){$("#boardtwo").html("Player 2 Board Character Choosen : Andy" )}
+          else if(data.Client2Char==2){$("#boardtwo").html("Player 2 Board Character Choosen : Ashley" )}
+          else if(data.Client2Char==3){$("#boardtwo").html("Player 2 Board Character Choosen : Brandon" )}
+          else if(data.Client2Char==4){$("#boardtwo").html("Player 2 Board Character Choosen : Chris" )}
+          else if(data.Client2Char==5){$("#boardtwo").html("Player 2 Board Character Choosen : Connor" )}
+          else if(data.Client2Char==6){$("#boardtwo").html("Player 2 Board Character Choosen : Daniel" )}
+          else if(data.Client2Char==7){$("#boardtwo").html("Player 2 Board Character Choosen : David" )}
+          else if(data.Client2Char==8){$("#boardtwo").html("Player 2 Board Character Choosen : Emily" )}
+          else if(data.Client2Char==9){$("#boardtwo").html("Player 2 Board Character Choosen : Jake" )}
+          else if(data.Client2Char==10){$("#boardtwo").html("Player 2 Board Character Choosen : James" )}
+          else if(data.Client2Char==11){$("#boardtwo").html("Player 2 Board Character Choosen : Jon" )}
+          else if(data.Client2Char==12){$("#boardtwo").html("Player 2 Board Character Choosen : Joseph" )}
+          else if(data.Client2Char==13){$("#boardtwo").html("Player 2 Board Character Choosen : Joshua" )}
+          else if(data.Client2Char==14){$("#boardtwo").html("Player 2 Board Character Choosen : Justin" )}
+          else if(data.Client2Char==15){$("#boardtwo").html("Player 2 Board Character Choosen : Kyle" )}
+          else if(data.Client2Char==16){$("#boardtwo").html("Player 2 Board Character Choosen : Matt" )}
+          else if(data.Client2Char==17){$("#boardtwo").html("Player 2 Board Character Choosen : Megan" )}
+          else if(data.Client2Char==18){$("#boardtwo").html("Player 2 Board Character Choosen : Nick" )}
+          else if(data.Client2Char==19){$("#boardtwo").html("Player 2 Board Character Choosen : Rachael" )}
+          else if(data.Client2Char==20){$("#boardtwo").html("Player 2 Board Character Choosen : Sarah" )}
+          else if(data.Client2Char==21){$("#boardtwo").html("Player 2 Board Character Choosen : Tyler" )}
+          else if(data.Client2Char==22){$("#boardtwo").html("Player 2 Board Character Choosen : William" )}
+          else if(data.Client2Char==23){$("#boardtwo").html("Player 2 Board Character Choosen : Zachary" )}
+        }
+
+
+        if(data.ClientBoard[0])
+        {
+          if($("#Alex1").attr("src")!="../images/AlexX.gif")
+          {$("#Alex1").attr("src","../images/AlexX.gif")}
         }
         else
         {
-          console.log("player 2 lose")
-          $.post("/delcurrentmultigame",{ident:roomID},null)
-          $.get("/getlose",function(data){
-            window.location = data.redirect;
-          });
-        }}
+          $("#Alex1").attr("src","../images/AlexCard.png")
+        }
+        if(data.ClientBoard[1])
+        {
+          if($("#Andy1").attr("src")!="../images/AndyX.gif")
+          {$("#Andy1").attr("src","../images/AndyX.gif")}
+        }
+        else{
+          $("#Andy1").attr("src","../images/AndyCard.png")
+        }
+        if(data.ClientBoard[2]){
+          if($("#Ashley1").attr("src")!="../images/AshleyX.gif")
+          {$("#Ashley1").attr("src","../images/AshleyX.gif")}
+        }
+        else{
+          $("#Ashley1").attr("src","../images/AshleyCard.png")
+        }
+        if(data.ClientBoard[3]){
+          if($("#Brandon1").attr("src")!="../images/BrandonX.gif")
+          {$("#Brandon1").attr("src","../images/BrandonX.gif")}
+        }
+        else{
+          $("#Brandon1").attr("src","../images/BrandonCard.png")
+        }
+        if(data.ClientBoard[4]){
+          if($("#Chris1").attr("src")!="../images/ChrisX.gif")
+          {$("#Chris1").attr("src","../images/ChrisX.gif")}
+        }
+        else{
+          $("#Chris1").attr("src","../images/ChrisCard.png")
+        }
+        if(data.ClientBoard[5]){
+          if($("#Connor1").attr("src")!="../images/ConnorX.gif")
+          {$("#Connor1").attr("src","../images/ConnorX.gif")}
+        }
+        else{
+          $("#Connor1").attr("src","../images/ConnorCard.png")
+        }
+        if(data.ClientBoard[6]){
+          if($("#Daniel1").attr("src")!="../images/DanielX.gif")
+          {$("#Daniel1").attr("src","../images/DanielX.gif")}
+        }
+        else{
+          $("#Daniel1").attr("src","../images/DanielCard.png")
+        }
+        if(data.ClientBoard[7]){
+          if($("#David1").attr("src")!="../images/DavidX.gif")
+          {$("#David1").attr("src","../images/DavidX.gif")}
+        }
+        else{
+          $("#David1").attr("src","../images/DavidCard.png")
+        }
+        if(data.ClientBoard[8]){
+          if($("#Emily1").attr("src")!="../images/EmilyX.gif")
+          {$("#Emily1").attr("src","../images/EmilyX.gif")}
+        }
+        else{
+          $("#Emily1").attr("src","../images/EmilyCard.png")
+        }
+        if(data.ClientBoard[9]){
+          if($("#Jake1").attr("src")!="../images/JakeX.gif")
+          {$("#Jake1").attr("src","../images/JakeX.gif")}
+        }
+        else{
+          $("#Jake1").attr("src","../images/JakeCard.png")
+        }
+        if(data.ClientBoard[10]){
+          if($("#James1").attr("src")!="../images/JamesX.gif")
+          {$("#James1").attr("src","../images/JamesX.gif")}
+        }
+        else{
+          $("#James1").attr("src","../images/JamesCard.png")
+        }
+        if(data.ClientBoard[11]){
+          if($("#Jon1").attr("src")!="../images/JonX.gif")
+          {$("#Jon1").attr("src","../images/JonX.gif")}
+        }
+        else{
+          $("#Jon1").attr("src","../images/JonCard.png")
+        }
+        if(data.ClientBoard[12]){
+          if($("#Joseph1").attr("src")!="../images/JosephX.gif")
+          {$("#Joseph1").attr("src","../images/JosephX.gif")}
+        }
+        else{
+          $("#Joseph1").attr("src","../images/JosephCard.png")
+        }
+        if(data.ClientBoard[13]){
+          if($("#Joshua1").attr("src")!="../images/JoshuaX.gif")
+          {$("#Joshua1").attr("src","../images/JoshuaX.gif")}
+        }
+        else{
+          $("#Joshua1").attr("src","../images/JoshuaCard.png")
+        }
+        if(data.ClientBoard[14]){
+          if($("#Justin1").attr("src")!="../images/JustinX.gif")
+          {$("#Justin1").attr("src","../images/JustinX.gif")}
+        }
+        else{
+          $("#Justin1").attr("src","../images/JustinCard.png")
+        }
+        if(data.ClientBoard[15]){
+          if($("#Kyle1").attr("src")!="../images/KyleX.gif")
+          {$("#Kyle1").attr("src","../images/KyleX.gif")}
+        }
+        else{
+          $("#Kyle1").attr("src","../images/KyleCard.png")
+        }
+        if(data.ClientBoard[16]){
+          if($("#Matt1").attr("src")!="../images/MattX.gif")
+          {$("#Matt1").attr("src","../images/MattX.gif")}
+        }
+        else{
+          $("#Matt1").attr("src","../images/MattCard.png")
+        }
+        if(data.ClientBoard[17]){
+          if($("#Megan1").attr("src")!="../images/MeganX.gif")
+          {$("#Megan1").attr("src","../images/MeganX.gif")}
+        }
+        else{
+          $("#Megan1").attr("src","../images/MeganCard.png")
+        }
+        if(data.ClientBoard[18]){
+          if($("#Nick1").attr("src")!="../images/NickX.gif")
+          {$("#Nick1").attr("src","../images/NickX.gif")}
+        }
+        else{
+          $("#Nick1").attr("src","../images/NickCard.png")
+        }
+        if(data.ClientBoard[19]){
+          if($("#Rachael1").attr("src")!="../images/RachaelX.gif")
+          {$("#Rachael1").attr("src","../images/RachaelX.gif")}
+        }
+        else{
+          $("#Rachael1").attr("src","../images/RachaelCard.png")
+        }
+        if(data.ClientBoard[20]){
+          if($("#Sarah1").attr("src")!="../images/SarahX.gif")
+          {$("#Sarah1").attr("src","../images/SarahX.gif")}
+        }
+        else{
+          $("#Sarah1").attr("src","../images/SarahCard.png")
+        }
+        if(data.ClientBoard[21]){
+          if($("#Tyler1").attr("src")!="../images/TylerX.gif")
+          {$("#Tyler1").attr("src","../images/TylerX.gif")}
+        }
+        else{
+          $("#Tyler1").attr("src","../images/TylerCard.png")
+        }
+        if(data.ClientBoard[22]){
+          if($("#William1").attr("src")!="../images/WilliamX.gif")
+          {$("#William1").attr("src","../images/WilliamX.gif")}
+        }
+        else{
+          $("#William1").attr("src","../images/WilliamCard.png")
+        }
+        if(data.ClientBoard[23]){
+          if($("#Zachary1").attr("src")!="../images/ZacharyX.gif")
+          {$("#Zachary1").attr("src","../images/ZacharyX.gif")}
+        }
+        else{
+          $("#Zachary1").attr("src","../images/ZacharyCard.png")
+        }
+
+        if(data.Client2Board[0])
+        {
+          if($("#Alex2").attr("src")!="../images/AlexX.gif")
+          {$("#Alex2").attr("src","../images/AlexX.gif")}
+        }
         else
         {
-          if(data.P1)
-          {
-            console.log("player 1 win")
-            $.post("/delcurrentmultigame",{ident:roomID},null)
-            $.get("/getwin",function(data){
-              window.location = data.redirect;
-            });
-          }
+          $("#Alex2").attr("src","../images/AlexCard.png")
+        }
+        if(data.Client2Board[1])
+        {
+          if($("#Andy2").attr("src")!="../images/AndyX.gif")
+          {$("#Andy2").attr("src","../images/AndyX.gif")}
+        }
+        else{
+          $("#Andy2").attr("src","../images/AndyCard.png")
+        }
+        if(data.Client2Board[2]){
+          if($("#Ashley2").attr("src")!="../images/AshleyX.gif")
+          {$("#Ashley2").attr("src","../images/AshleyX.gif")}
+        }
+        else{
+          $("#Ashley2").attr("src","../images/AshleyCard.png")
+        }
+        if(data.Client2Board[3]){
+          if($("#Brandon2").attr("src")!="../images/BrandonX.gif")
+          {$("#Brandon2").attr("src","../images/BrandonX.gif")}
+        }
+        else{
+          $("#Brandon2").attr("src","../images/BrandonCard.png")
+        }
+        if(data.Client2Board[4]){
+          if($("#Chris2").attr("src")!="../images/ChrisX.gif")
+          {$("#Chris2").attr("src","../images/ChrisX.gif")}
+        }
+        else{
+          $("#Chris2").attr("src","../images/ChrisCard.png")
+        }
+        if(data.Client2Board[5]){
+          if($("#Connor2").attr("src")!="../images/ConnorX.gif")
+          {$("#Connor2").attr("src","../images/ConnorX.gif")}
+        }
+        else{
+          $("#Connor2").attr("src","../images/ConnorCard.png")
+        }
+        if(data.Client2Board[6]){
+          if($("#Daniel2").attr("src")!="../images/DanielX.gif")
+          {$("#Daniel2").attr("src","../images/DanielX.gif")}
+        }
+        else{
+          $("#Daniel2").attr("src","../images/DanielCard.png")
+        }
+        if(data.Client2Board[7]){
+          if($("#David2").attr("src")!="../images/DavidX.gif")
+          {$("#David2").attr("src","../images/DavidX.gif")}
+        }
+        else{
+          $("#David2").attr("src","../images/DavidCard.png")
+        }
+        if(data.Client2Board[8]){
+          if($("#Emily2").attr("src")!="../images/EmilyX.gif")
+          {$("#Emily2").attr("src","../images/EmilyX.gif")}
+        }
+        else{
+          $("#Emily2").attr("src","../images/EmilyCard.png")
+        }
+        if(data.Client2Board[9]){
+          if($("#Jake2").attr("src")!="../images/JakeX.gif")
+          {$("#Jake2").attr("src","../images/JakeX.gif")}
+        }
+        else{
+          $("#Jake2").attr("src","../images/JakeCard.png")
+        }
+        if(data.Client2Board[10]){
+          if($("#James2").attr("src")!="../images/JamesX.gif")
+          {$("#James2").attr("src","../images/JamesX.gif")}
+        }
+        else{
+          $("#James2").attr("src","../images/JamesCard.png")
+        }
+        if(data.Client2Board[11]){
+          if($("#Jon2").attr("src")!="../images/JonX.gif")
+          {$("#Jon2").attr("src","../images/JonX.gif")}
+        }
+        else{
+          $("#Jon2").attr("src","../images/JonCard.png")
+        }
+        if(data.Client2Board[12]){
+          if($("#Joseph2").attr("src")!="../images/JosephX.gif")
+          {$("#Joseph2").attr("src","../images/JosephX.gif")}
+        }
+        else{
+          $("#Joseph2").attr("src","../images/JosephCard.png")
+        }
+        if(data.Client2Board[13]){
+          if($("#Joshua2").attr("src")!="../images/JoshuaX.gif")
+          {$("#Joshua2").attr("src","../images/JoshuaX.gif")}
+        }
+        else{
+          $("#Joshua2").attr("src","../images/JoshuaCard.png")
+        }
+        if(data.Client2Board[14]){
+          if($("#Justin2").attr("src")!="../images/JustinX.gif")
+          {$("#Justin2").attr("src","../images/JustinX.gif")}
+        }
+        else{
+          $("#Justin2").attr("src","../images/JustinCard.png")
+        }
+        if(data.Client2Board[15]){
+          if($("#Kyle2").attr("src")!="../images/KyleX.gif")
+          {$("#Kyle2").attr("src","../images/KyleX.gif")}
+        }
+        else{
+          $("#Kyle2").attr("src","../images/KyleCard.png")
+        }
+        if(data.Client2Board[16]){
+          if($("#Matt2").attr("src")!="../images/MattX.gif")
+          {$("#Matt2").attr("src","../images/MattX.gif")}
+        }
+        else{
+          $("#Matt2").attr("src","../images/MattCard.png")
+        }
+        if(data.Client2Board[17]){
+          if($("#Megan2").attr("src")!="../images/MeganX.gif")
+          {$("#Megan2").attr("src","../images/MeganX.gif")}
+        }
+        else{
+          $("#Megan2").attr("src","../images/MeganCard.png")
+        }
+        if(data.Client2Board[18]){
+          if($("#Nick2").attr("src")!="../images/NickX.gif")
+          {$("#Nick2").attr("src","../images/NickX.gif")}
+        }
+        else{
+          $("#Nick2").attr("src","../images/NickCard.png")
+        }
+        if(data.Client2Board[19]){
+          if($("#Rachael2").attr("src")!="../images/RachaelX.gif")
+          {$("#Rachael2").attr("src","../images/RachaelX.gif")}
+        }
+        else{
+          $("#Rachael2").attr("src","../images/RachaelCard.png")
+        }
+        if(data.Client2Board[20]){
+          if($("#Sarah2").attr("src")!="../images/SarahX.gif")
+          {$("#Sarah2").attr("src","../images/SarahX.gif")}
+        }
+        else{
+          $("#Sarah2").attr("src","../images/SarahCard.png")
+        }
+        if(data.Client2Board[21]){
+          if($("#Tyler2").attr("src")!="../images/TylerX.gif")
+          {$("#Tyler2").attr("src","../images/TylerX.gif")}
+        }
+        else{
+          $("#Tyler2").attr("src","../images/TylerCard.png")
+        }
+        if(data.Client2Board[22]){
+          if($("#William2").attr("src")!="../images/WilliamX.gif")
+          {$("#William2").attr("src","../images/WilliamX.gif")}
+        }
+        else{
+          $("#William2").attr("src","../images/WilliamCard.png")
+        }
+        if(data.Client2Board[23]){
+          if($("#Zachary2").attr("src")!="../images/ZacharyX.gif")
+          {$("#Zachary2").attr("src","../images/ZacharyX.gif")}
+        }
+        else{
+          $("#Zachary2").attr("src","../images/ZacharyCard.png")
+        }
+
+        $.get("/getUserName", {ident: data.ClientID},function(return1)
+        {
+          let name1 = ""
+          if(return1 == null || return1.name == null)
+          {name1 = "null"}
           else
+          {name1 = return1.name}
+      //    console.log("user one is " + name1)
+          $.get("/getUserName", {ident: data.Client2ID},function(return2)
           {
-            console.log("player 1 lose")
-            $.post("/delcurrentmultigame",{ident:roomID},null)
-            $.get("/getlose",function(data){
+            let name2 = ""
+            if(return2 == null || return2.name == null)
+            {name2 = "null"}
+            else
+            {name2 = return2.name}
+      //      console.log("user two is " + name2)
+            $("#playervsplayer").html(name1 + " vs " + name2)
+          })
+        })
+
+        if(data.PlayerOneSetOut != null || data.PlayerTwoSetOut != null)
+        {
+          if(data.PlayerOneSetOut == true && data.PlayerTwoSetOut == false)
+          {
+            $.get("/getP1Win",function(data){
+              window.location = data.redirect;
+            });
+          }
+          else if(data.PlayerOneSetOut == false && data.PlayerTwoSetOut == true)
+          {
+            $.get("/getP2Win",function(data){
               window.location = data.redirect;
             });
           }
         }
-      }
+      let numMilliSeconds = 1500;   // 1000 milliseconds = 1 second
+      setTimeout(getSpectateGame, numMilliSeconds);//recall this function after this number of miliseconds.
     })
-
-    $.get("/oppActive",{secondPlayer: areyousecondplayer, roomNum: roomID},function(data){
-      //console.log("oppactive data")
-      if(data.oppID != null){
-        $.get("/getUserName", {ident: data.oppID},function(data2){
-          if(data.active){
-            $("#opp").html("Opponent Status: " + data2.name + " is in the room")
-            $("#opp").css("color","#000000")//this works
-          }
-          else{
-            $("#opp").html("Opponent Status: " + data2.name + " is not in the room")
-
-          }
-        })
-      }
-
-
-
-    })
-
-    let numMilliSeconds = 1000;   // 1000 milliseconds = 1 second
-    setTimeout(getSetOuts, numMilliSeconds);//recall this function after this number of miliseconds.
-  }*/
+  }
 ////////////////////////////////////////////////////////////////////////////////////
   $(document).ready(function()
   {
     $.post("/spectateGet",null,function(data)
     {
-      console.log(data)
+      $("#roomNum").html("Spectating Room: "+ data.roomNum)
 
       if(data.ClientChar == -1)
       {
@@ -99,349 +481,402 @@
 
       if(data.ClientChar !=   -1)
       {
-        $("#prompt1").text("")
-        if(data.ClientChar==0){$("#boardone").html("Player 1 Board : Alex" )}
-        else if(data.ClientChar==1){$("#boardone").html("Player 1 Board : Andy" )}
-        else if(data.ClientChar==2){$("#boardone").html("Player 1 Board : Ashley" )}
-        else if(data.ClientChar==3){$("#boardone").html("Player 1 Board : Brandon" )}
-        else if(data.ClientChar==4){$("#boardone").html("Player 1 Board : Chris" )}
-        else if(data.ClientChar==5){$("#boardone").html("Player 1 Board : Connor" )}
-        else if(data.ClientChar==6){$("#boardone").html("Player 1 Board : Daniel" )}
-        else if(data.ClientChar==7){$("#boardone").html("Player 1 Board : David" )}
-        else if(data.ClientChar==8){$("#boardone").html("Player 1 Board : Emily" )}
-        else if(data.ClientChar==9){$("#boardone").html("Player 1 Board : Jake" )}
-        else if(data.ClientChar==10){$("#boardone").html("Player 1 Board : James" )}
-        else if(data.ClientChar==11){$("#boardone").html("Player 1 Board : Jon" )}
-        else if(data.ClientChar==12){$("#boardone").html("Player 1 Board : Joseph" )}
-        else if(data.ClientChar==13){$("#boardone").html("Player 1 Board : Joshua" )}
-        else if(data.ClientChar==14){$("#boardone").html("Player 1 Board : Justin" )}
-        else if(data.ClientChar==15){$("#boardone").html("Player 1 Board : Kyle" )}
-        else if(data.ClientChar==16){$("#boardone").html("Player 1 Board : Matt" )}
-        else if(data.ClientChar==17){$("#boardone").html("Player 1 Board : Megan" )}
-        else if(data.ClientChar==18){$("#boardone").html("Player 1 Board : Nick" )}
-        else if(data.ClientChar==19){$("#boardone").html("Player 1 Board : Rachael" )}
-        else if(data.ClientChar==20){$("#boardone").html("Player 1 Board : Sarah" )}
-        else if(data.ClientChar==21){$("#boardone").html("Player 1 Board : Tyler" )}
-        else if(data.ClientChar==22){$("#boardone").html("Player 1 Board : William" )}
-        else if(data.ClientChar==23){$("#boardone").html("Player 1 Board : Zachary" )}
+        if(data.ClientChar==0){$("#boardone").html("Player 1 Board Character Choosen : Alex" )}
+        else if(data.ClientChar==1){$("#boardone").html("Player 1 Board Character Choosen : Andy" )}
+        else if(data.ClientChar==2){$("#boardone").html("Player 1 Board Character Choosen : Ashley" )}
+        else if(data.ClientChar==3){$("#boardone").html("Player 1 Board Character Choosen : Brandon" )}
+        else if(data.ClientChar==4){$("#boardone").html("Player 1 Board Character Choosen : Chris" )}
+        else if(data.ClientChar==5){$("#boardone").html("Player 1 Board Character Choosen : Connor" )}
+        else if(data.ClientChar==6){$("#boardone").html("Player 1 Board Character Choosen : Daniel" )}
+        else if(data.ClientChar==7){$("#boardone").html("Player 1 Board Character Choosen : David" )}
+        else if(data.ClientChar==8){$("#boardone").html("Player 1 Board Character Choosen : Emily" )}
+        else if(data.ClientChar==9){$("#boardone").html("Player 1 Board Character Choosen : Jake" )}
+        else if(data.ClientChar==10){$("#boardone").html("Player 1 Board Character Choosen : James" )}
+        else if(data.ClientChar==11){$("#boardone").html("Player 1 Board Character Choosen : Jon" )}
+        else if(data.ClientChar==12){$("#boardone").html("Player 1 Board Character Choosen : Joseph" )}
+        else if(data.ClientChar==13){$("#boardone").html("Player 1 Board Character Choosen : Joshua" )}
+        else if(data.ClientChar==14){$("#boardone").html("Player 1 Board Character Choosen : Justin" )}
+        else if(data.ClientChar==15){$("#boardone").html("Player 1 Board Character Choosen : Kyle" )}
+        else if(data.ClientChar==16){$("#boardone").html("Player 1 Board Character Choosen : Matt" )}
+        else if(data.ClientChar==17){$("#boardone").html("Player 1 Board Character Choosen : Megan" )}
+        else if(data.ClientChar==18){$("#boardone").html("Player 1 Board Character Choosen : Nick" )}
+        else if(data.ClientChar==19){$("#boardone").html("Player 1 Board Character Choosen : Rachael" )}
+        else if(data.ClientChar==20){$("#boardone").html("Player 1 Board Character Choosen : Sarah" )}
+        else if(data.ClientChar==21){$("#boardone").html("Player 1 Board Character Choosen : Tyler" )}
+        else if(data.ClientChar==22){$("#boardone").html("Player 1 Board Character Choosen : William" )}
+        else if(data.ClientChar==23){$("#boardone").html("Player 1 Board Character Choosen : Zachary" )}
       }
       if(data.Client2Char !=   -1)
       {
-        $("#prompt1").text("")
-        if(data.Client2Char==0){$("#boardone").html("Player 1 Board : Alex" )}
-        else if(data.Client2Char==1){$("#boardone").html("Player 1 Board : Andy" )}
-        else if(data.Client2Char==2){$("#boardone").html("Player 1 Board : Ashley" )}
-        else if(data.Client2Char==3){$("#boardone").html("Player 1 Board : Brandon" )}
-        else if(data.Client2Char==4){$("#boardone").html("Player 1 Board : Chris" )}
-        else if(data.Client2Char==5){$("#boardone").html("Player 1 Board : Connor" )}
-        else if(data.Client2Char==6){$("#boardone").html("Player 1 Board : Daniel" )}
-        else if(data.Client2Char==7){$("#boardone").html("Player 1 Board : David" )}
-        else if(data.Client2Char==8){$("#boardone").html("Player 1 Board : Emily" )}
-        else if(data.Client2Char==9){$("#boardone").html("Player 1 Board : Jake" )}
-        else if(data.Client2Char==10){$("#boardone").html("Player 1 Board : James" )}
-        else if(data.Client2Char==11){$("#boardone").html("Player 1 Board : Jon" )}
-        else if(data.Client2Char==12){$("#boardone").html("Player 1 Board : Joseph" )}
-        else if(data.Client2Char==13){$("#boardone").html("Player 1 Board : Joshua" )}
-        else if(data.Client2Char==14){$("#boardone").html("Player 1 Board : Justin" )}
-        else if(data.Client2Char==15){$("#boardone").html("Player 1 Board : Kyle" )}
-        else if(data.Client2Char==16){$("#boardone").html("Player 1 Board : Matt" )}
-        else if(data.Client2Char==17){$("#boardone").html("Player 1 Board : Megan" )}
-        else if(data.Client2Char==18){$("#boardone").html("Player 1 Board : Nick" )}
-        else if(data.Client2Char==19){$("#boardone").html("Player 1 Board : Rachael" )}
-        else if(data.Client2Char==20){$("#boardone").html("Player 1 Board : Sarah" )}
-        else if(data.Client2Char==21){$("#boardone").html("Player 1 Board : Tyler" )}
-        else if(data.Client2Char==22){$("#boardone").html("Player 1 Board : William" )}
-        else if(data.Client2Char==23){$("#boardone").html("Player 1 Board : Zachary" )}
+        if(data.Client2Char==0){$("#boardtwo").html("Player 2 Board Character Choosen : Alex" )}
+        else if(data.Client2Char==1){$("#boardtwo").html("Player 2 Board Character Choosen : Andy" )}
+        else if(data.Client2Char==2){$("#boardtwo").html("Player 2 Board Character Choosen : Ashley" )}
+        else if(data.Client2Char==3){$("#boardtwo").html("Player 2 Board Character Choosen : Brandon" )}
+        else if(data.Client2Char==4){$("#boardtwo").html("Player 2 Board Character Choosen : Chris" )}
+        else if(data.Client2Char==5){$("#boardtwo").html("Player 2 Board Character Choosen : Connor" )}
+        else if(data.Client2Char==6){$("#boardtwo").html("Player 2 Board Character Choosen : Daniel" )}
+        else if(data.Client2Char==7){$("#boardtwo").html("Player 2 Board Character Choosen : David" )}
+        else if(data.Client2Char==8){$("#boardtwo").html("Player 2 Board Character Choosen : Emily" )}
+        else if(data.Client2Char==9){$("#boardtwo").html("Player 2 Board Character Choosen : Jake" )}
+        else if(data.Client2Char==10){$("#boardtwo").html("Player 2 Board Character Choosen : James" )}
+        else if(data.Client2Char==11){$("#boardtwo").html("Player 2 Board Character Choosen : Jon" )}
+        else if(data.Client2Char==12){$("#boardtwo").html("Player 2 Board Character Choosen : Joseph" )}
+        else if(data.Client2Char==13){$("#boardtwo").html("Player 2 Board Character Choosen : Joshua" )}
+        else if(data.Client2Char==14){$("#boardtwo").html("Player 2 Board Character Choosen : Justin" )}
+        else if(data.Client2Char==15){$("#boardtwo").html("Player 2 Board Character Choosen : Kyle" )}
+        else if(data.Client2Char==16){$("#boardtwo").html("Player 2 Board Character Choosen : Matt" )}
+        else if(data.Client2Char==17){$("#boardtwo").html("Player 2 Board Character Choosen : Megan" )}
+        else if(data.Client2Char==18){$("#boardtwo").html("Player 2 Board Character Choosen : Nick" )}
+        else if(data.Client2Char==19){$("#boardtwo").html("Player 2 Board Character Choosen : Rachael" )}
+        else if(data.Client2Char==20){$("#boardtwo").html("Player 2 Board Character Choosen : Sarah" )}
+        else if(data.Client2Char==21){$("#boardtwo").html("Player 2 Board Character Choosen : Tyler" )}
+        else if(data.Client2Char==22){$("#boardtwo").html("Player 2 Board Character Choosen : William" )}
+        else if(data.Client2Char==23){$("#boardtwo").html("Player 2 Board Character Choosen : Zachary" )}
       }
 
 
-      if(data.ClientBoard[0]){
-        $("#Alex").attr("src","../images/AlexX.gif")
+      if(data.ClientBoard[0])
+      {
+        if($("#Alex1").attr("src")!="../images/AlexX.gif")
+        {$("#Alex1").attr("src","../images/AlexX.gif")}
+      }
+      else
+      {
+        $("#Alex1").attr("src","../images/AlexCard.png")
+      }
+      if(data.ClientBoard[1])
+      {
+        if($("#Andy1").attr("src")!="../images/AndyX.gif")
+        {$("#Andy1").attr("src","../images/AndyX.gif")}
       }
       else{
-        $("#Alex").attr("src","../images/AlexCard.png")
-      }
-      if(data.ClientBoard[1]){
-        $("#Andy").attr("src","../images/AndyX.gif")
-      }
-      else{
-        $("#Andy").attr("src","../images/AndyCard.png")
+        $("#Andy1").attr("src","../images/AndyCard.png")
       }
       if(data.ClientBoard[2]){
-        $("#Ashley").attr("src","../images/AshleyX.gif")
+        if($("#Ashley1").attr("src")!="../images/AshleyX.gif")
+        {$("#Ashley1").attr("src","../images/AshleyX.gif")}
       }
       else{
-        $("#Ashley").attr("src","../images/AshleyCard.png")
+        $("#Ashley1").attr("src","../images/AshleyCard.png")
       }
       if(data.ClientBoard[3]){
-        $("#Brandon").attr("src","../images/BrandonX.gif")
+        if($("#Brandon1").attr("src")!="../images/BrandonX.gif")
+        {$("#Brandon1").attr("src","../images/BrandonX.gif")}
       }
       else{
-        $("#Brandon").attr("src","../images/BrandonCard.png")
+        $("#Brandon1").attr("src","../images/BrandonCard.png")
       }
       if(data.ClientBoard[4]){
-        $("#Chris").attr("src","../images/ChrisX.gif")
+        if($("#Chris1").attr("src")!="../images/ChrisX.gif")
+        {$("#Chris1").attr("src","../images/ChrisX.gif")}
       }
       else{
-        $("#Chris").attr("src","../images/ChrisCard.png")
+        $("#Chris1").attr("src","../images/ChrisCard.png")
       }
       if(data.ClientBoard[5]){
-        $("#Connor").attr("src","../images/ConnorX.gif")
+        if($("#Connor1").attr("src")!="../images/ConnorX.gif")
+        {$("#Connor1").attr("src","../images/ConnorX.gif")}
       }
       else{
-        $("#Connor").attr("src","../images/ConnorCard.png")
+        $("#Connor1").attr("src","../images/ConnorCard.png")
       }
       if(data.ClientBoard[6]){
-        $("#Daniel").attr("src","../images/DanielX.gif")
+        if($("#Daniel1").attr("src")!="../images/DanielX.gif")
+        {$("#Daniel1").attr("src","../images/DanielX.gif")}
       }
       else{
-        $("#Daniel").attr("src","../images/DanielCard.png")
+        $("#Daniel1").attr("src","../images/DanielCard.png")
       }
       if(data.ClientBoard[7]){
-        $("#David").attr("src","../images/DavidX.gif")
+        if($("#David1").attr("src")!="../images/DavidX.gif")
+        {$("#David1").attr("src","../images/DavidX.gif")}
       }
       else{
-        $("#David").attr("src","../images/DavidCard.png")
+        $("#David1").attr("src","../images/DavidCard.png")
       }
       if(data.ClientBoard[8]){
-        $("#Emily").attr("src","../images/EmilyX.gif")
+        if($("#Emily1").attr("src")!="../images/EmilyX.gif")
+        {$("#Emily1").attr("src","../images/EmilyX.gif")}
       }
       else{
-        $("#Emily").attr("src","../images/EmilyCard.png")
+        $("#Emily1").attr("src","../images/EmilyCard.png")
       }
       if(data.ClientBoard[9]){
-        $("#Jake").attr("src","../images/JakeX.gif")
+        if($("#Jake1").attr("src")!="../images/JakeX.gif")
+        {$("#Jake1").attr("src","../images/JakeX.gif")}
       }
       else{
-        $("#Jake").attr("src","../images/JakeCard.png")
+        $("#Jake1").attr("src","../images/JakeCard.png")
       }
       if(data.ClientBoard[10]){
-        $("#James").attr("src","../images/JamesX.gif")
+        if($("#James1").attr("src")!="../images/JamesX.gif")
+        {$("#James1").attr("src","../images/JamesX.gif")}
       }
       else{
-        $("#James").attr("src","../images/JamesCard.png")
+        $("#James1").attr("src","../images/JamesCard.png")
       }
       if(data.ClientBoard[11]){
-        $("#Jon").attr("src","../images/JonX.gif")
+        if($("#Jon1").attr("src")!="../images/JonX.gif")
+        {$("#Jon1").attr("src","../images/JonX.gif")}
       }
       else{
-        $("#Jon").attr("src","../images/JonCard.png")
+        $("#Jon1").attr("src","../images/JonCard.png")
       }
       if(data.ClientBoard[12]){
-        $("#Joseph").attr("src","../images/JosephX.gif")
+        if($("#Joseph1").attr("src")!="../images/JosephX.gif")
+        {$("#Joseph1").attr("src","../images/JosephX.gif")}
       }
       else{
-        $("#Joseph").attr("src","../images/JosephCard.png")
+        $("#Joseph1").attr("src","../images/JosephCard.png")
       }
       if(data.ClientBoard[13]){
-        $("#Joshua").attr("src","../images/JoshuaX.gif")
+        if($("#Joshua1").attr("src")!="../images/JoshuaX.gif")
+        {$("#Joshua1").attr("src","../images/JoshuaX.gif")}
       }
       else{
-        $("#Joshua").attr("src","../images/JoshuaCard.png")
+        $("#Joshua1").attr("src","../images/JoshuaCard.png")
       }
       if(data.ClientBoard[14]){
-        $("#Justin").attr("src","../images/JustinX.gif")
+        if($("#Justin1").attr("src")!="../images/JustinX.gif")
+        {$("#Justin1").attr("src","../images/JustinX.gif")}
       }
       else{
-        $("#Justin").attr("src","../images/JustinCard.png")
+        $("#Justin1").attr("src","../images/JustinCard.png")
       }
       if(data.ClientBoard[15]){
-        $("#Kyle").attr("src","../images/KyleX.gif")
+        if($("#Kyle1").attr("src")!="../images/KyleX.gif")
+        {$("#Kyle1").attr("src","../images/KyleX.gif")}
       }
       else{
-        $("#Kyle").attr("src","../images/KyleCard.png")
+        $("#Kyle1").attr("src","../images/KyleCard.png")
       }
       if(data.ClientBoard[16]){
-        $("#Matt").attr("src","../images/MattX.gif")
+        if($("#Matt1").attr("src")!="../images/MattX.gif")
+        {$("#Matt1").attr("src","../images/MattX.gif")}
       }
       else{
-        $("#Matt").attr("src","../images/MattCard.png")
+        $("#Matt1").attr("src","../images/MattCard.png")
       }
       if(data.ClientBoard[17]){
-        $("#Megan").attr("src","../images/MeganX.gif")
+        if($("#Megan1").attr("src")!="../images/MeganX.gif")
+        {$("#Megan1").attr("src","../images/MeganX.gif")}
       }
       else{
-        $("#Megan").attr("src","../images/MeganCard.png")
+        $("#Megan1").attr("src","../images/MeganCard.png")
       }
       if(data.ClientBoard[18]){
-        $("#Nick").attr("src","../images/NickX.gif")
+        if($("#Nick1").attr("src")!="../images/NickX.gif")
+        {$("#Nick1").attr("src","../images/NickX.gif")}
       }
       else{
-        $("#Nick").attr("src","../images/NickCard.png")
+        $("#Nick1").attr("src","../images/NickCard.png")
       }
       if(data.ClientBoard[19]){
-        $("#Rachael").attr("src","../images/RachaelX.gif")
+        if($("#Rachael1").attr("src")!="../images/RachaelX.gif")
+        {$("#Rachael1").attr("src","../images/RachaelX.gif")}
       }
       else{
-        $("#Rachael").attr("src","../images/RachaelCard.png")
+        $("#Rachael1").attr("src","../images/RachaelCard.png")
       }
       if(data.ClientBoard[20]){
-        $("#Sarah").attr("src","../images/SarahX.gif")
+        if($("#Sarah1").attr("src")!="../images/SarahX.gif")
+        {$("#Sarah1").attr("src","../images/SarahX.gif")}
       }
       else{
-        $("#Sarah").attr("src","../images/SarahCard.png")
+        $("#Sarah1").attr("src","../images/SarahCard.png")
       }
       if(data.ClientBoard[21]){
-        $("#Tyler").attr("src","../images/TylerX.gif")
+        if($("#Tyler1").attr("src")!="../images/TylerX.gif")
+        {$("#Tyler1").attr("src","../images/TylerX.gif")}
       }
       else{
-        $("#Tyler").attr("src","../images/TylerCard.png")
+        $("#Tyler1").attr("src","../images/TylerCard.png")
       }
       if(data.ClientBoard[22]){
-        $("#William").attr("src","../images/WilliamX.gif")
+        if($("#William1").attr("src")!="../images/WilliamX.gif")
+        {$("#William1").attr("src","../images/WilliamX.gif")}
       }
       else{
-        $("#William").attr("src","../images/WilliamCard.png")
+        $("#William1").attr("src","../images/WilliamCard.png")
       }
       if(data.ClientBoard[23]){
-        $("#Zachary").attr("src","../images/ZacharyX.gif")
+        if($("#Zachary1").attr("src")!="../images/ZacharyX.gif")
+        {$("#Zachary1").attr("src","../images/ZacharyX.gif")}
       }
       else{
-        $("#Zachary").attr("src","../images/ZacharyCard.png")
+        $("#Zachary1").attr("src","../images/ZacharyCard.png")
       }
-      if(data.Client2Board[0]){
-        $("#Alex").attr("src","../images/AlexX.gif")
+
+      if(data.Client2Board[0])
+      {
+        if($("#Alex2").attr("src")!="../images/AlexX.gif")
+        {$("#Alex2").attr("src","../images/AlexX.gif")}
+      }
+      else
+      {
+        $("#Alex2").attr("src","../images/AlexCard.png")
+      }
+      if(data.Client2Board[1])
+      {
+        if($("#Andy2").attr("src")!="../images/AndyX.gif")
+        {$("#Andy2").attr("src","../images/AndyX.gif")}
       }
       else{
-        $("#Alex").attr("src","../images/AlexCard.png")
-      }
-      if(data.Client2Board[1]){
-        $("#Andy").attr("src","../images/AndyX.gif")
-      }
-      else{
-        $("#Andy").attr("src","../images/AndyCard.png")
+        $("#Andy2").attr("src","../images/AndyCard.png")
       }
       if(data.Client2Board[2]){
-        $("#Ashley").attr("src","../images/AshleyX.gif")
+        if($("#Ashley2").attr("src")!="../images/AshleyX.gif")
+        {$("#Ashley2").attr("src","../images/AshleyX.gif")}
       }
       else{
-        $("#Ashley").attr("src","../images/AshleyCard.png")
+        $("#Ashley2").attr("src","../images/AshleyCard.png")
       }
       if(data.Client2Board[3]){
-        $("#Brandon").attr("src","../images/BrandonX.gif")
+        if($("#Brandon2").attr("src")!="../images/BrandonX.gif")
+        {$("#Brandon2").attr("src","../images/BrandonX.gif")}
       }
       else{
-        $("#Brandon").attr("src","../images/BrandonCard.png")
+        $("#Brandon2").attr("src","../images/BrandonCard.png")
       }
       if(data.Client2Board[4]){
-        $("#Chris").attr("src","../images/ChrisX.gif")
+        if($("#Chris2").attr("src")!="../images/ChrisX.gif")
+        {$("#Chris2").attr("src","../images/ChrisX.gif")}
       }
       else{
-        $("#Chris").attr("src","../images/ChrisCard.png")
+        $("#Chris2").attr("src","../images/ChrisCard.png")
       }
       if(data.Client2Board[5]){
-        $("#Connor").attr("src","../images/ConnorX.gif")
+        if($("#Connor2").attr("src")!="../images/ConnorX.gif")
+        {$("#Connor2").attr("src","../images/ConnorX.gif")}
       }
       else{
-        $("#Connor").attr("src","../images/ConnorCard.png")
+        $("#Connor2").attr("src","../images/ConnorCard.png")
       }
       if(data.Client2Board[6]){
-        $("#Daniel").attr("src","../images/DanielX.gif")
+        if($("#Daniel2").attr("src")!="../images/DanielX.gif")
+        {$("#Daniel2").attr("src","../images/DanielX.gif")}
       }
       else{
-        $("#Daniel").attr("src","../images/DanielCard.png")
+        $("#Daniel2").attr("src","../images/DanielCard.png")
       }
       if(data.Client2Board[7]){
-        $("#David").attr("src","../images/DavidX.gif")
+        if($("#David2").attr("src")!="../images/DavidX.gif")
+        {$("#David2").attr("src","../images/DavidX.gif")}
       }
       else{
-        $("#David").attr("src","../images/DavidCard.png")
+        $("#David2").attr("src","../images/DavidCard.png")
       }
       if(data.Client2Board[8]){
-        $("#Emily").attr("src","../images/EmilyX.gif")
+        if($("#Emily2").attr("src")!="../images/EmilyX.gif")
+        {$("#Emily2").attr("src","../images/EmilyX.gif")}
       }
       else{
-        $("#Emily").attr("src","../images/EmilyCard.png")
+        $("#Emily2").attr("src","../images/EmilyCard.png")
       }
       if(data.Client2Board[9]){
-        $("#Jake").attr("src","../images/JakeX.gif")
+        if($("#Jake2").attr("src")!="../images/JakeX.gif")
+        {$("#Jake2").attr("src","../images/JakeX.gif")}
       }
       else{
-        $("#Jake").attr("src","../images/JakeCard.png")
+        $("#Jake2").attr("src","../images/JakeCard.png")
       }
       if(data.Client2Board[10]){
-        $("#James").attr("src","../images/JamesX.gif")
+        if($("#James2").attr("src")!="../images/JamesX.gif")
+        {$("#James2").attr("src","../images/JamesX.gif")}
       }
       else{
-        $("#James").attr("src","../images/JamesCard.png")
+        $("#James2").attr("src","../images/JamesCard.png")
       }
       if(data.Client2Board[11]){
-        $("#Jon").attr("src","../images/JonX.gif")
+        if($("#Jon2").attr("src")!="../images/JonX.gif")
+        {$("#Jon2").attr("src","../images/JonX.gif")}
       }
       else{
-        $("#Jon").attr("src","../images/JonCard.png")
+        $("#Jon2").attr("src","../images/JonCard.png")
       }
       if(data.Client2Board[12]){
-        $("#Joseph").attr("src","../images/JosephX.gif")
+        if($("#Joseph2").attr("src")!="../images/JosephX.gif")
+        {$("#Joseph2").attr("src","../images/JosephX.gif")}
       }
       else{
-        $("#Joseph").attr("src","../images/JosephCard.png")
+        $("#Joseph2").attr("src","../images/JosephCard.png")
       }
       if(data.Client2Board[13]){
-        $("#Joshua").attr("src","../images/JoshuaX.gif")
+        if($("#Joshua2").attr("src")!="../images/JoshuaX.gif")
+        {$("#Joshua2").attr("src","../images/JoshuaX.gif")}
       }
       else{
-        $("#Joshua").attr("src","../images/JoshuaCard.png")
+        $("#Joshua2").attr("src","../images/JoshuaCard.png")
       }
       if(data.Client2Board[14]){
-        $("#Justin").attr("src","../images/JustinX.gif")
+        if($("#Justin2").attr("src")!="../images/JustinX.gif")
+        {$("#Justin2").attr("src","../images/JustinX.gif")}
       }
       else{
-        $("#Justin").attr("src","../images/JustinCard.png")
+        $("#Justin2").attr("src","../images/JustinCard.png")
       }
       if(data.Client2Board[15]){
-        $("#Kyle").attr("src","../images/KyleX.gif")
+        if($("#Kyle2").attr("src")!="../images/KyleX.gif")
+        {$("#Kyle2").attr("src","../images/KyleX.gif")}
       }
       else{
-        $("#Kyle").attr("src","../images/KyleCard.png")
+        $("#Kyle2").attr("src","../images/KyleCard.png")
       }
       if(data.Client2Board[16]){
-        $("#Matt").attr("src","../images/MattX.gif")
+        if($("#Matt2").attr("src")!="../images/MattX.gif")
+        {$("#Matt2").attr("src","../images/MattX.gif")}
       }
       else{
-        $("#Matt").attr("src","../images/MattCard.png")
+        $("#Matt2").attr("src","../images/MattCard.png")
       }
       if(data.Client2Board[17]){
-        $("#Megan").attr("src","../images/MeganX.gif")
+        if($("#Megan2").attr("src")!="../images/MeganX.gif")
+        {$("#Megan2").attr("src","../images/MeganX.gif")}
       }
       else{
-        $("#Megan").attr("src","../images/MeganCard.png")
+        $("#Megan2").attr("src","../images/MeganCard.png")
       }
       if(data.Client2Board[18]){
-        $("#Nick").attr("src","../images/NickX.gif")
+        if($("#Nick2").attr("src")!="../images/NickX.gif")
+        {$("#Nick2").attr("src","../images/NickX.gif")}
       }
       else{
-        $("#Nick").attr("src","../images/NickCard.png")
+        $("#Nick2").attr("src","../images/NickCard.png")
       }
       if(data.Client2Board[19]){
-        $("#Rachael").attr("src","../images/RachaelX.gif")
+        if($("#Rachael2").attr("src")!="../images/RachaelX.gif")
+        {$("#Rachael2").attr("src","../images/RachaelX.gif")}
       }
       else{
-        $("#Rachael").attr("src","../images/RachaelCard.png")
+        $("#Rachael2").attr("src","../images/RachaelCard.png")
       }
       if(data.Client2Board[20]){
-        $("#Sarah").attr("src","../images/SarahX.gif")
+        if($("#Sarah2").attr("src")!="../images/SarahX.gif")
+        {$("#Sarah2").attr("src","../images/SarahX.gif")}
       }
       else{
-        $("#Sarah").attr("src","../images/SarahCard.png")
+        $("#Sarah2").attr("src","../images/SarahCard.png")
       }
       if(data.Client2Board[21]){
-        $("#Tyler").attr("src","../images/TylerX.gif")
+        if($("#Tyler2").attr("src")!="../images/TylerX.gif")
+        {$("#Tyler2").attr("src","../images/TylerX.gif")}
       }
       else{
-        $("#Tyler").attr("src","../images/TylerCard.png")
+        $("#Tyler2").attr("src","../images/TylerCard.png")
       }
       if(data.Client2Board[22]){
-        $("#William").attr("src","../images/WilliamX.gif")
+        if($("#William2").attr("src")!="../images/WilliamX.gif")
+        {$("#William2").attr("src","../images/WilliamX.gif")}
       }
       else{
-        $("#William").attr("src","../images/WilliamCard.png")
+        $("#William2").attr("src","../images/WilliamCard.png")
       }
       if(data.Client2Board[23]){
-        $("#Zachary").attr("src","../images/ZacharyX.gif")
+        if($("#Zachary2").attr("src")!="../images/ZacharyX.gif")
+        {$("#Zachary2").attr("src","../images/ZacharyX.gif")}
       }
       else{
-        $("#Zachary").attr("src","../images/ZacharyCard.png")
+        $("#Zachary2").attr("src","../images/ZacharyCard.png")
       }
 
       $.get("/getUserName", {ident: data.ClientID},function(return1)
@@ -451,7 +886,7 @@
         {name1 = "null"}
         else
         {name1 = return1.name}
-        console.log("user one is " + name1)
+    //    console.log("user one is " + name1)
         $.get("/getUserName", {ident: data.Client2ID},function(return2)
         {
           let name2 = ""
@@ -459,12 +894,27 @@
           {name2 = "null"}
           else
           {name2 = return2.name}
-          console.log("user two is " + name2)
+    //      console.log("user two is " + name2)
           $("#playervsplayer").html(name1 + " vs " + name2)
         })
       })
 
-    });
+      if(data.PlayerOneSetOut != null || data.PlayerTwoSetOut != null)
+      {
+        if(data.PlayerOneSetOut == true && data.PlayerTwoSetOut == false)
+        {
+          $.get("/getP1Win",function(data){
+            window.location = data.redirect;
+          });
+        }
+        else if(data.PlayerOneSetOut == false && data.PlayerTwoSetOut == true)
+        {
+          $.get("/getP2Win",function(data){
+            window.location = data.redirect;
+          });
+        }
+      }
+    })
   });
 
   $("#musicicon").click(trialfunction);

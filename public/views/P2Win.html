@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--   -->
+<html>
+  <head>
+    <title>Result</title>
+      <meta charset="utf-8"/>
+        <style>
+        .thismusicicon
+        {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50px;
+          height: 50px
+        }
+        .button1
+        {
+          text-align:center;
+        }
+        .text
+        {
+          text-align:center;
+          color: white;
+        }
+        .guesswhoimg
+        {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        }
+        .yeewin
+        {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        }
+        body
+        {
+          background-image: url("../images/Background(Red).png");
+          background-size: 100% 300%;
+          background-repeat: no-repeat;
+        }
+
+        </style>
+      <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+      <link rel="icon" type="image/png" href="../images/YEE.png">
+  </head>
+
+  <body>
+    <img src="../images/GuessWho.png" alt="Guess Who img" class="guesswhoimg">
+
+    <br><br><br>
+    <<h1 class="text">Player Two Won!</h1>
+    <br><br><br>
+
+    <div class="button1">
+    <button id = "mainmenu" type="button">Main Menu</button>
+    </div>
+
+    <img style="float: right;" alt="" class="thismusicicon" id="musicicon" src="../images/1024px-Mute_Icon.png" />
+    <audio id="player" autoplay="autoplay" src="../sound/1-hour-of-silence.mp3"></audio>
+
+    <br><br><br>
+
+
+    <script>
+    $("#musicicon").click(trialfunction);
+
+    function trialfunction()
+    {
+      if($("#musicicon").attr("src")=="../images/1024px-Mute_Icon.png")
+      {
+        $("#musicicon").attr("src", "../images/600px-Speaker_Icon.png")
+        playAudio();
+      }
+      else if($("#musicicon").attr("src")=="../images/600px-Speaker_Icon.png")
+      {
+        $("#musicicon").attr("src", "../images/1024px-Mute_Icon.png")
+        stopAudio();
+      }
+    }
+
+    let audioSources = ["../sound/13 - Beach - Plok! - OST - SNES.wav",
+    "../sound/Donkey Kong Country - Bonus Room Blitz [Restored].wav",
+    "../sound/Mario Paint OST - BGM 1.wav",
+    "../sound/Sonic CD - Tidal Tempest Present [JPEU] (HD).wav",
+    "../sound/Team Fortress 2 Soundtrack  Upgrade Station.wav"];
+
+    function stopAudio()
+    {
+      $("#player").attr("src","../sound/1-hour-of-silence.mp3")
+    }
+
+    function playAudio()
+    {
+      if(audioSources.length==0 || audioSources.src ==  "../sound/1-hour-of-silence.mp3")
+      {
+        audioSources = ["../sound/13 - Beach - Plok! - OST - SNES.wav",
+        "../sound/Donkey Kong Country - Bonus Room Blitz [Restored].wav",
+        "../sound/Mario Paint OST - BGM 1.wav",
+        "../sound/Sonic CD - Tidal Tempest Present [JPEU] (HD).wav",
+        "../sound/Team Fortress 2 Soundtrack  Upgrade Station.wav"];
+      }
+
+      let index = Math.floor(Math.random() * audioSources.length)
+      let audioSource = audioSources[index];
+
+      if(audioSource!=undefined)
+        $("#player").attr("src",audioSource)
+
+      let splicer = audioSources.indexOf(audioSource);
+      audioSources.splice(splicer, 1);
+
+    }
+    $("#player").on('ended', playAudio);
+
+    $(document).ready(function()
+    {
+      $("#mainmenu").click(mainmenuclick);
+    })
+    function mainmenuclick()
+    {
+      $.get("/getmenu",function(data){
+        window.location = data.redirect;
+      });
+    }
+    </script>
+  </body>
+</html>
