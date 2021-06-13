@@ -1,4 +1,7 @@
 
+  let currentmessage = 1
+  let currentmessagetodel = 1
+
   function guessWhoClicked()
   {
     $.get("/getmenu",function(data){
@@ -11,7 +14,12 @@
   {
       $.post("/spectateGet",null,function(data)
       {
-        //console.log(data)
+        if(data == null)
+        {
+          $.get("/getmenu",function(data){
+            window.location = data.redirect;
+          });
+        }
 
         $("#roomNum").html("Spectating Room: "+ data.roomNum)
 
@@ -78,7 +86,6 @@
           else if(data.Client2Char==22){$("#boardtwo").html("Player 2 Board Character Choosen : William" )}
           else if(data.Client2Char==23){$("#boardtwo").html("Player 2 Board Character Choosen : Zachary" )}
         }
-
 
         if(data.ClientBoard[0])
         {
@@ -459,7 +466,7 @@
             });
           }
         }
-      let numMilliSeconds = 1500;   // 1000 milliseconds = 1 second
+      let numMilliSeconds = 0500;   // 1000 milliseconds = 1 second
       setTimeout(getSpectateGame, numMilliSeconds);//recall this function after this number of miliseconds.
     })
   }
@@ -468,6 +475,13 @@
   {
     $.post("/spectateGet",null,function(data)
     {
+      if(data == null)
+      {
+        $.get("/getmenu",function(data){
+          window.location = data.redirect;
+        });
+      }
+      
       $("#roomNum").html("Spectating Room: "+ data.roomNum)
 
       if(data.ClientChar == -1)

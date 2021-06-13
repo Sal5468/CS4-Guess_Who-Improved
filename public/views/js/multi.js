@@ -105,7 +105,7 @@
 
     })
 
-    let numMilliSeconds = 1000;   // 1000 milliseconds = 1 second
+    let numMilliSeconds = 1500;   // 1000 milliseconds = 1 second
     setTimeout(getSetOuts, numMilliSeconds);//recall this function after this number of miliseconds.
   }
 
