@@ -1341,6 +1341,13 @@
       }
 
     });
+
+    $("#message").keypress(function(event) {
+      if (event.keyCode != 13)
+                return;
+      doit();
+    });
+
   });
 
   $("#musicicon").click(trialfunction);
@@ -1427,8 +1434,10 @@
 
   }
   function request(){
+
     $.get("/getUserName",{ident: clientID},function(data){
       socket.emit('request', {'ident': ident,'name': data.name, 'roomNum': roomID});
+      $("#chat").append('<li>Opponent has been requested</li>');
       return false;
 
 
