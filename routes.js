@@ -895,8 +895,11 @@ router.get("/getRoom", function(req,res)
 
         if(room.ClientID == req.user.ident || room.Client2ID == req.user.ident){
           console.log("premade room")
-          currRooms[req.user.ident] = room.roomNum;
-          res.json({redirect: "/multiplayer"})
+          User.findOneAndUpdate({ident: req.user.ident}, {currRoom: room.roomNum},function(err, user)
+          {
+            currRooms[req.user.ident] = room.roomNum;//using this as backup??
+            res.json({redirect: "/multiplayer"})
+          })
         }
         else if(room.ClientID == null)
         {
