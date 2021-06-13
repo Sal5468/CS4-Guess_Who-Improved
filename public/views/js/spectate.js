@@ -2,6 +2,9 @@
   let currentmessage = 1
   let currentmessagetodel = 1
 
+
+  let roomID;
+
   function guessWhoClicked()
   {
     $.get("/getmenu",function(data){
@@ -20,7 +23,7 @@
             window.location = data.redirect;
           });
         }
-
+        roomID = data.roomNum;
         $("#roomNum").html("Spectating Room: "+ data.roomNum)
 
         if(data.ClientChar == -1)
@@ -481,7 +484,7 @@
           window.location = data.redirect;
         });
       }
-      
+
       $("#roomNum").html("Spectating Room: "+ data.roomNum)
 
       if(data.ClientChar == -1)
@@ -998,27 +1001,3 @@
     if(data.roomNum == roomID)
         $("#chat").append('<li>' + data.name + ": " + data.text + '</li>');
   });
-
-
-
-  function doit() {
-//Send message to server.\
-    $.get("/getUserName",{ident: clientID},function(data){
-      socket.emit('update', {'ident': ident, 'text': $("#message").val(), 'name': data.name, 'roomNum': roomID});
-      //socket.to('some room').emit('some event');
-
-      $("#message").val("");
-      return false;
-
-
-    })
-
-  }
-  function request(){
-    $.get("/getUserName",{ident: clientID},function(data){
-      socket.emit('request', {'ident': ident,'name': data.name, 'roomNum': roomID});
-      return false;
-
-
-    })
-  }
