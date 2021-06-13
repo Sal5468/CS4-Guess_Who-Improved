@@ -124,7 +124,7 @@ router.post("/delcurrentmultigame", function(req, res) {
 	{
     activePlayers[req.user.ident] = -1;
     console.log("authenticate")
-		Room.remove({roomNum: req.body.ident},function(error,removed) {
+		Room.remove({roomNum: req.user.currRoom},function(error,removed) {
 			if (error)
 				console.log(error);
 			else
@@ -132,6 +132,7 @@ router.post("/delcurrentmultigame", function(req, res) {
 				console.log(removed.result);
 			}
 		})
+    res.json(null)
 	}
 })
 
