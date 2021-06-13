@@ -28,66 +28,66 @@
 
         if(data.ClientChar == -1)
         {
-          $("#boardone").html("Player 1 Board : Character Not Choosen" )
+          $("#boardone").html("Player 1 Board : Character Not Chosen" )
         }
         if(data.Client2Char == -1)
         {
-          $("#boardtwo").html("Player 2 Board : Character Not Choosen" )
+          $("#boardtwo").html("Player 2 Board : Character Not Chosen" )
         }
 
         if(data.ClientChar !=   -1)
         {
-          if(data.ClientChar==0){$("#boardone").html("Player 1 Board Character Choosen : Alex" )}
-          else if(data.ClientChar==1){$("#boardone").html("Player 1 Board Character Choosen : Andy" )}
-          else if(data.ClientChar==2){$("#boardone").html("Player 1 Board Character Choosen : Ashley" )}
-          else if(data.ClientChar==3){$("#boardone").html("Player 1 Board Character Choosen : Brandon" )}
-          else if(data.ClientChar==4){$("#boardone").html("Player 1 Board Character Choosen : Chris" )}
-          else if(data.ClientChar==5){$("#boardone").html("Player 1 Board Character Choosen : Connor" )}
-          else if(data.ClientChar==6){$("#boardone").html("Player 1 Board Character Choosen : Daniel" )}
-          else if(data.ClientChar==7){$("#boardone").html("Player 1 Board Character Choosen : David" )}
-          else if(data.ClientChar==8){$("#boardone").html("Player 1 Board Character Choosen : Emily" )}
-          else if(data.ClientChar==9){$("#boardone").html("Player 1 Board Character Choosen : Jake" )}
-          else if(data.ClientChar==10){$("#boardone").html("Player 1 Board Character Choosen : James" )}
-          else if(data.ClientChar==11){$("#boardone").html("Player 1 Board Character Choosen : Jon" )}
-          else if(data.ClientChar==12){$("#boardone").html("Player 1 Board Character Choosen : Joseph" )}
-          else if(data.ClientChar==13){$("#boardone").html("Player 1 Board Character Choosen : Joshua" )}
-          else if(data.ClientChar==14){$("#boardone").html("Player 1 Board Character Choosen : Justin" )}
-          else if(data.ClientChar==15){$("#boardone").html("Player 1 Board Character Choosen : Kyle" )}
-          else if(data.ClientChar==16){$("#boardone").html("Player 1 Board Character Choosen : Matt" )}
-          else if(data.ClientChar==17){$("#boardone").html("Player 1 Board Character Choosen : Megan" )}
-          else if(data.ClientChar==18){$("#boardone").html("Player 1 Board Character Choosen : Nick" )}
-          else if(data.ClientChar==19){$("#boardone").html("Player 1 Board Character Choosen : Rachael" )}
-          else if(data.ClientChar==20){$("#boardone").html("Player 1 Board Character Choosen : Sarah" )}
-          else if(data.ClientChar==21){$("#boardone").html("Player 1 Board Character Choosen : Tyler" )}
-          else if(data.ClientChar==22){$("#boardone").html("Player 1 Board Character Choosen : William" )}
-          else if(data.ClientChar==23){$("#boardone").html("Player 1 Board Character Choosen : Zachary" )}
+          if(data.ClientChar==0){$("#boardone").html("Player 1 Board Character Chosen : Alex" )}
+          else if(data.ClientChar==1){$("#boardone").html("Player 1 Board Character Chosen : Andy" )}
+          else if(data.ClientChar==2){$("#boardone").html("Player 1 Board Character Chosen : Ashley" )}
+          else if(data.ClientChar==3){$("#boardone").html("Player 1 Board Character Chosen : Brandon" )}
+          else if(data.ClientChar==4){$("#boardone").html("Player 1 Board Character Chosen : Chris" )}
+          else if(data.ClientChar==5){$("#boardone").html("Player 1 Board Character Chosen : Connor" )}
+          else if(data.ClientChar==6){$("#boardone").html("Player 1 Board Character Chosen : Daniel" )}
+          else if(data.ClientChar==7){$("#boardone").html("Player 1 Board Character Chosen : David" )}
+          else if(data.ClientChar==8){$("#boardone").html("Player 1 Board Character Chosen : Emily" )}
+          else if(data.ClientChar==9){$("#boardone").html("Player 1 Board Character Chosen : Jake" )}
+          else if(data.ClientChar==10){$("#boardone").html("Player 1 Board Character Chosen : James" )}
+          else if(data.ClientChar==11){$("#boardone").html("Player 1 Board Character Chosen : Jon" )}
+          else if(data.ClientChar==12){$("#boardone").html("Player 1 Board Character Chosen : Joseph" )}
+          else if(data.ClientChar==13){$("#boardone").html("Player 1 Board Character Chosen : Joshua" )}
+          else if(data.ClientChar==14){$("#boardone").html("Player 1 Board Character Chosen : Justin" )}
+          else if(data.ClientChar==15){$("#boardone").html("Player 1 Board Character Chosen : Kyle" )}
+          else if(data.ClientChar==16){$("#boardone").html("Player 1 Board Character Chosen : Matt" )}
+          else if(data.ClientChar==17){$("#boardone").html("Player 1 Board Character Chosen : Megan" )}
+          else if(data.ClientChar==18){$("#boardone").html("Player 1 Board Character Chosen : Nick" )}
+          else if(data.ClientChar==19){$("#boardone").html("Player 1 Board Character Chosen : Rachael" )}
+          else if(data.ClientChar==20){$("#boardone").html("Player 1 Board Character Chosen : Sarah" )}
+          else if(data.ClientChar==21){$("#boardone").html("Player 1 Board Character Chosen : Tyler" )}
+          else if(data.ClientChar==22){$("#boardone").html("Player 1 Board Character Chosen : William" )}
+          else if(data.ClientChar==23){$("#boardone").html("Player 1 Board Character Chosen : Zachary" )}
         }
         if(data.Client2Char !=   -1)
         {
-          if(data.Client2Char==0){$("#boardtwo").html("Player 2 Board Character Choosen : Alex" )}
-          else if(data.Client2Char==1){$("#boardtwo").html("Player 2 Board Character Choosen : Andy" )}
-          else if(data.Client2Char==2){$("#boardtwo").html("Player 2 Board Character Choosen : Ashley" )}
-          else if(data.Client2Char==3){$("#boardtwo").html("Player 2 Board Character Choosen : Brandon" )}
-          else if(data.Client2Char==4){$("#boardtwo").html("Player 2 Board Character Choosen : Chris" )}
-          else if(data.Client2Char==5){$("#boardtwo").html("Player 2 Board Character Choosen : Connor" )}
-          else if(data.Client2Char==6){$("#boardtwo").html("Player 2 Board Character Choosen : Daniel" )}
-          else if(data.Client2Char==7){$("#boardtwo").html("Player 2 Board Character Choosen : David" )}
-          else if(data.Client2Char==8){$("#boardtwo").html("Player 2 Board Character Choosen : Emily" )}
-          else if(data.Client2Char==9){$("#boardtwo").html("Player 2 Board Character Choosen : Jake" )}
-          else if(data.Client2Char==10){$("#boardtwo").html("Player 2 Board Character Choosen : James" )}
-          else if(data.Client2Char==11){$("#boardtwo").html("Player 2 Board Character Choosen : Jon" )}
-          else if(data.Client2Char==12){$("#boardtwo").html("Player 2 Board Character Choosen : Joseph" )}
-          else if(data.Client2Char==13){$("#boardtwo").html("Player 2 Board Character Choosen : Joshua" )}
-          else if(data.Client2Char==14){$("#boardtwo").html("Player 2 Board Character Choosen : Justin" )}
-          else if(data.Client2Char==15){$("#boardtwo").html("Player 2 Board Character Choosen : Kyle" )}
-          else if(data.Client2Char==16){$("#boardtwo").html("Player 2 Board Character Choosen : Matt" )}
-          else if(data.Client2Char==17){$("#boardtwo").html("Player 2 Board Character Choosen : Megan" )}
-          else if(data.Client2Char==18){$("#boardtwo").html("Player 2 Board Character Choosen : Nick" )}
-          else if(data.Client2Char==19){$("#boardtwo").html("Player 2 Board Character Choosen : Rachael" )}
-          else if(data.Client2Char==20){$("#boardtwo").html("Player 2 Board Character Choosen : Sarah" )}
-          else if(data.Client2Char==21){$("#boardtwo").html("Player 2 Board Character Choosen : Tyler" )}
-          else if(data.Client2Char==22){$("#boardtwo").html("Player 2 Board Character Choosen : William" )}
-          else if(data.Client2Char==23){$("#boardtwo").html("Player 2 Board Character Choosen : Zachary" )}
+          if(data.Client2Char==0){$("#boardtwo").html("Player 2 Board Character Chosen : Alex" )}
+          else if(data.Client2Char==1){$("#boardtwo").html("Player 2 Board Character Chosen : Andy" )}
+          else if(data.Client2Char==2){$("#boardtwo").html("Player 2 Board Character Chosen : Ashley" )}
+          else if(data.Client2Char==3){$("#boardtwo").html("Player 2 Board Character Chosen : Brandon" )}
+          else if(data.Client2Char==4){$("#boardtwo").html("Player 2 Board Character Chosen : Chris" )}
+          else if(data.Client2Char==5){$("#boardtwo").html("Player 2 Board Character Chosen : Connor" )}
+          else if(data.Client2Char==6){$("#boardtwo").html("Player 2 Board Character Chosen : Daniel" )}
+          else if(data.Client2Char==7){$("#boardtwo").html("Player 2 Board Character Chosen : David" )}
+          else if(data.Client2Char==8){$("#boardtwo").html("Player 2 Board Character Chosen : Emily" )}
+          else if(data.Client2Char==9){$("#boardtwo").html("Player 2 Board Character Chosen : Jake" )}
+          else if(data.Client2Char==10){$("#boardtwo").html("Player 2 Board Character Chosen : James" )}
+          else if(data.Client2Char==11){$("#boardtwo").html("Player 2 Board Character Chosen : Jon" )}
+          else if(data.Client2Char==12){$("#boardtwo").html("Player 2 Board Character Chosen : Joseph" )}
+          else if(data.Client2Char==13){$("#boardtwo").html("Player 2 Board Character Chosen : Joshua" )}
+          else if(data.Client2Char==14){$("#boardtwo").html("Player 2 Board Character Chosen : Justin" )}
+          else if(data.Client2Char==15){$("#boardtwo").html("Player 2 Board Character Chosen : Kyle" )}
+          else if(data.Client2Char==16){$("#boardtwo").html("Player 2 Board Character Chosen : Matt" )}
+          else if(data.Client2Char==17){$("#boardtwo").html("Player 2 Board Character Chosen : Megan" )}
+          else if(data.Client2Char==18){$("#boardtwo").html("Player 2 Board Character Chosen : Nick" )}
+          else if(data.Client2Char==19){$("#boardtwo").html("Player 2 Board Character Chosen : Rachael" )}
+          else if(data.Client2Char==20){$("#boardtwo").html("Player 2 Board Character Chosen : Sarah" )}
+          else if(data.Client2Char==21){$("#boardtwo").html("Player 2 Board Character Chosen : Tyler" )}
+          else if(data.Client2Char==22){$("#boardtwo").html("Player 2 Board Character Chosen : William" )}
+          else if(data.Client2Char==23){$("#boardtwo").html("Player 2 Board Character Chosen : Zachary" )}
         }
 
         if(data.ClientBoard[0])
@@ -489,66 +489,66 @@
 
       if(data.ClientChar == -1)
       {
-        $("#boardone").html("Player 1 Board : Character Not Choosen" )
+        $("#boardone").html("Player 1 Board : Character Not Chosen" )
       }
       if(data.Client2Char == -1)
       {
-        $("#boardtwo").html("Player 2 Board : Character Not Choosen" )
+        $("#boardtwo").html("Player 2 Board : Character Not Chosen" )
       }
 
       if(data.ClientChar !=   -1)
       {
-        if(data.ClientChar==0){$("#boardone").html("Player 1 Board Character Choosen : Alex" )}
-        else if(data.ClientChar==1){$("#boardone").html("Player 1 Board Character Choosen : Andy" )}
-        else if(data.ClientChar==2){$("#boardone").html("Player 1 Board Character Choosen : Ashley" )}
-        else if(data.ClientChar==3){$("#boardone").html("Player 1 Board Character Choosen : Brandon" )}
-        else if(data.ClientChar==4){$("#boardone").html("Player 1 Board Character Choosen : Chris" )}
-        else if(data.ClientChar==5){$("#boardone").html("Player 1 Board Character Choosen : Connor" )}
-        else if(data.ClientChar==6){$("#boardone").html("Player 1 Board Character Choosen : Daniel" )}
-        else if(data.ClientChar==7){$("#boardone").html("Player 1 Board Character Choosen : David" )}
-        else if(data.ClientChar==8){$("#boardone").html("Player 1 Board Character Choosen : Emily" )}
-        else if(data.ClientChar==9){$("#boardone").html("Player 1 Board Character Choosen : Jake" )}
-        else if(data.ClientChar==10){$("#boardone").html("Player 1 Board Character Choosen : James" )}
-        else if(data.ClientChar==11){$("#boardone").html("Player 1 Board Character Choosen : Jon" )}
-        else if(data.ClientChar==12){$("#boardone").html("Player 1 Board Character Choosen : Joseph" )}
-        else if(data.ClientChar==13){$("#boardone").html("Player 1 Board Character Choosen : Joshua" )}
-        else if(data.ClientChar==14){$("#boardone").html("Player 1 Board Character Choosen : Justin" )}
-        else if(data.ClientChar==15){$("#boardone").html("Player 1 Board Character Choosen : Kyle" )}
-        else if(data.ClientChar==16){$("#boardone").html("Player 1 Board Character Choosen : Matt" )}
-        else if(data.ClientChar==17){$("#boardone").html("Player 1 Board Character Choosen : Megan" )}
-        else if(data.ClientChar==18){$("#boardone").html("Player 1 Board Character Choosen : Nick" )}
-        else if(data.ClientChar==19){$("#boardone").html("Player 1 Board Character Choosen : Rachael" )}
-        else if(data.ClientChar==20){$("#boardone").html("Player 1 Board Character Choosen : Sarah" )}
-        else if(data.ClientChar==21){$("#boardone").html("Player 1 Board Character Choosen : Tyler" )}
-        else if(data.ClientChar==22){$("#boardone").html("Player 1 Board Character Choosen : William" )}
-        else if(data.ClientChar==23){$("#boardone").html("Player 1 Board Character Choosen : Zachary" )}
+        if(data.ClientChar==0){$("#boardone").html("Player 1 Board Character Chosen : Alex" )}
+        else if(data.ClientChar==1){$("#boardone").html("Player 1 Board Character Chosen : Andy" )}
+        else if(data.ClientChar==2){$("#boardone").html("Player 1 Board Character Chosen : Ashley" )}
+        else if(data.ClientChar==3){$("#boardone").html("Player 1 Board Character Chosen : Brandon" )}
+        else if(data.ClientChar==4){$("#boardone").html("Player 1 Board Character Chosen : Chris" )}
+        else if(data.ClientChar==5){$("#boardone").html("Player 1 Board Character Chosen : Connor" )}
+        else if(data.ClientChar==6){$("#boardone").html("Player 1 Board Character Chosen : Daniel" )}
+        else if(data.ClientChar==7){$("#boardone").html("Player 1 Board Character Chosen : David" )}
+        else if(data.ClientChar==8){$("#boardone").html("Player 1 Board Character Chosen : Emily" )}
+        else if(data.ClientChar==9){$("#boardone").html("Player 1 Board Character Chosen : Jake" )}
+        else if(data.ClientChar==10){$("#boardone").html("Player 1 Board Character Chosen : James" )}
+        else if(data.ClientChar==11){$("#boardone").html("Player 1 Board Character Chosen : Jon" )}
+        else if(data.ClientChar==12){$("#boardone").html("Player 1 Board Character Chosen : Joseph" )}
+        else if(data.ClientChar==13){$("#boardone").html("Player 1 Board Character Chosen : Joshua" )}
+        else if(data.ClientChar==14){$("#boardone").html("Player 1 Board Character Chosen : Justin" )}
+        else if(data.ClientChar==15){$("#boardone").html("Player 1 Board Character Chosen : Kyle" )}
+        else if(data.ClientChar==16){$("#boardone").html("Player 1 Board Character Chosen : Matt" )}
+        else if(data.ClientChar==17){$("#boardone").html("Player 1 Board Character Chosen : Megan" )}
+        else if(data.ClientChar==18){$("#boardone").html("Player 1 Board Character Chosen : Nick" )}
+        else if(data.ClientChar==19){$("#boardone").html("Player 1 Board Character Chosen : Rachael" )}
+        else if(data.ClientChar==20){$("#boardone").html("Player 1 Board Character Chosen : Sarah" )}
+        else if(data.ClientChar==21){$("#boardone").html("Player 1 Board Character Chosen : Tyler" )}
+        else if(data.ClientChar==22){$("#boardone").html("Player 1 Board Character Chosen : William" )}
+        else if(data.ClientChar==23){$("#boardone").html("Player 1 Board Character Chosen : Zachary" )}
       }
       if(data.Client2Char !=   -1)
       {
-        if(data.Client2Char==0){$("#boardtwo").html("Player 2 Board Character Choosen : Alex" )}
-        else if(data.Client2Char==1){$("#boardtwo").html("Player 2 Board Character Choosen : Andy" )}
-        else if(data.Client2Char==2){$("#boardtwo").html("Player 2 Board Character Choosen : Ashley" )}
-        else if(data.Client2Char==3){$("#boardtwo").html("Player 2 Board Character Choosen : Brandon" )}
-        else if(data.Client2Char==4){$("#boardtwo").html("Player 2 Board Character Choosen : Chris" )}
-        else if(data.Client2Char==5){$("#boardtwo").html("Player 2 Board Character Choosen : Connor" )}
-        else if(data.Client2Char==6){$("#boardtwo").html("Player 2 Board Character Choosen : Daniel" )}
-        else if(data.Client2Char==7){$("#boardtwo").html("Player 2 Board Character Choosen : David" )}
-        else if(data.Client2Char==8){$("#boardtwo").html("Player 2 Board Character Choosen : Emily" )}
-        else if(data.Client2Char==9){$("#boardtwo").html("Player 2 Board Character Choosen : Jake" )}
-        else if(data.Client2Char==10){$("#boardtwo").html("Player 2 Board Character Choosen : James" )}
-        else if(data.Client2Char==11){$("#boardtwo").html("Player 2 Board Character Choosen : Jon" )}
-        else if(data.Client2Char==12){$("#boardtwo").html("Player 2 Board Character Choosen : Joseph" )}
-        else if(data.Client2Char==13){$("#boardtwo").html("Player 2 Board Character Choosen : Joshua" )}
-        else if(data.Client2Char==14){$("#boardtwo").html("Player 2 Board Character Choosen : Justin" )}
-        else if(data.Client2Char==15){$("#boardtwo").html("Player 2 Board Character Choosen : Kyle" )}
-        else if(data.Client2Char==16){$("#boardtwo").html("Player 2 Board Character Choosen : Matt" )}
-        else if(data.Client2Char==17){$("#boardtwo").html("Player 2 Board Character Choosen : Megan" )}
-        else if(data.Client2Char==18){$("#boardtwo").html("Player 2 Board Character Choosen : Nick" )}
-        else if(data.Client2Char==19){$("#boardtwo").html("Player 2 Board Character Choosen : Rachael" )}
-        else if(data.Client2Char==20){$("#boardtwo").html("Player 2 Board Character Choosen : Sarah" )}
-        else if(data.Client2Char==21){$("#boardtwo").html("Player 2 Board Character Choosen : Tyler" )}
-        else if(data.Client2Char==22){$("#boardtwo").html("Player 2 Board Character Choosen : William" )}
-        else if(data.Client2Char==23){$("#boardtwo").html("Player 2 Board Character Choosen : Zachary" )}
+        if(data.Client2Char==0){$("#boardtwo").html("Player 2 Board Character Chosen : Alex" )}
+        else if(data.Client2Char==1){$("#boardtwo").html("Player 2 Board Character Chosen : Andy" )}
+        else if(data.Client2Char==2){$("#boardtwo").html("Player 2 Board Character Chosen : Ashley" )}
+        else if(data.Client2Char==3){$("#boardtwo").html("Player 2 Board Character Chosen : Brandon" )}
+        else if(data.Client2Char==4){$("#boardtwo").html("Player 2 Board Character Chosen : Chris" )}
+        else if(data.Client2Char==5){$("#boardtwo").html("Player 2 Board Character Chosen : Connor" )}
+        else if(data.Client2Char==6){$("#boardtwo").html("Player 2 Board Character Chosen : Daniel" )}
+        else if(data.Client2Char==7){$("#boardtwo").html("Player 2 Board Character Chosen : David" )}
+        else if(data.Client2Char==8){$("#boardtwo").html("Player 2 Board Character Chosen : Emily" )}
+        else if(data.Client2Char==9){$("#boardtwo").html("Player 2 Board Character Chosen : Jake" )}
+        else if(data.Client2Char==10){$("#boardtwo").html("Player 2 Board Character Chosen : James" )}
+        else if(data.Client2Char==11){$("#boardtwo").html("Player 2 Board Character Chosen : Jon" )}
+        else if(data.Client2Char==12){$("#boardtwo").html("Player 2 Board Character Chosen : Joseph" )}
+        else if(data.Client2Char==13){$("#boardtwo").html("Player 2 Board Character Chosen : Joshua" )}
+        else if(data.Client2Char==14){$("#boardtwo").html("Player 2 Board Character Chosen : Justin" )}
+        else if(data.Client2Char==15){$("#boardtwo").html("Player 2 Board Character Chosen : Kyle" )}
+        else if(data.Client2Char==16){$("#boardtwo").html("Player 2 Board Character Chosen : Matt" )}
+        else if(data.Client2Char==17){$("#boardtwo").html("Player 2 Board Character Chosen : Megan" )}
+        else if(data.Client2Char==18){$("#boardtwo").html("Player 2 Board Character Chosen : Nick" )}
+        else if(data.Client2Char==19){$("#boardtwo").html("Player 2 Board Character Chosen : Rachael" )}
+        else if(data.Client2Char==20){$("#boardtwo").html("Player 2 Board Character Chosen : Sarah" )}
+        else if(data.Client2Char==21){$("#boardtwo").html("Player 2 Board Character Chosen : Tyler" )}
+        else if(data.Client2Char==22){$("#boardtwo").html("Player 2 Board Character Chosen : William" )}
+        else if(data.Client2Char==23){$("#boardtwo").html("Player 2 Board Character Chosen : Zachary" )}
       }
 
 
