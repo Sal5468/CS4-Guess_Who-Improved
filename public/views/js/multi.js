@@ -51,7 +51,7 @@
           if(data.P2)
           {
             console.log("player 2 win")
-            $.post("/delcurrentmultigame",{ident:roomID},null)
+            //$.post("/delcurrentmultigame",{ident:roomID},null)
             $.get("/getwin",function(data){
               window.location = data.redirect;
             });
@@ -59,7 +59,7 @@
         else
         {
           console.log("player 2 lose")
-          $.post("/delcurrentmultigame",{ident:roomID},null)
+        //  $.post("/delcurrentmultigame",{ident:roomID},null)
           $.get("/getlose",function(data){
             window.location = data.redirect;
           });
@@ -69,7 +69,7 @@
           if(data.P1)
           {
             console.log("player 1 win")
-            $.post("/delcurrentmultigame",{ident:roomID},null)
+        //    $.post("/delcurrentmultigame",{ident:roomID},null)
             $.get("/getwin",function(data){
               window.location = data.redirect;
             });
@@ -77,7 +77,7 @@
           else
           {
             console.log("player 1 lose")
-            $.post("/delcurrentmultigame",{ident:roomID},null)
+          //  $.post("/delcurrentmultigame",{ident:roomID},null)
             $.get("/getlose",function(data){
               window.location = data.redirect;
             });

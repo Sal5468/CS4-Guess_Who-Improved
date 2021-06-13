@@ -121,8 +121,11 @@
 
     $(document).ready(function()
     {
-    //  $("#return").click(returnClick);
       $("#mainmenu").click(mainmenuclick);
+      setTimeout(function(){
+         $.post("/delcurrentmultigame",null,null)
+       }, 3000);
+
     })
 /*    function returnClick()
     {
